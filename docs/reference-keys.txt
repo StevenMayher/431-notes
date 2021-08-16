@@ -1,0 +1,6 @@
+fig:datasci-fig
+fig:cycle-fig
+data-science
+data-science-project-cycle
+data-science-and-the-431-course
+what-the-course-is-and-isnt
