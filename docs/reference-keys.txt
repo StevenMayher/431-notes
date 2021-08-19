@@ -10,3 +10,12 @@ counting-things-and-making-tables
 visualizing-the-data-in-a-graph-or-a-few
 six-ways-to-improve-this-graph
 a-little-reflection
+dataviz
+the-nhanes-data-a-first-sample
+age-and-height
+subset-of-subjects-with-known-age-and-height
+the-distinction-between-gender-and-sex
+age-height-and-sex
+can-we-show-the-female-and-male-relationships-in-separate-panels
+can-we-add-a-smooth-curve-to-show-the-relationship-in-each-plot
+what-if-we-want-to-assume-straight-line-relationships
