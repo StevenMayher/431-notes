@@ -4,3 +4,9 @@ data-science
 data-science-project-cycle
 data-science-and-the-431-course
 what-the-course-is-and-isnt
+looking-at-the-palmer-penguins
+package-loading-then-dealing-with-missing-data
+counting-things-and-making-tables
+visualizing-the-data-in-a-graph-or-a-few
+six-ways-to-improve-this-graph
+a-little-reflection

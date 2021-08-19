@@ -24,7 +24,7 @@
 <meta name="author" content="Thomas E. Love" />
 
 
-<meta name="date" content="2021-08-16" />
+<meta name="date" content="2021-08-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="index.html"/>
-<link rel="next" href="references.html"/>
+<link rel="next" href="looking-at-the-palmer-penguins.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -174,6 +174,15 @@ div.csl-indent {
 <li class="chapter" data-level="1.2" data-path="data-science.html"><a href="data-science.html#data-science-and-the-431-course"><i class="fa fa-check"></i><b>1.2</b> Data Science and the 431 Course</a></li>
 <li class="chapter" data-level="1.3" data-path="data-science.html"><a href="data-science.html#what-the-course-is-and-isnt"><i class="fa fa-check"></i><b>1.3</b> What The Course Is and Isn’t</a></li>
 </ul></li>
+<li class="part"><span><b>Part A. Exploring Data</b></span></li>
+<li class="chapter" data-level="2" data-path="looking-at-the-palmer-penguins.html"><a href="looking-at-the-palmer-penguins.html"><i class="fa fa-check"></i><b>2</b> Looking at the Palmer Penguins</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="looking-at-the-palmer-penguins.html"><a href="looking-at-the-palmer-penguins.html#package-loading-then-dealing-with-missing-data"><i class="fa fa-check"></i><b>2.1</b> Package Loading, then Dealing with Missing Data</a></li>
+<li class="chapter" data-level="2.2" data-path="looking-at-the-palmer-penguins.html"><a href="looking-at-the-palmer-penguins.html#counting-things-and-making-tables"><i class="fa fa-check"></i><b>2.2</b> Counting Things and Making Tables</a></li>
+<li class="chapter" data-level="2.3" data-path="looking-at-the-palmer-penguins.html"><a href="looking-at-the-palmer-penguins.html#visualizing-the-data-in-a-graph-or-a-few"><i class="fa fa-check"></i><b>2.3</b> Visualizing the Data in a Graph (or a few…)</a></li>
+<li class="chapter" data-level="2.4" data-path="looking-at-the-palmer-penguins.html"><a href="looking-at-the-palmer-penguins.html#six-ways-to-improve-this-graph"><i class="fa fa-check"></i><b>2.4</b> Six Ways To “Improve” This Graph</a></li>
+<li class="chapter" data-level="2.5" data-path="looking-at-the-palmer-penguins.html"><a href="looking-at-the-palmer-penguins.html#a-little-reflection"><i class="fa fa-check"></i><b>2.5</b> A Little Reflection</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -216,21 +225,21 @@ Figure 1.1: Data Science Venn Diagram from Steven Geringer
 </blockquote>
 <div id="data-science-project-cycle" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> Data Science Project Cycle</h2>
-<p>A typical data science project can be modeled as follows, which comes from the introduction to the amazing book <strong>R for Data Science</strong>, by Garrett Grolemund and Hadley Wickham, which is a key text for this course <span class="citation">(<a href="#ref-R4DS" role="doc-biblioref">Grolemund and Wickham 2019</a>)</span>.</p>
+<p>A typical data science project can be modeled as follows, which comes from the introduction to the amazing book <strong>R for Data Science</strong>, by Garrett Grolemund and Hadley Wickham, which is a key text for this course <span class="citation">(<a href="#ref-R4DS" role="doc-biblioref">Grolemund and Wickham 2021</a>)</span>.</p>
 <div class="figure"><span id="fig:cycle-fig"></span>
 <img src="figures/data-science-cycle.png" alt="Source: R for Data Science: Introduction" width="95%" />
 <p class="caption">
 Figure 1.2: Source: R for Data Science: Introduction
 </p>
 </div>
-<p>This diagram is sometimes referred to as the Krebs Cycle of Data Science. For more on the steps of a data science project, we encourage you to read the Introduction of <span class="citation"><a href="#ref-R4DS" role="doc-biblioref">Grolemund and Wickham</a> (<a href="#ref-R4DS" role="doc-biblioref">2019</a>)</span>.</p>
+<p>This diagram is sometimes referred to as the Krebs Cycle of Data Science. For more on the steps of a data science project, we encourage you to read the Introduction of <span class="citation"><a href="#ref-R4DS" role="doc-biblioref">Grolemund and Wickham</a> (<a href="#ref-R4DS" role="doc-biblioref">2021</a>)</span>.</p>
 </div>
 <div id="data-science-and-the-431-course" class="section level2" number="1.2">
 <h2><span class="header-section-number">1.2</span> Data Science and the 431 Course</h2>
 <p>We’ll discuss each of these elements in the 431 course, focusing at the start on understanding our data through transformation, modeling and (especially in the early stages) visualization. In 431, we learn how to get things done.</p>
 <ul>
 <li>We get people working with R and R Studio and R Markdown, even if they are completely new to coding. A gentle introduction is provided at <span class="citation"><a href="#ref-ModernDive" role="doc-biblioref">Ismay and Kim</a> (<a href="#ref-ModernDive" role="doc-biblioref">2021</a>)</span></li>
-<li>We learn how to use the <code>tidyverse</code> (<a href="http://www.tidyverse.org/" class="uri">http://www.tidyverse.org/</a>), an array of tools in R (mostly developed by Hadley Wickham and his colleagues at R Studio) which share an underlying philosophy to make data science faster, easier, more reproducible and more fun. A critical text for understanding the tidyverse is <span class="citation"><a href="#ref-R4DS" role="doc-biblioref">Grolemund and Wickham</a> (<a href="#ref-R4DS" role="doc-biblioref">2019</a>)</span>. Tidyverse tools facilitate:
+<li>We learn how to use the <code>tidyverse</code> (<a href="http://www.tidyverse.org/" class="uri">http://www.tidyverse.org/</a>), an array of tools in R (mostly developed by Hadley Wickham and his colleagues at R Studio) which share an underlying philosophy to make data science faster, easier, more reproducible and more fun. A critical text for understanding the tidyverse is <span class="citation"><a href="#ref-R4DS" role="doc-biblioref">Grolemund and Wickham</a> (<a href="#ref-R4DS" role="doc-biblioref">2021</a>)</span>. Tidyverse tools facilitate:
 <ul>
 <li><strong>importing</strong> data into R, which can be the source of intense pain for some things, but is really quite easy 95% of the time with the right tool.</li>
 <li><strong>tidying</strong> data, that is, storing it in a format that includes one row per observation and one column per variable. This is harder, and more important, than you might think.</li>
@@ -262,13 +271,16 @@ f(x) = \frac{e^{-(x - \mu)^{2}/(2\sigma^{2})}}{\sigma{\sqrt{2 \pi }}}
 
 </div>
 </div>
+
+
+
 <h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Gelman-Nolan" class="csl-entry">
 Gelman, Andrew, and Deborah Nolan. 2017. <em>Teaching Statistics: A Bag of Tricks</em>. Second. Oxford, UK: Oxford University Press.
 </div>
 <div id="ref-R4DS" class="csl-entry">
-Grolemund, Garrett, and Hadley Wickham. 2019. <em>R for Data Science</em>. O’Reilly. <a href="http://r4ds.had.co.nz/">http://r4ds.had.co.nz/</a>.
+Grolemund, Garrett, and Hadley Wickham. 2021. <em>R for Data Science</em>. O’Reilly. <a href="http://r4ds.had.co.nz/">http://r4ds.had.co.nz/</a>.
 </div>
 <div id="ref-ModernDive" class="csl-entry">
 Ismay, Chester, and Albert Y. Kim. 2021. <em>ModernDive: Statistical Inference via Data Science</em>. <a href="http://moderndive.com/">http://moderndive.com/</a>.
@@ -280,7 +292,7 @@ Ismay, Chester, and Albert Y. Kim. 2021. <em>ModernDive: Statistical Inference v
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="looking-at-the-palmer-penguins.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

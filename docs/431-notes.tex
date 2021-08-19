@@ -124,7 +124,7 @@
 
 \title{Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431}
 \author{Thomas E. Love}
-\date{2021-08-16}
+\date{2021-08-19}
 
 \begin{document}
 \maketitle
@@ -384,6 +384,218 @@ f(x) = \frac{e^{-(x - \mu)^{2}/(2\sigma^{2})}}{\sigma{\sqrt{2 \pi }}}
 \]
 
 Instead, these notes (and the course) focus on how we get R to do the things we want to do, and how we interpret the results of our work. Our next Chapter provides a first example.
+
+\hypertarget{part-part-a.-exploring-data}{%
+\part*{Part A. Exploring Data}\label{part-part-a.-exploring-data}}
+\addcontentsline{toc}{part}{Part A. Exploring Data}
+
+\hypertarget{looking-at-the-palmer-penguins}{%
+\chapter{Looking at the Palmer Penguins}\label{looking-at-the-palmer-penguins}}
+
+The data in the \texttt{palmerpenguins} package in R include size measurements, clutch observations, and blood isotope ratios for adult foraging Adélie, Chinstrap, and Gentoo penguins observed on islands in the Palmer Archipelago near Palmer Station, Antarctica. The data were collected and made available by Dr.~Kristen Gorman and the Palmer Station Long Term Ecological Research (LTER) Program.
+
+For more on the \texttt{palmerpenguins} package, visit \url{https://allisonhorst.github.io/palmerpenguins/}.
+
+\hypertarget{package-loading-then-dealing-with-missing-data}{%
+\section{Package Loading, then Dealing with Missing Data}\label{package-loading-then-dealing-with-missing-data}}
+
+To start, let's load up the necessary R packages to manage the data and summarize it in a small table, and a plot. We've actually done this previously, but we'll repeat the steps here, because it's worth seeing what R is doing.
+
+In this case, we'll load up five packages.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(palmerpenguins)  }\CommentTok{\# source for the data set}
+\FunctionTok{library}\NormalTok{(janitor)         }\CommentTok{\# some utilities for cleanup and simple tables}
+\FunctionTok{library}\NormalTok{(magrittr)        }\CommentTok{\# provides us with the pipe \%\textgreater{}\% for code management}
+\FunctionTok{library}\NormalTok{(dplyr)           }\CommentTok{\# part of the tidyverse: data management tools}
+\FunctionTok{library}\NormalTok{(ggplot2)         }\CommentTok{\# part of the tidyverse: tools for plotting data}
+\end{Highlighting}
+\end{Shaded}
+
+It's worth remembering that everything after the \texttt{\#} on each line above is just a comment for the reader, and is ignored by R. We'll see later that the loading of a single package (called \texttt{tidyverse}) gives us both the \texttt{dplyr} and \texttt{ggplot2} packages, as well as several other useful things.
+
+Next, let's take the \texttt{penguins} data from the \texttt{palmerpenguins} package, and identify those observations which have complete data (so, no missing values) in four variables of interest. We'll store that result in a new data frame (think of this as a data set) called \texttt{new\_penguins} and then take a look at that result using the following code.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{new\_penguins }\OtherTok{\textless{}{-}}\NormalTok{ penguins }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{filter}\NormalTok{(}\FunctionTok{complete.cases}\NormalTok{(flipper\_length\_mm, body\_mass\_g, species, sex))}
+
+\NormalTok{new\_penguins}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 333 x 8
+   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+   <fct>   <fct>              <dbl>         <dbl>             <int>       <int>
+ 1 Adelie  Torgersen           39.1          18.7               181        3750
+ 2 Adelie  Torgersen           39.5          17.4               186        3800
+ 3 Adelie  Torgersen           40.3          18                 195        3250
+ 4 Adelie  Torgersen           36.7          19.3               193        3450
+ 5 Adelie  Torgersen           39.3          20.6               190        3650
+ 6 Adelie  Torgersen           38.9          17.8               181        3625
+ 7 Adelie  Torgersen           39.2          19.6               195        4675
+ 8 Adelie  Torgersen           41.1          17.6               182        3200
+ 9 Adelie  Torgersen           38.6          21.2               191        3800
+10 Adelie  Torgersen           34.6          21.1               198        4400
+# ... with 323 more rows, and 2 more variables: sex <fct>, year <int>
+\end{verbatim}
+
+\hypertarget{counting-things-and-making-tables}{%
+\section{Counting Things and Making Tables}\label{counting-things-and-making-tables}}
+
+So, how many penguins are in our \texttt{new\_penguins} data? When we printed out the result, we got an answer, but (as with many things in R) there are many ways to get the same result.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{nrow}\NormalTok{(new\_penguins)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 333
+\end{verbatim}
+
+How do our \texttt{new\_penguins} data break down by sex and species?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{new\_penguins }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{tabyl}\NormalTok{(sex, species) }\CommentTok{\# tabyl comes from the janitor package}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+    sex Adelie Chinstrap Gentoo
+ female     73        34     58
+   male     73        34     61
+\end{verbatim}
+
+Note the strange spelling of \texttt{tabyl} here. The output is reasonably clear, but could we make that table a little prettier, and while we're at it, can we add the row and column totals to it?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{new\_penguins }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{tabyl}\NormalTok{(sex, species) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{adorn\_totals}\NormalTok{(}\AttributeTok{where =} \FunctionTok{c}\NormalTok{(}\StringTok{"row"}\NormalTok{, }\StringTok{"col"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# add row, column totals}
+\NormalTok{    kable  }\CommentTok{\# one convenient way to make the table prettier}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|r|r|r|r}
+\hline
+sex & Adelie & Chinstrap & Gentoo & Total\\
+\hline
+female & 73 & 34 & 58 & 165\\
+\hline
+male & 73 & 34 & 61 & 168\\
+\hline
+Total & 146 & 68 & 119 & 333\\
+\hline
+\end{tabular}
+
+\hypertarget{visualizing-the-data-in-a-graph-or-a-few}{%
+\section{Visualizing the Data in a Graph (or a few\ldots)}\label{visualizing-the-data-in-a-graph-or-a-few}}
+
+Now, let's look at the other two variables of interest. Let's create a graph showing the association of body mass with flipper length across the complete set of 333 penguins.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(new\_penguins, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ body\_mass\_g, }\AttributeTok{y =}\NormalTok{ flipper\_length\_mm)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+Some of you may want to include a straight-line model (fit by a classical linear regression) to this plot. One way to do that in R involves the addition of a single line of code, like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(new\_penguins, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ body\_mass\_g, }\AttributeTok{y =}\NormalTok{ flipper\_length\_mm)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{formula =}\NormalTok{ y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x,}
+                \AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+Whenever we build a graph for ourselves, these default choices may be sufficient. But I'd like to see a prettier version if I was going to show it to someone else. So, I might use a different color for each species, and I might neaten up the theme (to get rid of the default grey background) and add a title, like this.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(new\_penguins, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ body\_mass\_g, }\AttributeTok{y =}\NormalTok{ flipper\_length\_mm, }\AttributeTok{col =}\NormalTok{ species)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+    \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+} 
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Flipper Length and Body Mass for 333 of the Palmer Penguins"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\hypertarget{six-ways-to-improve-this-graph}{%
+\section{Six Ways To ``Improve'' This Graph}\label{six-ways-to-improve-this-graph}}
+
+Now, let's build a new graph. Here, I want to:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  plot the relationship between body mass and flipper length in light of both Sex and Species
+\item
+  increase the size of the points and add a little transparency so we can see if points overlap,
+\item
+  add some smooth curves to summarize the relationships between the two quantities (body mass and flipper length) within each combination of species and sex,
+\item
+  split the graph into two ``facets'' (one for each sex),
+\item
+  improve the axis labels,
+\item
+  improve the titles by adding a subtitle, and also adding in some code to count the penguins (rather than hard-coding in the total number.)
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(new\_penguins, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ body\_mass\_g, }\AttributeTok{y =}\NormalTok{ flipper\_length\_mm, }
+                         \AttributeTok{col =}\NormalTok{ species)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{2}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} 
+    \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"loess"}\NormalTok{, }\AttributeTok{formula =}\NormalTok{ y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x, }
+                \AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{size =} \FloatTok{1.5}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ sex) }\SpecialCharTok{+}
+    \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+} 
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Flipper Length and Body Mass, by Sex \& Species"}\NormalTok{,}
+         \AttributeTok{subtitle =} \FunctionTok{paste0}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(new\_penguins), }\StringTok{" of the Palmer Penguins"}\NormalTok{),}
+         \AttributeTok{x =} \StringTok{"Body Mass (g)"}\NormalTok{, }
+         \AttributeTok{y =} \StringTok{"Flipper Length (mm)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\hypertarget{a-little-reflection}{%
+\section{A Little Reflection}\label{a-little-reflection}}
+
+What can we learn from these plots and their construction? In particular,
+
+\begin{itemize}
+\tightlist
+\item
+  What do these plots suggest about the center of the distribution of each quantity (body mass and flipper length) overall, and within each combination of Sex and Species?
+\item
+  What does the final plot suggest about the spread of the distribution of each of those quantities in each combination of Sex and Species?
+\item
+  What do the plots suggest about the association of body mass and flipper length across the complete set of penguins?
+\item
+  How does the shape and nature of this body mass - flipper length relationship change based on Sex and Species?
+\item
+  Do you think it would be helpful to plot a straight-line relationship (rather than a smooth curve) within each combination of Sex and Species in the final plot? Why or why not? (Also, what would we have to do to the code to accomplish this?)
+\item
+  How was the R code for the plot revised to accomplish each of the six ``wants'' specified above?
+\end{itemize}
 
   \bibliography{book.bib,packages.bib}
 
