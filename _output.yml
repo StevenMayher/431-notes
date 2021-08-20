@@ -1,12 +1,8 @@
-bookdown::gitbook:
-  css: style.css
-  config:
-    toc:
-      before: |
-        <li><a href="./">Dr. Love's Notes for 431</a></li>
-      after: |
-        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    edit: https://github.com/rstudio/bookdown-demo/edit/master/%s
+bookdown::bs4_book:
+  css: bs4_style.css
+  theme:
+    primary: "#096B72"
+  repo: https://github.com/THOMASELOVE/431-notes
   download: ["pdf", "epub"]
 bookdown::pdf_book:
   includes:

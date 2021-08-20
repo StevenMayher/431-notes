@@ -247,6 +247,7 @@ To start, I'll present a series of commands I run at the beginning of these Note
 \FunctionTok{library}\NormalTok{(rms)}
 \FunctionTok{library}\NormalTok{(mosaic)}
 \FunctionTok{library}\NormalTok{(Epi)}
+\FunctionTok{library}\NormalTok{(naniar)}
 \FunctionTok{library}\NormalTok{(broom) }\CommentTok{\# note: tidymodels includes the broom package}
 \FunctionTok{library}\NormalTok{(tidyverse) }\CommentTok{\# note: tidyverse includes the dplyr and ggplot2 packages}
 
@@ -428,19 +429,21 @@ Next, let's take the \texttt{penguins} data from the \texttt{palmerpenguins} pac
 
 \begin{verbatim}
 # A tibble: 333 x 8
-   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
-   <fct>   <fct>              <dbl>         <dbl>             <int>       <int>
- 1 Adelie  Torgersen           39.1          18.7               181        3750
- 2 Adelie  Torgersen           39.5          17.4               186        3800
- 3 Adelie  Torgersen           40.3          18                 195        3250
- 4 Adelie  Torgersen           36.7          19.3               193        3450
- 5 Adelie  Torgersen           39.3          20.6               190        3650
- 6 Adelie  Torgersen           38.9          17.8               181        3625
- 7 Adelie  Torgersen           39.2          19.6               195        4675
- 8 Adelie  Torgersen           41.1          17.6               182        3200
- 9 Adelie  Torgersen           38.6          21.2               191        3800
-10 Adelie  Torgersen           34.6          21.1               198        4400
-# ... with 323 more rows, and 2 more variables: sex <fct>, year <int>
+   species island    bill_length_mm bill_depth_mm
+   <fct>   <fct>              <dbl>         <dbl>
+ 1 Adelie  Torgersen           39.1          18.7
+ 2 Adelie  Torgersen           39.5          17.4
+ 3 Adelie  Torgersen           40.3          18  
+ 4 Adelie  Torgersen           36.7          19.3
+ 5 Adelie  Torgersen           39.3          20.6
+ 6 Adelie  Torgersen           38.9          17.8
+ 7 Adelie  Torgersen           39.2          19.6
+ 8 Adelie  Torgersen           41.1          17.6
+ 9 Adelie  Torgersen           38.6          21.2
+10 Adelie  Torgersen           34.6          21.1
+# ... with 323 more rows, and 4 more variables:
+#   flipper_length_mm <int>, body_mass_g <int>, sex <fct>,
+#   year <int>
 \end{verbatim}
 
 \hypertarget{counting-things-and-making-tables}{%
@@ -508,7 +511,7 @@ Now, let's look at the other two variables of interest. Let's create a graph sho
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-5-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-8-1.pdf}
 
 Some of you may want to include a straight-line model (fit by a classical linear regression) to this plot. One way to do that in R involves the addition of a single line of code, like this:
 
@@ -521,7 +524,7 @@ Some of you may want to include a straight-line model (fit by a classical linear
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-6-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-9-1.pdf}
 
 Whenever we build a graph for ourselves, these default choices may be sufficient. But I'd like to see a prettier version if I was going to show it to someone else. So, I might use a different color for each species, and I might neaten up the theme (to get rid of the default grey background) and add a title, like this.
 
@@ -534,7 +537,7 @@ Whenever we build a graph for ourselves, these default choices may be sufficient
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-7-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-10-1.pdf}
 
 \hypertarget{six-ways-to-improve-this-graph}{%
 \section{Six Ways To ``Improve'' This Graph}\label{six-ways-to-improve-this-graph}}
@@ -574,7 +577,7 @@ Now, let's build a new graph. Here, I want to:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-8-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-11-1.pdf}
 
 \hypertarget{a-little-reflection}{%
 \section{A Little Reflection}\label{a-little-reflection}}
@@ -671,7 +674,8 @@ Suppose we want to visualize the relationship of Height and Age in our 1,000 NHA
 \end{Shaded}
 
 \begin{verbatim}
-Warning: Removed 37 rows containing missing values (geom_point).
+Warning: Removed 37 rows containing missing values
+(geom_point).
 \end{verbatim}
 
 \includegraphics{431-notes_files/figure-latex/nh_dat1_heightbyage1-fig-1.pdf}
@@ -706,19 +710,26 @@ Before we move on, let's manipulate the data set a bit, to focus on only those s
 \end{Shaded}
 
 \begin{verbatim}
-       ID           SurveyYr      Gender         Age            Height     
- Min.   :51624   2009_10:487   female:484   Min.   : 2.00   Min.   : 85.0  
- 1st Qu.:57034   2011_12:476   male  :479   1st Qu.:19.00   1st Qu.:156.2  
- Median :62056                              Median :37.00   Median :165.0  
- Mean   :61967                              Mean   :38.29   Mean   :162.3  
- 3rd Qu.:67269                              3rd Qu.:56.00   3rd Qu.:174.5  
- Max.   :71875                              Max.   :80.00   Max.   :195.9  
+       ID           SurveyYr      Gender         Age       
+ Min.   :51624   2009_10:487   female:484   Min.   : 2.00  
+ 1st Qu.:57034   2011_12:476   male  :479   1st Qu.:19.00  
+ Median :62056                              Median :37.00  
+ Mean   :61967                              Mean   :38.29  
+ 3rd Qu.:67269                              3rd Qu.:56.00  
+ Max.   :71875                              Max.   :80.00  
+     Height     
+ Min.   : 85.0  
+ 1st Qu.:156.2  
+ Median :165.0  
+ Mean   :162.3  
+ 3rd Qu.:174.5  
+ Max.   :195.9  
 \end{verbatim}
 
 Note that the units and explanations for these variables are contained in the NHANES help file, available via typing \texttt{?NHANES} in the Console of R Studio, or by typing \texttt{NHANES} into the Search bar in R Studio's Help window.
 
 \hypertarget{the-distinction-between-gender-and-sex}{%
-\subsection{\texorpdfstring{The Distinction between \texttt{Gender} and \texttt{Sex}}{The Distinction between Gender and Sex}}\label{the-distinction-between-gender-and-sex}}
+\section{\texorpdfstring{The Distinction between \texttt{Gender} and \texttt{Sex}}{The Distinction between Gender and Sex}}\label{the-distinction-between-gender-and-sex}}
 
 The \texttt{Gender} variable here is mis-named. These data refer to the biological status of these subjects, which is their \texttt{Sex}, and not the social construct of \texttt{Gender} which can be quite different. In our effort to avoid further confusion, we'll rename the variable \texttt{Gender} to \texttt{Sex} so as to more accurately describe what is actually measured here.
 
@@ -735,13 +746,20 @@ To do this, we can use this approach\ldots{}
 \end{Shaded}
 
 \begin{verbatim}
-       ID           SurveyYr       Sex           Age            Height     
- Min.   :51624   2009_10:487   female:484   Min.   : 2.00   Min.   : 85.0  
- 1st Qu.:57034   2011_12:476   male  :479   1st Qu.:19.00   1st Qu.:156.2  
- Median :62056                              Median :37.00   Median :165.0  
- Mean   :61967                              Mean   :38.29   Mean   :162.3  
- 3rd Qu.:67269                              3rd Qu.:56.00   3rd Qu.:174.5  
- Max.   :71875                              Max.   :80.00   Max.   :195.9  
+       ID           SurveyYr       Sex           Age       
+ Min.   :51624   2009_10:487   female:484   Min.   : 2.00  
+ 1st Qu.:57034   2011_12:476   male  :479   1st Qu.:19.00  
+ Median :62056                              Median :37.00  
+ Mean   :61967                              Mean   :38.29  
+ 3rd Qu.:67269                              3rd Qu.:56.00  
+ Max.   :71875                              Max.   :80.00  
+     Height     
+ Min.   : 85.0  
+ 1st Qu.:156.2  
+ Median :165.0  
+ Mean   :162.3  
+ 3rd Qu.:174.5  
+ Max.   :195.9  
 \end{verbatim}
 
 That's better. How many observations do we have now? We could use \texttt{dim} to find out the number of rows and columns in this new data set.

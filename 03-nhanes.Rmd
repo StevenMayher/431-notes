@@ -63,7 +63,7 @@ summary(nh_dat2)
 
 Note that the units and explanations for these variables are contained in the NHANES help file, available via typing `?NHANES` in the Console of R Studio, or by typing `NHANES` into the Search bar in R Studio's Help window.
 
-### The Distinction between `Gender` and `Sex`
+## The Distinction between `Gender` and `Sex`
 
 The `Gender` variable here is mis-named. These data refer to the biological status of these subjects, which is their `Sex`, and not the social construct of `Gender` which can be quite different. In our effort to avoid further confusion, we'll rename the variable `Gender` to `Sex` so as to more accurately describe what is actually measured here. 
 
