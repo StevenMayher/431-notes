@@ -1,7 +1,7 @@
 --- 
 title: "Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431"
 author: "Thomas E. Love"
-date: "`r Sys.Date()`"
+date: "2021-08-19"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -24,9 +24,7 @@ csl: chicago-fullnote-bibliography.csl
 
 The **main web page** for the 431 course in Fall 2021 is https://thomaselove.github.io/431/. Go there for all information related to the course.
 
-```{r iconlogo-fig, echo = FALSE, fig.align = "center", out.width = '80%'}
-knitr::include_graphics("figures/431_foot2.PNG")
-```
+<img src="figures/431_foot2.PNG" width="80%" style="display: block; margin: auto;" />
 
 ## What You'll Find Here {-}
 
@@ -72,7 +70,8 @@ Another excellent resource to learn more about R Markdown tools is the Communica
 
 To start, I'll present a series of commands I run (silently) at the beginning of each chapter of these Notes. These particular commands set up the output so it will look nice as either an HTML or PDF file, and also set up R to use several packages (libraries) of functions that expand its capabilities. A chunk of code like this will occur near the top of any R Markdown work.
 
-```{r setup, message=FALSE}
+
+```r
 knitr::opts_chunk$set(comment = NA)
 
 library(knitr)
@@ -97,7 +96,8 @@ I have deliberately set up this list of loaded packages to be relatively small, 
 
 Starting in October, we'll make use of a few scripts I've gathered for you. When necessary, I'll source in some code using the following command...
 
-```{r}
+
+```r
 source("data/Love-boost.R")
 ```
 

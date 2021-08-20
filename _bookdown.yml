@@ -1,4 +1,5 @@
 book_filename: "431-notes"
+new_session: true
 before_chapter_script: _common.R
 language:
   ui:

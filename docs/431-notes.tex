@@ -232,7 +232,7 @@ Another excellent resource to learn more about R Markdown tools is the Communica
 \section*{Initial Setup of R Packages}\label{initial-setup-of-r-packages}}
 \addcontentsline{toc}{section}{Initial Setup of R Packages}
 
-To start, I'll present a series of commands I run at the beginning of these Notes. These particular commands set up the output so it will look nice as either an HTML or PDF file, and also set up R to use several packages (libraries) of functions that expand its capabilities. A chunk of code like this will occur near the top of any R Markdown work.
+To start, I'll present a series of commands I run (silently) at the beginning of each chapter of these Notes. These particular commands set up the output so it will look nice as either an HTML or PDF file, and also set up R to use several packages (libraries) of functions that expand its capabilities. A chunk of code like this will occur near the top of any R Markdown work.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -261,7 +261,7 @@ I have deliberately set up this list of loaded packages to be relatively small, 
 \section*{\texorpdfstring{The \texttt{Love-boost.R} script}{The Love-boost.R script}}\label{the-love-boost.r-script}}
 \addcontentsline{toc}{section}{The \texttt{Love-boost.R} script}
 
-Starting in October, we'll make use of a few scripts I've gathered for you.
+Starting in October, we'll make use of a few scripts I've gathered for you. When necessary, I'll source in some code using the following command\ldots{}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -282,7 +282,6 @@ GGally
 gt
 psych
 modelsummary
-naniar
 visdat
 \end{verbatim}
 
@@ -511,7 +510,7 @@ Now, let's look at the other two variables of interest. Let's create a graph sho
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-8-1.pdf}
+\includegraphics{02-penguins_files/figure-latex/unnamed-chunk-4-1.pdf}
 
 Some of you may want to include a straight-line model (fit by a classical linear regression) to this plot. One way to do that in R involves the addition of a single line of code, like this:
 
@@ -524,7 +523,7 @@ Some of you may want to include a straight-line model (fit by a classical linear
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-9-1.pdf}
+\includegraphics{02-penguins_files/figure-latex/unnamed-chunk-5-1.pdf}
 
 Whenever we build a graph for ourselves, these default choices may be sufficient. But I'd like to see a prettier version if I was going to show it to someone else. So, I might use a different color for each species, and I might neaten up the theme (to get rid of the default grey background) and add a title, like this.
 
@@ -537,7 +536,7 @@ Whenever we build a graph for ourselves, these default choices may be sufficient
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-10-1.pdf}
+\includegraphics{02-penguins_files/figure-latex/unnamed-chunk-6-1.pdf}
 
 \hypertarget{six-ways-to-improve-this-graph}{%
 \section{Six Ways To ``Improve'' This Graph}\label{six-ways-to-improve-this-graph}}
@@ -577,7 +576,7 @@ Now, let's build a new graph. Here, I want to:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-11-1.pdf}
+\includegraphics{02-penguins_files/figure-latex/unnamed-chunk-7-1.pdf}
 
 \hypertarget{a-little-reflection}{%
 \section{A Little Reflection}\label{a-little-reflection}}
@@ -678,7 +677,7 @@ Warning: Removed 37 rows containing missing values
 (geom_point).
 \end{verbatim}
 
-\includegraphics{431-notes_files/figure-latex/nh_dat1_heightbyage1-fig-1.pdf}
+\includegraphics{03-nhanes_files/figure-latex/nh_dat1_heightbyage1-fig-1.pdf}
 
 We note several interesting results here.
 
@@ -813,7 +812,7 @@ Let's add Sex to the plot using color, and also adjust the y axis label to incor
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/nh_dat2_heightbyageandsex1-fig-1.pdf}
+\includegraphics{03-nhanes_files/figure-latex/nh_dat2_heightbyageandsex1-fig-1.pdf}
 
 \hypertarget{can-we-show-the-female-and-male-relationships-in-separate-panels}{%
 \subsection{Can we show the Female and Male relationships in separate panels?}\label{can-we-show-the-female-and-male-relationships-in-separate-panels}}
@@ -830,7 +829,7 @@ Sure.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/nh_dat2_heightbyageandsex2-fig-1.pdf}
+\includegraphics{03-nhanes_files/figure-latex/nh_dat2_heightbyageandsex2-fig-1.pdf}
 
 \hypertarget{can-we-add-a-smooth-curve-to-show-the-relationship-in-each-plot}{%
 \subsection{Can we add a smooth curve to show the relationship in each plot?}\label{can-we-add-a-smooth-curve-to-show-the-relationship-in-each-plot}}
@@ -849,7 +848,7 @@ Yep, and let's change the theme of the graph to remove the gray background, too.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/nh_dat2_heightbyageandsex3-fig-1.pdf}
+\includegraphics{03-nhanes_files/figure-latex/nh_dat2_heightbyageandsex3-fig-1.pdf}
 
 \hypertarget{what-if-we-want-to-assume-straight-line-relationships}{%
 \subsection{What if we want to assume straight line relationships?}\label{what-if-we-want-to-assume-straight-line-relationships}}
@@ -868,7 +867,7 @@ We could look at a linear model in the plot. Does this make sense here?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/nh_dat2_heightbyageandsex4-fig-1.pdf}
+\includegraphics{03-nhanes_files/figure-latex/nh_dat2_heightbyageandsex4-fig-1.pdf}
 
 I hope it seems clear from the graphs that a more complex relationship is going on here than just a straight line.
 
