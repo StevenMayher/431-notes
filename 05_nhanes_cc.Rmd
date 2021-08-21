@@ -2,13 +2,13 @@
 
 ## Loading in the "Complete Cases" Sample
 
-Let's begin by loading into the `nh_500cc` data frame the information from the `nh_adult500cc.Rds` file we created in Section (#nh_cc)
+Let's begin by loading into the `nh_500cc` data frame the information from the `nh_adult500cc.Rds` file we created in Section \@ref(nh_cc).
 
 ```{r}
 nh_500cc <- read_rds("data/nh_adult500cc.Rds")
 ```
 
-One obvious hurdle we'll avoid for the moment is what to do about missing data, since the `nh_500cc` data are specifically drawn from complete responses. Working with complete cases only can introduce bias to our estimates and visualizations, so it will be necessary in time to address what we should do when a complete-case analysis isn't a good choice.
+One obvious hurdle we'll avoid for the moment is what to do about missing data, since the `nh_500cc` data are specifically drawn from complete responses. Working with complete cases only can introduce bias to our estimates and visualizations, so it will be necessary in time to address what we should do when a complete-case analysis isn't a good choice. We'll return to this issue in a few chapters.
 
 ## Distribution of Heights
 

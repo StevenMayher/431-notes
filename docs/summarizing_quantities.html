@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 6 Summarizing Quantitative Variables | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</title>
+<meta name="author" content="Thomas E. Love">
+<meta name="description" content="Most numerical summaries that might be new to you are applied most appropriately to quantitative variables. The measures that will interest us relate to: the center of our distribution, the spread...">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="Chapter 6 Summarizing Quantitative Variables | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta property="og:type" content="book">
+<meta property="og:url" content="your book url like https://thomaselove.github.io/431-book/summarizing_quantities.html">
+<meta property="og:description" content="Most numerical summaries that might be new to you are applied most appropriately to quantitative variables. The measures that will interest us relate to: the center of our distribution, the spread...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 6 Summarizing Quantitative Variables | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta name="twitter:description" content="Most numerical summaries that might be new to you are applied most appropriately to quantitative variables. The measures that will interest us relate to: the center of our distribution, the spread...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Working with These Notes</a></li>
+<li><a class="" href="data-science.html"><span class="header-section-number">1</span> Data Science</a></li>
+<li class="book-part">Part A. Exploring Data</li>
+<li><a class="" href="looking-at-the-palmer-penguins.html"><span class="header-section-number">2</span> Looking at the Palmer Penguins</a></li>
+<li><a class="" href="nhanes1.html"><span class="header-section-number">3</span> NHANES: Initial Exploring</a></li>
+<li><a class="" href="data-structures-and-types-of-variables.html"><span class="header-section-number">4</span> Data Structures and Types of Variables</a></li>
+<li><a class="" href="visualizing-nhanes-complete-cases.html"><span class="header-section-number">5</span> Visualizing NHANES Complete Cases</a></li>
+<li><a class="active" href="summarizing_quantities.html"><span class="header-section-number">6</span> Summarizing Quantitative Variables</a></li>
+<li><a class="" href="summarizing-categorical-variables.html"><span class="header-section-number">7</span> Summarizing Categorical Variables</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/THOMASELOVE/431-notes">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="summarizing_quantities" class="section level1" number="6">
+<h1>
+<span class="header-section-number">6</span> Summarizing Quantitative Variables<a class="anchor" aria-label="anchor" href="#summarizing_quantities"><i class="fas fa-link"></i></a>
+</h1>
+<p>Most numerical summaries that might be new to you are applied most appropriately to quantitative variables. The measures that will interest us relate to:</p>
+<ul>
+<li>the <strong>center</strong> of our distribution,</li>
+<li>the <strong>spread</strong> of our distribution, and</li>
+<li>the <strong>shape</strong> of our distribution.</li>
+</ul>
+<p>To demonstrate key ideas in this Chapter, we will consider our sample of 750 adults ages 21-64 from NHANES 2011-12 which includes some missing values. We’ll load into the <code>nh_750</code> data frame the information from the <code>nh_adult750.Rds</code> file we created in Section <a href="data-structures-and-types-of-variables.html#newNHANES">4.2</a>.</p>
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">&lt;-</span> <span class="fu">read_rds</span><span class="op">(</span><span class="st">"data/nh_adult750.Rds"</span><span class="op">)</span></code></pre></div>
+<div id="the-summary-function-for-quantitative-data" class="section level2" number="6.1">
+<h2>
+<span class="header-section-number">6.1</span> The <code>summary</code> function for Quantitative data<a class="anchor" aria-label="anchor" href="#the-summary-function-for-quantitative-data"><i class="fas fa-link"></i></a>
+</h2>
+<p>R provides a small sampling of numerical summaries with the <code>summary</code> function, for instance.</p>
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Age</span>, <span class="va">BMI</span>, <span class="va">SBP</span>, <span class="va">DBP</span>, <span class="va">Pulse</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>      Age             BMI             SBP       
+ Min.   :21.00   Min.   :16.70   Min.   : 83.0  
+ 1st Qu.:30.00   1st Qu.:24.20   1st Qu.:108.0  
+ Median :40.00   Median :27.90   Median :118.0  
+ Mean   :40.82   Mean   :29.08   Mean   :118.8  
+ 3rd Qu.:51.00   3rd Qu.:32.10   3rd Qu.:127.0  
+ Max.   :64.00   Max.   :80.60   Max.   :209.0  
+                 NA's   :5       NA's   :33     
+      DBP             Pulse       
+ Min.   :  0.00   Min.   : 40.00  
+ 1st Qu.: 66.00   1st Qu.: 66.00  
+ Median : 73.00   Median : 72.00  
+ Mean   : 72.69   Mean   : 73.53  
+ 3rd Qu.: 80.00   3rd Qu.: 80.00  
+ Max.   :108.00   Max.   :124.00  
+ NA's   :33       NA's   :32      </code></pre>
+<p>This basic summary includes a set of five <strong>quantiles</strong><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;The quantiles (sometimes referred to as percentiles) can also be summarised with a boxplot.&lt;/p&gt;"><sup>17</sup></a>, plus the sample’s <strong>mean</strong>.</p>
+<ul>
+<li>
+<code>Min.</code> = the <strong>minimum</strong> value for each variable, so, for example, the youngest subject’s Age was 21.</li>
+<li>
+<code>1st Qu.</code> = the <strong>first quartile</strong> (25<sup>th</sup> percentile) for each variable - for example, 25% of the subjects were Age 30 or younger.</li>
+<li>
+<code>Median</code> = the <strong>median</strong> (50<sup>th</sup> percentile) - half of the subjects were Age 40 or younger.</li>
+<li>
+<code>Mean</code> = the <strong>mean</strong>, usually what one means by an <em>average</em> - the sum of the Ages divided by 750 is 40.8,</li>
+<li>
+<code>3rd Qu.</code> = the <strong>third quartile</strong> (75<sup>th</sup> percentile) - 25% of the subjects were Age 51 or older.</li>
+<li>
+<code>Max.</code> = the <strong>maximum</strong> value for each variable, so the oldest subject was Age 64.</li>
+</ul>
+<p>The summary also specifies the number of missing values for each variable. Here, we are missing 5 of the BMI values, for example.</p>
+</div>
+<div id="measuring-the-center-of-a-distribution" class="section level2" number="6.2">
+<h2>
+<span class="header-section-number">6.2</span> Measuring the Center of a Distribution<a class="anchor" aria-label="anchor" href="#measuring-the-center-of-a-distribution"><i class="fas fa-link"></i></a>
+</h2>
+<div id="the-mean-and-the-median" class="section level3" number="6.2.1">
+<h3>
+<span class="header-section-number">6.2.1</span> The Mean and The Median<a class="anchor" aria-label="anchor" href="#the-mean-and-the-median"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <strong>mean</strong> and <strong>median</strong> are the most commonly used measures of the center of a distribution for a quantitative variable. The median is the more generally useful value, as it is relevant even if the data have a shape that is not symmetric. We might also collect the <strong>sum</strong> of the observations, and the <strong>count</strong> of the number of observations, usually symbolized with <em>n</em>.</p>
+<p>For variables without missing values, like <code>Age</code>, this is pretty straightforward.</p>
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>, Mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">mean</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span>, Median <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">median</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span>, Sum <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">sum</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code># A tibble: 1 x 4
+      n  Mean Median   Sum
+  &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;
+1   750  40.8     40 30616</code></pre>
+<p>And again, the Mean is just the Sum (30616), divided by the number of non-missing values of Age (750), or 40.8213333.</p>
+<p>The Median is the middle value when the data are sorted in order. When we have an odd number of values, this is sufficient. When we have an even number, as in this case, we take the mean of the two middle values. We could sort and list all 500 Ages, if we wanted to do so.</p>
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span></code></pre></div>
+<pre><code># A tibble: 750 x 1
+     Age
+   &lt;int&gt;
+ 1    21
+ 2    21
+ 3    21
+ 4    21
+ 5    21
+ 6    21
+ 7    21
+ 8    21
+ 9    21
+10    21
+# ... with 740 more rows</code></pre>
+<p>But this data set figures we don’t want to output more than 10 observations to a table like this.</p>
+<p>If we really want to see all of the data, we can use <code><a href="https://rdrr.io/r/utils/View.html">View(nh_750)</a></code> to get a spreadsheet-style presentation, or use the <code>sort</code> command…</p>
+<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">nh_750</span><span class="op">$</span><span class="va">Age</span><span class="op">)</span></code></pre></div>
+<pre><code>  [1] 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21
+ [19] 21 21 21 21 22 22 22 22 22 22 22 22 22 22 22 22 22 22
+ [37] 22 22 22 22 22 22 22 22 23 23 23 23 23 23 23 23 23 23
+ [55] 23 23 23 23 23 23 23 23 23 23 23 23 24 24 24 24 24 24
+ [73] 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 25
+ [91] 25 25 25 25 25 25 25 25 25 25 25 25 25 26 26 26 26 26
+[109] 26 26 26 26 26 26 26 26 26 27 27 27 27 27 27 27 27 27
+[127] 27 27 27 27 28 28 28 28 28 28 28 28 28 28 28 28 28 28
+[145] 28 28 28 28 28 28 29 29 29 29 29 29 29 29 29 29 29 29
+[163] 29 29 29 29 29 29 29 29 30 30 30 30 30 30 30 30 30 30
+[181] 30 30 30 30 30 30 30 30 30 30 30 30 30 30 31 31 31 31
+[199] 31 31 31 31 31 31 31 31 31 31 31 31 31 31 31 32 32 32
+[217] 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32
+[235] 32 32 32 32 32 32 32 33 33 33 33 33 33 33 33 33 33 33
+[253] 33 33 33 33 33 33 33 33 33 33 33 33 33 34 34 34 34 34
+[271] 34 34 34 34 34 34 34 34 34 35 35 35 35 35 35 35 35 35
+[289] 35 35 36 36 36 36 36 36 36 36 36 36 36 36 36 36 36 36
+[307] 36 36 36 36 36 36 36 36 36 36 37 37 37 37 37 37 37 37
+[325] 37 37 37 37 37 37 37 37 37 37 38 38 38 38 38 38 38 38
+[343] 38 38 38 38 38 38 38 38 39 39 39 39 39 39 39 39 39 39
+[361] 39 39 39 39 39 39 39 39 39 40 40 40 40 40 40 40 40 40
+[379] 40 40 40 40 40 40 40 40 40 41 41 41 41 41 41 41 41 41
+[397] 41 41 41 41 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+[415] 42 42 42 42 42 43 43 43 43 43 43 43 43 43 43 43 43 43
+[433] 43 43 43 43 43 44 44 44 44 44 44 44 44 44 44 44 44 44
+[451] 44 44 44 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45
+[469] 45 45 46 46 46 46 46 46 46 46 46 46 46 46 46 46 47 47
+[487] 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 48 48 48
+[505] 48 48 48 48 48 48 48 48 49 49 49 49 49 49 49 49 49 49
+[523] 49 49 49 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50
+[541] 50 50 50 50 50 50 50 50 50 50 50 51 51 51 51 51 51 51
+[559] 51 51 51 51 51 51 51 51 51 51 51 51 51 52 52 52 52 52
+[577] 52 52 52 52 52 52 52 53 53 53 53 53 53 53 53 53 53 53
+[595] 53 53 53 53 54 54 54 54 54 54 54 54 54 54 54 54 54 54
+[613] 54 54 55 55 55 55 55 55 55 55 55 55 56 56 56 56 56 56
+[631] 56 56 56 56 56 56 56 56 56 56 56 56 56 57 57 57 57 57
+[649] 57 57 57 57 58 58 58 58 58 58 58 58 58 58 58 58 58 58
+[667] 58 58 58 58 59 59 59 59 59 59 59 59 59 59 59 59 59 60
+[685] 60 60 60 60 60 60 60 60 60 60 60 60 61 61 61 61 61 61
+[703] 61 61 61 61 61 61 61 61 62 62 62 62 62 62 62 62 62 62
+[721] 62 62 62 63 63 63 63 63 63 63 63 63 63 63 63 63 64 64
+[739] 64 64 64 64 64 64 64 64 64 64 64 64</code></pre>
+<p>Again, to find the median, we would take the mean of the middle two observations in this sorted data set. That would be the 250<sup>th</sup> and 251<sup>st</sup> largest Ages.</p>
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">nh_750</span><span class="op">$</span><span class="va">Age</span><span class="op">)</span><span class="op">[</span><span class="fl">250</span><span class="op">:</span><span class="fl">251</span><span class="op">]</span></code></pre></div>
+<pre><code>[1] 33 33</code></pre>
+</div>
+<div id="dealing-with-missingness" class="section level3" number="6.2.2">
+<h3>
+<span class="header-section-number">6.2.2</span> Dealing with Missingness<a class="anchor" aria-label="anchor" href="#dealing-with-missingness"><i class="fas fa-link"></i></a>
+</h3>
+<p>When calculating a mean, you may be tempted to try something like this…</p>
+<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">mean</a></span><span class="op">(</span><span class="va">Pulse</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">median</a></span><span class="op">(</span><span class="va">Pulse</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code># A tibble: 1 x 2
+  `mean(Pulse)` `median(Pulse)`
+          &lt;dbl&gt;           &lt;int&gt;
+1            NA              NA</code></pre>
+<p>This fails because we have some missing values in the Pulse data. We can address this by either omitting the data with missing values before we run the summarise function, or tell the mean and median summary functions to remove missing values<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;We could also use &lt;code&gt;!is.na&lt;/code&gt; in place of &lt;code&gt;complete.cases&lt;/code&gt; to accomplish the same thing.&lt;/p&gt;"><sup>18</sup></a>.</p>
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">Pulse</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">mean</a></span><span class="op">(</span><span class="va">Pulse</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">median</a></span><span class="op">(</span><span class="va">Pulse</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code># A tibble: 1 x 3
+  count `mean(Pulse)` `median(Pulse)`
+  &lt;int&gt;         &lt;dbl&gt;           &lt;dbl&gt;
+1   718          73.5              72</code></pre>
+<p>Or, we could tell the summary functions themselves to remove NA values.</p>
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">mean</a></span><span class="op">(</span><span class="va">Pulse</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">median</a></span><span class="op">(</span><span class="va">Pulse</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code># A tibble: 1 x 2
+  `mean(Pulse, na.rm = TRUE)` `median(Pulse, na.rm = TRUE)`
+                        &lt;dbl&gt;                         &lt;dbl&gt;
+1                        73.5                            72</code></pre>
+<p>While we eventually discuss the importance of <strong>imputation</strong> when dealing with missing data, this doesn’t apply to providing descriptive summaries of actual, observed values.</p>
+</div>
+<div id="the-mode-of-a-quantitative-variable" class="section level3" number="6.2.3">
+<h3>
+<span class="header-section-number">6.2.3</span> The Mode of a Quantitative Variable<a class="anchor" aria-label="anchor" href="#the-mode-of-a-quantitative-variable"><i class="fas fa-link"></i></a>
+</h3>
+<p>One other less common measure of the center of a quantitative variable’s distribution is its most frequently observed value, referred to as the <strong>mode</strong>. This measure is only appropriate for discrete variables, be they quantitative or categorical. To find the mode, we usually tabulate the data, and then sort by the counts of the numbers of observations.</p>
+<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
+<pre><code># A tibble: 44 x 2
+     Age count
+   &lt;int&gt; &lt;int&gt;
+ 1    32    28
+ 2    36    26
+ 3    50    26
+ 4    30    24
+ 5    33    24
+ 6    24    23
+ 7    21    22
+ 8    22    22
+ 9    23    22
+10    28    20
+# ... with 34 more rows</code></pre>
+<p>Note the use of three different “verbs” in our function there - for more explanation of this strategy, visit <span class="citation"><a href="references.html#ref-R4DS" role="doc-biblioref">Grolemund and Wickham</a>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;a href="references.html#ref-R4DS" role="doc-biblioref"&gt;&lt;em&gt;R for Data Science&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;'><sup>19</sup></a></span></p>
+<p>As an alternative, the <code>modeest</code> package’s <code>mfv</code> function calculates the sample mode (or most frequent value).<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;See the documentation for the &lt;code&gt;modeest&lt;/code&gt; package’s &lt;code&gt;mlv&lt;/code&gt; function to look at other definitions of the mode.&lt;/p&gt;"><sup>20</sup></a></p>
+</div>
+</div>
+<div id="measuring-the-spread-of-a-distribution" class="section level2" number="6.3">
+<h2>
+<span class="header-section-number">6.3</span> Measuring the Spread of a Distribution<a class="anchor" aria-label="anchor" href="#measuring-the-spread-of-a-distribution"><i class="fas fa-link"></i></a>
+</h2>
+<p>Statistics is all about variation, so spread or dispersion is an important fundamental concept in statistics. Measures of spread like the inter-quartile range and range (maximum - minimum) can help us understand and compare data sets. If the values in the data are close to the center, the spread will be small. If many of the values in the data are scattered far away from the center, the spread will be large.</p>
+<div id="rangeandiqr" class="section level3" number="6.3.1">
+<h3>
+<span class="header-section-number">6.3.1</span> The Range and the Interquartile Range (IQR)<a class="anchor" aria-label="anchor" href="#rangeandiqr"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <strong>range</strong> of a quantitative variable is sometimes interpreted as the difference between the maximum and the minimum, even though R presents the actual minimum and maximum values when you ask for a range…</p>
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span> 
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+    <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">range</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>[1] 21 64</code></pre>
+<p>And, for a variable with missing values, we can use…</p>
+<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span> 
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">BMI</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+    <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">range</a></span><span class="op">(</span><span class="va">.</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<pre><code>[1] 16.7 80.6</code></pre>
+<p>A more interesting and useful statistic is the <strong>inter-quartile range</strong>, or IQR, which is the range of the middle half of the distribution, calculated by subtracting the 25<sup>th</sup> percentile value from the 75<sup>th</sup> percentile value.</p>
+<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">IQR</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">quantile</a></span><span class="op">(</span><span class="va">Age</span>, <span class="fl">0.25</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">quantile</a></span><span class="op">(</span><span class="va">Age</span>, <span class="fl">0.75</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code># A tibble: 1 x 3
+  `IQR(Age)` `quantile(Age, 0.25)` `quantile(Age, 0.75)`
+       &lt;dbl&gt;                 &lt;dbl&gt;                 &lt;dbl&gt;
+1         21                    30                    51</code></pre>
+<p>We can calculate the range and IQR nicely from the summary information on quantiles, of course:</p>
+<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Age</span>, <span class="va">BMI</span>, <span class="va">SBP</span>, <span class="va">DBP</span>, <span class="va">Pulse</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>      Age             BMI             SBP       
+ Min.   :21.00   Min.   :16.70   Min.   : 83.0  
+ 1st Qu.:30.00   1st Qu.:24.20   1st Qu.:108.0  
+ Median :40.00   Median :27.90   Median :118.0  
+ Mean   :40.82   Mean   :29.08   Mean   :118.8  
+ 3rd Qu.:51.00   3rd Qu.:32.10   3rd Qu.:127.0  
+ Max.   :64.00   Max.   :80.60   Max.   :209.0  
+                 NA's   :5       NA's   :33     
+      DBP             Pulse       
+ Min.   :  0.00   Min.   : 40.00  
+ 1st Qu.: 66.00   1st Qu.: 66.00  
+ Median : 73.00   Median : 72.00  
+ Mean   : 72.69   Mean   : 73.53  
+ 3rd Qu.: 80.00   3rd Qu.: 80.00  
+ Max.   :108.00   Max.   :124.00  
+ NA's   :33       NA's   :32      </code></pre>
+</div>
+<div id="the-variance-and-the-standard-deviation" class="section level3" number="6.3.2">
+<h3>
+<span class="header-section-number">6.3.2</span> The Variance and the Standard Deviation<a class="anchor" aria-label="anchor" href="#the-variance-and-the-standard-deviation"><i class="fas fa-link"></i></a>
+</h3>
+<p>The IQR is always a reasonable summary of spread, just as the median is always a reasonable summary of the center of a distribution. Yet, most people are inclined to summarise a batch of data using two numbers: the <strong>mean</strong> and the <strong>standard deviation</strong>. This is really only a sensible thing to do if you are willing to assume the data follow a Normal distribution: a bell-shaped, symmetric distribution without substantial outliers.</p>
+<p>But <strong>most data do not (even approximately) follow a Normal distribution</strong>. Summarizing by the median and quartiles (25th and 75th percentiles) is much more robust, explaining R’s emphasis on them.</p>
+</div>
+<div id="obtaining-the-variance-and-standard-deviation-in-r" class="section level3" number="6.3.3">
+<h3>
+<span class="header-section-number">6.3.3</span> Obtaining the Variance and Standard Deviation in R<a class="anchor" aria-label="anchor" href="#obtaining-the-variance-and-standard-deviation-in-r"><i class="fas fa-link"></i></a>
+</h3>
+<p>Here are the variances of the quantitative variables in the <code>nh_750</code> data. Note the need to include <code>na.rm = TRUE</code> to deal with the missing values in some variables.</p>
+<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Age</span>, <span class="va">BMI</span>, <span class="va">SBP</span>, <span class="va">DBP</span>, <span class="va">Pulse</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise_all.html">summarise_all</a></span><span class="op">(</span><span class="va">var</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<pre><code># A tibble: 1 x 5
+    Age   BMI   SBP   DBP Pulse
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1  157.  52.4  229.  128.  136.</code></pre>
+<p>And here are the standard deviations of those same variables.</p>
+<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Age</span>, <span class="va">BMI</span>, <span class="va">SBP</span>, <span class="va">DBP</span>, <span class="va">Pulse</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise_all.html">summarise_all</a></span><span class="op">(</span><span class="va">sd</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<pre><code># A tibble: 1 x 5
+    Age   BMI   SBP   DBP Pulse
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1  12.5  7.24  15.1  11.3  11.6</code></pre>
+</div>
+<div id="defining-the-variance-and-standard-deviation" class="section level3" number="6.3.4">
+<h3>
+<span class="header-section-number">6.3.4</span> Defining the Variance and Standard Deviation<a class="anchor" aria-label="anchor" href="#defining-the-variance-and-standard-deviation"><i class="fas fa-link"></i></a>
+</h3>
+<p><span class="citation"><a href="references.html#ref-BockVD" role="doc-biblioref">Bock, Velleman, and De Veaux</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;a href="references.html#ref-BockVD" role="doc-biblioref"&gt;&lt;em&gt;Stats&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;'><sup>21</sup></a></span> have lots of useful thoughts here, which are lightly edited here.</p>
+<p>In thinking about spread, we might consider how far each data value is from the mean. Such a difference is called a <em>deviation</em>. We could just average the deviations, but the positive and negative differences always cancel out, leaving an average deviation of zero, so that’s not helpful. Instead, we <em>square</em> each deviation to obtain non-negative values, and to emphasize larger differences. When we add up these squared deviations and find their mean (almost), this yields the <strong>variance</strong>.</p>
+<p><span class="math display">\[
+\mbox{Variance} = s^2 = \frac{\Sigma (y - \bar{y})^2}{n-1}
+\]</span></p>
+<p>Why almost? It would be the mean of the squared deviations only if we divided the sum by <span class="math inline">\(n\)</span>, but instead we divide by <span class="math inline">\(n-1\)</span> because doing so produces an estimate of the true (population) variance that is <em>unbiased</em><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;When we divide by n-1 as we calculate the sample variance, the average of the sample variances for all possible samples is equal to the population variance. If we instead divided by n, the average sample variance across all possible samples would be a little smaller than the population variance.&lt;/p&gt;"><sup>22</sup></a>. If you’re looking for a more intuitive explanation, <a href="http://stats.stackexchange.com/questions/3931/intuitive-explanation-for-dividing-by-n-1-when-calculating-standard-deviation">this Stack Exchange link</a> awaits your attention.</p>
+<ul>
+<li>To return to the original units of measurement, we take the square root of <span class="math inline">\(s^2\)</span>, and instead work with <span class="math inline">\(s\)</span>, the <strong>standard deviation</strong>, also abbreviated SD.</li>
+</ul>
+<p><span class="math display">\[
+\mbox{Standard Deviation} = s = \sqrt{\frac{\Sigma (y - \bar{y})^2}{n-1}}
+\]</span></p>
+</div>
+<div id="interpreting-the-sd-when-the-data-are-normally-distributed" class="section level3" number="6.3.5">
+<h3>
+<span class="header-section-number">6.3.5</span> Interpreting the SD when the data are Normally distributed<a class="anchor" aria-label="anchor" href="#interpreting-the-sd-when-the-data-are-normally-distributed"><i class="fas fa-link"></i></a>
+</h3>
+<p>For a set of measurements that follow a Normal distribution, the interval:</p>
+<ul>
+<li>Mean <span class="math inline">\(\pm\)</span> Standard Deviation contains approximately 68% of the measurements;</li>
+<li>Mean <span class="math inline">\(\pm\)</span> 2(Standard Deviation) contains approximately 95% of the measurements;</li>
+<li>Mean <span class="math inline">\(\pm\)</span> 3(Standard Deviation) contains approximately all (99.7%) of the measurements.</li>
+</ul>
+<p>We often refer to the population or process mean of a distribution with <span class="math inline">\(\mu\)</span> and the standard deviation with <span class="math inline">\(\sigma\)</span>, leading to the Figure below.</p>
+<div class="figure">
+<img src="figures/Empirical_Rule.PNG" alt="The Normal Distribution and the Empirical Rule" width="90%"><p class="caption">
+(#fig:c6_Emp_Rule)The Normal Distribution and the Empirical Rule
+</p>
+</div>
+<p>But if the data are not from an approximately Normal distribution, then this Empirical Rule is less helpful.</p>
+</div>
+<div id="chebyshevs-inequality-one-interpretation-of-the-standard-deviation" class="section level3" number="6.3.6">
+<h3>
+<span class="header-section-number">6.3.6</span> Chebyshev’s Inequality: One Interpretation of the Standard Deviation<a class="anchor" aria-label="anchor" href="#chebyshevs-inequality-one-interpretation-of-the-standard-deviation"><i class="fas fa-link"></i></a>
+</h3>
+<p>Chebyshev’s Inequality tells us that for any distribution, regardless of its relationship to a Normal distribution, no more than 1/k<sup>2</sup> of the distribution’s values can lie more than k standard deviations from the mean. This implies, for instance, that for <strong>any</strong> distribution, at least 75% of the values must lie within two standard deviations of the mean, and at least 89% must lie within three standard deviations of the mean.</p>
+<p>Again, most data sets do not follow a Normal distribution. We’ll return to this notion soon. But first, let’s try to draw some pictures that let us get a better understanding of the distribution of our data.</p>
+</div>
+</div>
+<div id="measuring-the-shape-of-a-distribution" class="section level2" number="6.4">
+<h2>
+<span class="header-section-number">6.4</span> Measuring the Shape of a Distribution<a class="anchor" aria-label="anchor" href="#measuring-the-shape-of-a-distribution"><i class="fas fa-link"></i></a>
+</h2>
+<p>When considering the shape of a distribution, one is often interested in three key points.</p>
+<ul>
+<li>The number of modes in the distribution, which I always assess through plotting the data.</li>
+<li>The <strong>skewness</strong>, or symmetry that is present, which I typically assess by looking at a plot of the distribution of the data, but if required to, will summarise with a non-parametric measure of <strong>skewness</strong>.</li>
+<li>The <strong>kurtosis</strong>, or heavy-tailedness (outlier-proneness) that is present, usually in comparison to a Normal distribution. Again, this is something I nearly inevitably assess graphically, but there are measures.</li>
+</ul>
+<p>A Normal distribution has a single mode, is symmetric and, naturally, is neither heavy-tailed nor light-tailed as compared to a Normal distribution (we call this mesokurtic).</p>
+<div id="multimodal-vs.-unimodal-distributions" class="section level3" number="6.4.1">
+<h3>
+<span class="header-section-number">6.4.1</span> Multimodal vs. Unimodal distributions<a class="anchor" aria-label="anchor" href="#multimodal-vs.-unimodal-distributions"><i class="fas fa-link"></i></a>
+</h3>
+<p>A unimodal distribution, on some level, is straightforward. It is a distribution with a single mode, or “peak” in the distribution. Such a distribution may be skewed or symmetric, light-tailed or heavy-tailed. We usually describe as multimodal distributions like the two on the right below, which have multiple local maxima, even though they have just a single global maximum peak.</p>
+<div class="figure">
+<img src="figures/modality.PNG" alt="Unimodal and Multimodal Sketches" width="90%"><p class="caption">
+(#fig:c6_modality-fig)Unimodal and Multimodal Sketches
+</p>
+</div>
+<p>Truly multimodal distributions are usually described that way in terms of shape. For unimodal distributions, skewness and kurtosis become useful ideas.</p>
+</div>
+<div id="skew" class="section level3" number="6.4.2">
+<h3>
+<span class="header-section-number">6.4.2</span> Skew<a class="anchor" aria-label="anchor" href="#skew"><i class="fas fa-link"></i></a>
+</h3>
+<p>Whether or not a distribution is approximately symmetric is an important consideration in describing its shape. Graphical assessments are always most useful in this setting, particularly for unimodal data. My favorite measure of skew, or skewness if the data have a single mode, is:</p>
+<p><span class="math display">\[
+skew_1 = \frac{\mbox{mean} - \mbox{median}}{\mbox{standard deviation}}
+\]</span></p>
+<ul>
+<li>Symmetric distributions generally show values of <span class="math inline">\(skew_1\)</span> near zero. If the distribution is actually symmetric, the mean should be equal to the median.</li>
+<li>Distributions with <span class="math inline">\(skew_1\)</span> values above 0.2 in absolute value generally indicate meaningful skew.</li>
+<li>Positive skew (mean &gt; median if the data are unimodal) is also referred to as <em>right skew</em>.</li>
+<li>Negative skew (mean &lt; median if the data are unimodal) is referred to as <em>left skew</em>.</li>
+</ul>
+<div class="figure">
+<img src="figures/negandposskew.png" alt="Negative (Left) Skew and Positive (Right) Skew" width="90%"><p class="caption">
+(#fig:c6_negandposskew-fig)Negative (Left) Skew and Positive (Right) Skew
+</p>
+</div>
+</div>
+<div id="kurtosis" class="section level3" number="6.4.3">
+<h3>
+<span class="header-section-number">6.4.3</span> Kurtosis<a class="anchor" aria-label="anchor" href="#kurtosis"><i class="fas fa-link"></i></a>
+</h3>
+<p>When we have a unimodal distribution that is symmetric, we will often be interested in the behavior of the tails of the distribution, as compared to a Normal distribution with the same mean and standard deviation. High values of kurtosis measures (and there are several) indicate data which has extreme outliers, or is heavy-tailed.</p>
+<ul>
+<li>A mesokurtic distribution has similar tail behavior to what we would expect from a Normal distribution.</li>
+<li>A leptokurtic distribution is a thinner, more slender distribution, with heavier tails than we’d expect from a Normal distribution. One example is the t distribution.</li>
+<li>A platykurtic distribution is a broader, flatter distribution, with thinner tails than we’d expect from a Normal distribution. One example is a uniform distribution.</li>
+</ul>
+<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">431</span><span class="op">)</span>
+<span class="va">sims_kurt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>meso <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">300</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
+                    lepto <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">rt</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">300</span>, df <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,
+                    platy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">300</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, max <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">sims_kurt</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">meso</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">stat</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span><span class="op">)</span>, 
+                 bins <span class="op">=</span> <span class="fl">25</span>, fill <span class="op">=</span> <span class="st">"royalblue"</span>, col <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">stat_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="va">dnorm</span>, 
+                args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">mean</a></span><span class="op">(</span><span class="va">sims_kurt</span><span class="op">$</span><span class="va">meso</span><span class="op">)</span>, 
+                            sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">sd</a></span><span class="op">(</span><span class="va">sims_kurt</span><span class="op">$</span><span class="va">meso</span><span class="op">)</span><span class="op">)</span>,
+                col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Normal (mesokurtic)"</span><span class="op">)</span>
+
+<span class="va">p1a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">sims_kurt</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">meso</span>, y <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"royalblue"</span>, outlier.color <span class="op">=</span> <span class="st">"royalblue"</span>, width <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span>
+
+<span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">sims_kurt</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lepto</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">stat</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span><span class="op">)</span>, 
+                 bins <span class="op">=</span> <span class="fl">25</span>, fill <span class="op">=</span> <span class="st">"tomato"</span>, col <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">stat_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="va">dnorm</span>, 
+                args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">mean</a></span><span class="op">(</span><span class="va">sims_kurt</span><span class="op">$</span><span class="va">lepto</span><span class="op">)</span>, 
+                            sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">sd</a></span><span class="op">(</span><span class="va">sims_kurt</span><span class="op">$</span><span class="va">lepto</span><span class="op">)</span><span class="op">)</span>,
+                col <span class="op">=</span> <span class="st">"royalblue"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"t (leptokurtic)"</span><span class="op">)</span>
+
+<span class="va">p2a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">sims_kurt</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lepto</span>, y <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"tomato"</span>, outlier.color <span class="op">=</span> <span class="st">"tomato"</span>, width <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">""</span>, x <span class="op">=</span> <span class="st">"t (slender with heavy tails)"</span><span class="op">)</span>
+
+<span class="va">p3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">sims_kurt</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">platy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">stat</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span><span class="op">)</span>, 
+                 bins <span class="op">=</span> <span class="fl">25</span>, fill <span class="op">=</span> <span class="st">"yellow"</span>, col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">stat_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="va">dnorm</span>, 
+                args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">mean</a></span><span class="op">(</span><span class="va">sims_kurt</span><span class="op">$</span><span class="va">platy</span><span class="op">)</span>, 
+                            sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">sd</a></span><span class="op">(</span><span class="va">sims_kurt</span><span class="op">$</span><span class="va">platy</span><span class="op">)</span><span class="op">)</span>,
+                col <span class="op">=</span> <span class="st">"royalblue"</span>, lwd <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Uniform (platykurtic)"</span><span class="op">)</span>
+
+<span class="va">p3a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">sims_kurt</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">platy</span>, y <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"yellow"</span>, width <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">""</span>, x <span class="op">=</span> <span class="st">"Uniform (broad with thin tails)"</span><span class="op">)</span>
+
+
+<span class="op">(</span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">p1a</span> <span class="op">+</span> <span class="va">p2a</span> <span class="op">+</span> <span class="va">p3a</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>Warning: Removed 2 rows containing missing values
+(geom_bar).</code></pre>
+<div class="inline-figure"><img src="06-summarizing_quantities_files/figure-html/c6_sims_kurtosis-1.png" width="672"></div>
+<p>Graphical tools are in most cases the best way to identify issues related to kurtosis.</p>
+</div>
+</div>
+<div id="numerical-summaries-for-quantitative-variables" class="section level2" number="6.5">
+<h2>
+<span class="header-section-number">6.5</span> Numerical Summaries for Quantitative Variables<a class="anchor" aria-label="anchor" href="#numerical-summaries-for-quantitative-variables"><i class="fas fa-link"></i></a>
+</h2>
+<div id="favstats-in-the-mosaic-package" class="section level3" number="6.5.1">
+<h3>
+<span class="header-section-number">6.5.1</span> <code>favstats</code> in the <code>mosaic</code> package<a class="anchor" aria-label="anchor" href="#favstats-in-the-mosaic-package"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <code>favstats</code> function adds the standard deviation, and counts of overall and missing observations to our usual <code>summary</code> for a continuous variable. Let’s look at systolic blood pressure, because we haven’t yet.</p>
+<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">SBP</span>, data <span class="op">=</span> <span class="va">nh_750</span><span class="op">)</span></code></pre></div>
+<pre><code> min  Q1 median  Q3 max     mean       sd   n missing
+  83 108    118 127 209 118.7908 15.14329 717      33</code></pre>
+<p>We could, of course, duplicate these results with a rather lengthy set of <code>summarise</code> pieces…</p>
+<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">SBP</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">min</a></span><span class="op">(</span><span class="va">SBP</span><span class="op">)</span>, Q1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">quantile</a></span><span class="op">(</span><span class="va">SBP</span>, <span class="fl">0.25</span><span class="op">)</span>, median <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">median</a></span><span class="op">(</span><span class="va">SBP</span><span class="op">)</span>, 
+              Q3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">quantile</a></span><span class="op">(</span><span class="va">SBP</span>, <span class="fl">0.75</span><span class="op">)</span>, max <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">max</a></span><span class="op">(</span><span class="va">SBP</span><span class="op">)</span>,  
+              mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">mean</a></span><span class="op">(</span><span class="va">SBP</span><span class="op">)</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">sd</a></span><span class="op">(</span><span class="va">SBP</span><span class="op">)</span>, n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>, missing <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">SBP</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code># A tibble: 1 x 9
+    min    Q1 median    Q3   max  mean    sd     n missing
+  &lt;int&gt; &lt;dbl&gt;  &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;   &lt;int&gt;
+1    83   108    118   127   209  119.  15.1   717       0</code></pre>
+<p>The somewhat unusual structure of <code>favstats</code> (complete with an easy to forget <code><a href="https://rdrr.io/r/base/tilde.html">~</a></code>) is actually helpful. It allows you to look at some interesting grouping approaches, like this:</p>
+<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">Education</span>, data <span class="op">=</span> <span class="va">nh_750</span><span class="op">)</span></code></pre></div>
+<pre><code>       Education min     Q1 median     Q3 max     mean
+1      8th Grade  96 110.25  119.5 129.75 167 122.4565
+2 9 - 11th Grade  85 107.75  116.0 127.00 191 118.8026
+3    High School  84 111.50  120.5 129.00 209 121.0882
+4   Some College  85 108.00  117.0 126.00 186 118.6293
+5   College Grad  83 107.00  117.0 125.00 171 116.8326
+        sd   n missing
+1 16.34993  46       4
+2 15.79453  76       0
+3 16.52853 136       7
+4 14.32736 232       9
+5 14.41202 227      13</code></pre>
+<p>Of course, we could accomplish the same comparison with <code>dplyr</code> commands, too, but the <code>favstats</code> approach has much to offer.</p>
+<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">SBP</span>, <span class="va">Education</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Education</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">min</a></span><span class="op">(</span><span class="va">SBP</span><span class="op">)</span>, Q1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">quantile</a></span><span class="op">(</span><span class="va">SBP</span>, <span class="fl">0.25</span><span class="op">)</span>, median <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">median</a></span><span class="op">(</span><span class="va">SBP</span><span class="op">)</span>, 
+              Q3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">quantile</a></span><span class="op">(</span><span class="va">SBP</span>, <span class="fl">0.75</span><span class="op">)</span>, max <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">max</a></span><span class="op">(</span><span class="va">SBP</span><span class="op">)</span>,  
+              mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">mean</a></span><span class="op">(</span><span class="va">SBP</span><span class="op">)</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">sd</a></span><span class="op">(</span><span class="va">SBP</span><span class="op">)</span>, n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>, missing <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">SBP</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code># A tibble: 5 x 10
+  Education   min    Q1 median    Q3   max  mean    sd     n
+  &lt;fct&gt;     &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+1 8th Grade    96  110.   120.  130.   167  122.  16.3    46
+2 9 - 11th~    85  108.   116   127    191  119.  15.8    76
+3 High Sch~    84  112.   120.  129    209  121.  16.5   136
+4 Some Col~    85  108    117   126    186  119.  14.3   232
+5 College ~    83  107    117   125    171  117.  14.4   227
+# ... with 1 more variable: missing &lt;int&gt;</code></pre>
+</div>
+<div id="describe-in-the-psych-package" class="section level3" number="6.5.2">
+<h3>
+<span class="header-section-number">6.5.2</span> <code>describe</code> in the <code>psych</code> package<a class="anchor" aria-label="anchor" href="#describe-in-the-psych-package"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <code>psych</code> package has a more detailed list of numerical summaries for quantitative variables that lets us look at a group of observations at once.</p>
+<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="va">nh_750</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Age</span>, <span class="va">BMI</span>, <span class="va">SBP</span>, <span class="va">DBP</span>, <span class="va">Pulse</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>      vars   n   mean    sd median trimmed   mad  min   max
+Age      1 750  40.82 12.54   40.0   40.53 14.83 21.0  64.0
+BMI      2 745  29.08  7.24   27.9   28.31  5.93 16.7  80.6
+SBP      3 717 118.79 15.14  118.0  117.88 13.34 83.0 209.0
+DBP      4 717  72.69 11.34   73.0   72.65 10.38  0.0 108.0
+Pulse    5 718  73.53 11.65   72.0   73.11 11.86 40.0 124.0
+      range  skew kurtosis   se
+Age    43.0  0.16    -1.15 0.46
+BMI    63.9  1.72     6.16 0.27
+SBP   126.0  0.96     3.10 0.57
+DBP   108.0 -0.28     2.59 0.42
+Pulse  84.0  0.48     0.73 0.43</code></pre>
+<p>The additional statistics presented here are:</p>
+<ul>
+<li>
+<code>trimmed</code> = a trimmed mean (by default in this function, this removes the top and bottom 10% from the data, then computes the mean of the remaining values - the middle 80% of the full data set.)</li>
+<li>
+<code>mad</code> = the median absolute deviation (from the median), which can be used in a manner similar to the standard deviation or IQR to measure spread.
+<ul>
+<li>If the data are <span class="math inline">\(Y_1, Y_2, ..., Y_n\)</span>, then the <code>mad</code> is defined as <span class="math inline">\(median(|Y_i - median(Y_i)|)\)</span>.</li>
+<li>To find the <code>mad</code> for a set of numbers, find the median, subtract the median from each value and find the absolute value of that difference, and then find the median of those absolute differences.</li>
+<li>For non-normal data with a skewed shape but tails well approximated by the Normal, the <code>mad</code> is likely to be a better (more robust) estimate of the spread than is the standard deviation.</li>
+</ul>
+</li>
+<li>a measure of <code>skew</code>, which refers to how much asymmetry is present in the shape of the distribution. The measure is not the same as the <em>nonparametric skew</em> measure that we will usually prefer. The [Wikipedia page on skewness][<a href="https://en.wikipedia.org/wiki/Skewness" class="uri">https://en.wikipedia.org/wiki/Skewness</a>] is very detailed.</li>
+<li>a measure of excess <code>kurtosis</code>, which refers to how outlier-prone, or heavy-tailed the shape of the distribution is, as compared to a Normal distribution.</li>
+<li>
+<code>se</code> = the standard error of the sample mean, equal to the sample sd divided by the square root of the sample size.</li>
+</ul>
+</div>
+<div id="the-hmisc-packages-version-of-describe" class="section level3" number="6.5.3">
+<h3>
+<span class="header-section-number">6.5.3</span> The <code>Hmisc</code> package’s version of <code>describe</code><a class="anchor" aria-label="anchor" href="#the-hmisc-packages-version-of-describe"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">Hmisc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/describe.html">describe</a></span><span class="op">(</span><span class="va">nh_750</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Age</span>, <span class="va">BMI</span>, <span class="va">SBP</span>, <span class="va">DBP</span>, <span class="va">Pulse</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>nh_750 %&gt;% select(Age, BMI, SBP, DBP, Pulse) 
+
+ 5  Variables      750  Observations
+------------------------------------------------------------
+Age 
+       n  missing distinct     Info     Mean      Gmd 
+     750        0       44    0.999    40.82    14.46 
+     .05      .10      .25      .50      .75      .90 
+      22       24       30       40       51       59 
+     .95 
+      62 
+
+lowest : 21 22 23 24 25, highest: 60 61 62 63 64
+------------------------------------------------------------
+BMI 
+       n  missing distinct     Info     Mean      Gmd 
+     745        5      250        1    29.08    7.538 
+     .05      .10      .25      .50      .75      .90 
+   20.22    21.30    24.20    27.90    32.10    37.60 
+     .95 
+   41.28 
+
+lowest : 16.7 17.6 17.8 17.9 18.0, highest: 59.1 62.8 63.3 69.0 80.6
+------------------------------------------------------------
+SBP 
+       n  missing distinct     Info     Mean      Gmd 
+     717       33       81    0.999    118.8    16.36 
+     .05      .10      .25      .50      .75      .90 
+    98.0    102.0    108.0    118.0    127.0    137.0 
+     .95 
+   144.2 
+
+lowest :  83  84  85  86  89, highest: 171 179 186 191 209
+------------------------------------------------------------
+DBP 
+       n  missing distinct     Info     Mean      Gmd 
+     717       33       66    0.999    72.69    12.43 
+     .05      .10      .25      .50      .75      .90 
+      55       59       66       73       80       86 
+     .95 
+      91 
+
+lowest :   0  25  41  42  44, highest: 104 105 106 107 108
+------------------------------------------------------------
+Pulse 
+       n  missing distinct     Info     Mean      Gmd 
+     718       32       37    0.997    73.53    12.95 
+     .05      .10      .25      .50      .75      .90 
+      56       60       66       72       80       88 
+     .95 
+      94 
+
+lowest :  40  44  46  48  50, highest: 108 112 114 118 124
+------------------------------------------------------------</code></pre>
+<p>The <code>Hmisc</code> package’s version of <code>describe</code> for a distribution of data presents three new ideas, in addition to a more comprehensive list of quartiles (the 5<sup>th</sup>, 10<sup>th</sup>, 25<sup>th</sup>, 50<sup>th</sup>, 75<sup>th</sup>, 90<sup>th</sup> and 95<sup>th</sup> are shown) and the lowest and highest few observations. These are:</p>
+<ul>
+<li>
+<code>distinct</code> - the number of different values observed in the data.</li>
+<li>
+<code>Info</code> - a measure of how “continuous” the variable is, related to how many “ties” there are in the data, with Info taking a higher value (closer to its maximum of one) if the data are more continuous.</li>
+<li>
+<code>Gmd</code> - the Gini mean difference - a robust measure of spread that is calculated as the mean absolute difference between any pairs of observations. Larger values of Gmd indicate more spread-out distributions. (Gini is pronounced as either “Genie” or “Ginny.”)</li>
+</ul>
+</div>
+<div id="other-options" class="section level3" number="6.5.4">
+<h3>
+<span class="header-section-number">6.5.4</span> Other options<a class="anchor" aria-label="anchor" href="#other-options"><i class="fas fa-link"></i></a>
+</h3>
+<p>The package <a href="https://cran.r-project.org/web/packages/summarytools/vignettes/Introduction.html"><code>summarytools</code> has a function called <code>dfSummary</code></a> which I like and Dominic Comtois has also published <a href="https://cran.r-project.org/web/packages/summarytools/vignettes/Recommendations-rmarkdown.html">Recommendations for Using summarytools with R Markdown</a>. Note that this isn’t really for Word documents.</p>
+<p>The <a href="http://naniar.njtierney.com/"><code>naniar</code> package</a> is helpful for wrangling and visualizing missing values, and checking imputations.</p>
+<p><a href="https://boxuancui.github.io/DataExplorer/"><code>DataExplorer</code></a> can be used for more automated exploratory data analyses (and some people also like <a href="https://github.com/ropensci/skimr"><code>skimr</code></a>) and <a href="http://visdat.njtierney.com/"><code>visdat</code></a>, as well.</p>
+<p>The <code>df_stats</code> function available when the <code>mosaic</code> package is loaded allows you to run <code>favstats</code> for multiple outcome variables simultaneously.</p>
+
+</div>
+</div>
+</div>
+
+  <div class="chapter-nav">
+<div class="prev"><a href="visualizing-nhanes-complete-cases.html"><span class="header-section-number">5</span> Visualizing NHANES Complete Cases</a></div>
+<div class="next"><a href="summarizing-categorical-variables.html"><span class="header-section-number">7</span> Summarizing Categorical Variables</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#summarizing_quantities"><span class="header-section-number">6</span> Summarizing Quantitative Variables</a></li>
+<li><a class="nav-link" href="#the-summary-function-for-quantitative-data"><span class="header-section-number">6.1</span> The summary function for Quantitative data</a></li>
+<li>
+<a class="nav-link" href="#measuring-the-center-of-a-distribution"><span class="header-section-number">6.2</span> Measuring the Center of a Distribution</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#the-mean-and-the-median"><span class="header-section-number">6.2.1</span> The Mean and The Median</a></li>
+<li><a class="nav-link" href="#dealing-with-missingness"><span class="header-section-number">6.2.2</span> Dealing with Missingness</a></li>
+<li><a class="nav-link" href="#the-mode-of-a-quantitative-variable"><span class="header-section-number">6.2.3</span> The Mode of a Quantitative Variable</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#measuring-the-spread-of-a-distribution"><span class="header-section-number">6.3</span> Measuring the Spread of a Distribution</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#rangeandiqr"><span class="header-section-number">6.3.1</span> The Range and the Interquartile Range (IQR)</a></li>
+<li><a class="nav-link" href="#the-variance-and-the-standard-deviation"><span class="header-section-number">6.3.2</span> The Variance and the Standard Deviation</a></li>
+<li><a class="nav-link" href="#obtaining-the-variance-and-standard-deviation-in-r"><span class="header-section-number">6.3.3</span> Obtaining the Variance and Standard Deviation in R</a></li>
+<li><a class="nav-link" href="#defining-the-variance-and-standard-deviation"><span class="header-section-number">6.3.4</span> Defining the Variance and Standard Deviation</a></li>
+<li><a class="nav-link" href="#interpreting-the-sd-when-the-data-are-normally-distributed"><span class="header-section-number">6.3.5</span> Interpreting the SD when the data are Normally distributed</a></li>
+<li><a class="nav-link" href="#chebyshevs-inequality-one-interpretation-of-the-standard-deviation"><span class="header-section-number">6.3.6</span> Chebyshev’s Inequality: One Interpretation of the Standard Deviation</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#measuring-the-shape-of-a-distribution"><span class="header-section-number">6.4</span> Measuring the Shape of a Distribution</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#multimodal-vs.-unimodal-distributions"><span class="header-section-number">6.4.1</span> Multimodal vs. Unimodal distributions</a></li>
+<li><a class="nav-link" href="#skew"><span class="header-section-number">6.4.2</span> Skew</a></li>
+<li><a class="nav-link" href="#kurtosis"><span class="header-section-number">6.4.3</span> Kurtosis</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#numerical-summaries-for-quantitative-variables"><span class="header-section-number">6.5</span> Numerical Summaries for Quantitative Variables</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#favstats-in-the-mosaic-package"><span class="header-section-number">6.5.1</span> favstats in the mosaic package</a></li>
+<li><a class="nav-link" href="#describe-in-the-psych-package"><span class="header-section-number">6.5.2</span> describe in the psych package</a></li>
+<li><a class="nav-link" href="#the-hmisc-packages-version-of-describe"><span class="header-section-number">6.5.3</span> The Hmisc package’s version of describe</a></li>
+<li><a class="nav-link" href="#other-options"><span class="header-section-number">6.5.4</span> Other options</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/THOMASELOVE/431-notes/blob/master/06-summarizing_quantities.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/THOMASELOVE/431-notes/edit/master/06-summarizing_quantities.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</strong>" was written by Thomas E. Love. It was last built on 2021-08-21.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
