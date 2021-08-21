@@ -1,7 +1,7 @@
 --- 
 title: "Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431"
 author: "Thomas E. Love"
-date: "2021-08-19"
+date: "2021-08-21"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -68,7 +68,7 @@ Another excellent resource to learn more about R Markdown tools is the Communica
 
 ## Initial Setup of R Packages {-}
 
-To start, I'll present a series of commands I run (silently) at the beginning of each chapter of these Notes. These particular commands set up the output so it will look nice as either an HTML or PDF file, and also set up R to use several packages (libraries) of functions that expand its capabilities. A chunk of code like this will occur near the top of any R Markdown work.
+To start, I'll present a series of commands I run (silently) at the beginning of each chapter of these Notes. These particular commands set up R to use several packages (libraries) of functions that expand its capabilities, make a specific change to how I want R output to be displayed (that's the `comment = NA` piece) and sets the theme for most of the graphs I will build to one called `theme_bw()`. A chunk of code like this will occur near the top of any R Markdown work.
 
 
 ```r
@@ -90,7 +90,7 @@ library(tidyverse) # note: tidyverse includes the dplyr and ggplot2 packages
 theme_set(theme_bw())
 ```
 
-I have deliberately set up this list of loaded packages to be relatively small, and will add some others later in these Notes. You only need to install a package once, but you need to reload it every time you start a new session.
+I have deliberately set up this list of loaded packages to be relatively small. You only need to install a package once, but you need to reload it every time you start a new session.
 
 ## The `Love-boost.R` script {-}
 

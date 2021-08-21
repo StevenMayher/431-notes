@@ -1,4 +1,4 @@
-# NHANES: Initial Exploring {#dataviz} 
+# NHANES: Initial Exploring {#nhanes1} 
 
 Next, we'll explore some data from the US National Health and Nutrition Examination Survey, or NHANES. 
 
@@ -19,7 +19,7 @@ dim(NHANES)
 
 We see that we have 10000 rows and 76 columns in the `NHANES` data frame.
 
-For the moment, let's gather a random sample of 1,000 responses from the 10000 rows listed in the `NHANES` data frame, and then identify several variables of interest about those subjects^[For more on the NHANES data available in the NHANES package, type ?NHANES in the Console in R Studio.]. Some of the motivation for this example came from a Figure in @BaumerKaplanHorton.
+For the moment, let's gather a random sample of 1,000 responses from the 10000 rows listed in the `NHANES` data frame, and then look at three variables (labeled Gender, Age and Height) that describe those subjects^[For more on the NHANES data available in the NHANES package, type ?NHANES in the Console in R Studio.]. Some of the motivation for this example came from a Figure in @BaumerKaplanHorton.
 
 
 ```r
@@ -27,13 +27,13 @@ For the moment, let's gather a random sample of 1,000 responses from the 10000 r
 
 set.seed(431001) 
 # use set.seed to ensure that we all get the same random sample 
-# of 1,000 NHANES subjects in our nh_data collection
+# of 1,000 NHANES subjects in our nh_1 collection
 
-nh_dat1 <- 
+nh_1 <- 
     slice_sample(NHANES, n = 1000, replace = FALSE) %>%
     select(ID, SurveyYr, Gender, Age, Height)
 
-nh_dat1
+nh_1
 ```
 
 ```
@@ -55,13 +55,41 @@ nh_dat1
 
 We have 1000 rows (observations) and 5 columns (variables) that describe the responses listed in the rows. 
 
-## Age and Height
+## A Quick Numerical Summary
+
+
+```r
+summary(nh_1)
+```
+
+```
+       ID           SurveyYr      Gender         Age       
+ Min.   :51624   2009_10:512   female:504   Min.   : 0.00  
+ 1st Qu.:57011   2011_12:488   male  :496   1st Qu.:18.00  
+ Median :61979                              Median :36.00  
+ Mean   :61903                              Mean   :37.42  
+ 3rd Qu.:67178                              3rd Qu.:56.00  
+ Max.   :71875                              Max.   :80.00  
+                                                           
+     Height     
+ Min.   : 85.0  
+ 1st Qu.:156.2  
+ Median :165.0  
+ Mean   :162.3  
+ 3rd Qu.:174.5  
+ Max.   :195.9  
+ NA's   :37     
+```
+
+For the two variables that R recognizes as describing *categories*, `SurveyYr` and `Gender`, this numeric summary provides a small table of counts. For the `Age` and `Height` variables, we see the minimum, mean, maximum and other summary statistics.
+
+## Plotting Age vs. Height
 
 Suppose we want to visualize the relationship of Height and Age in our 1,000 NHANES observations. The best choice is likely to be a scatterplot.
 
 
 ```r
-ggplot(data = nh_dat1, aes(x = Age, y = Height)) +
+ggplot(data = nh_1, aes(x = Age, y = Height)) +
     geom_point()
 ```
 
@@ -70,7 +98,7 @@ Warning: Removed 37 rows containing missing values
 (geom_point).
 ```
 
-<img src="03-nhanes_files/figure-html/nh_dat1_heightbyage1-fig-1.png" width="672" />
+<img src="03-nhanes_files/figure-html/nh1_heightbyage_1-1.png" width="672" />
 
 We note several interesting results here.
 
@@ -81,16 +109,16 @@ We note several interesting results here.
 As in this case, we're going to build most of our visualizations using tools from the `ggplot2` package, which is part of the `tidyverse` series of packages. You'll see similar coding structures throughout this Chapter, most of which are covered as well in Chapter 3 of @R4DS.
 
 
-## Subset of Subjects with Known Age and Height
+## Restriction to Complete Cases
 
-Before we move on, let's manipulate the data set a bit, to focus on only those subjects who have complete data on both Age and Height. This will help us avoid that warning message.
+Before we move on, let's manipulate the data frame a bit, to focus on only those subjects who have complete data on both Age and Height. This will help us avoid that warning message.
 
 
 ```r
-nh_dat2 <- nh_dat1 %>%
+nh_1cc <- nh_1 %>%
     filter(complete.cases(Age, Height)) 
 
-summary(nh_dat2)
+summary(nh_1cc)
 ```
 
 ```
@@ -120,11 +148,11 @@ To do this, we can use this approach...
 
 
 ```r
-nh_dat2 <- nh_dat1 %>%
+nh_1cc <- nh_1 %>%
     rename(Sex = Gender) %>%
     filter(complete.cases(Age, Height)) 
 
-summary(nh_dat2)
+summary(nh_1cc)
 ```
 
 ```
@@ -144,22 +172,22 @@ summary(nh_dat2)
  Max.   :195.9  
 ```
 
-That's better. How many observations do we have now? We could use `dim` to find out the number of rows and columns in this new data set.
+That's better. How many observations do we have now? We could use `dim` to find out the number of rows and columns in this new data frame.
 
 
 ```r
-dim(nh_dat2)
+dim(nh_1cc)
 ```
 
 ```
 [1] 963   5
 ```
 
-Or, we could simply list the data set and read off the result.
+Or, we could simply list the data frame and read off the result.
 
 
 ```r
-nh_dat2
+nh_1cc
 ```
 
 ```
@@ -179,19 +207,19 @@ nh_dat2
 # ... with 953 more rows
 ```
 
-## Age-Height and Sex?
+## Age-Height by Sex?
 
 Let's add Sex to the plot using color, and also adjust the y axis label to incorporate the units of measurement. 
 
 
 ```r
-ggplot(data = nh_dat2, aes(x = Age, y = Height, color = Sex)) +
+ggplot(data = nh_1cc, aes(x = Age, y = Height, color = Sex)) +
     geom_point() +
     labs(title = "Height-Age Relationship in NHANES sample", 
          y = "Height in cm.")
 ```
 
-<img src="03-nhanes_files/figure-html/nh_dat2_heightbyageandsex1-fig-1.png" width="672" />
+<img src="03-nhanes_files/figure-html/nh_1cc_ht_age_sex_fig1-1.png" width="672" />
 
 ### Can we show the Female and Male relationships in separate panels?
 
@@ -199,50 +227,49 @@ Sure.
 
 
 ```r
-ggplot(data = nh_dat2, aes(x = Age, y = Height, color = Sex)) +
+ggplot(data = nh_1cc, aes(x = Age, y = Height, color = Sex)) +
     geom_point() + 
     labs(title = "Height-Age Relationship in NHANES sample", 
          y = "Height in cm.") +
     facet_wrap(~ Sex)
 ```
 
-<img src="03-nhanes_files/figure-html/nh_dat2_heightbyageandsex2-fig-1.png" width="672" />
+<img src="03-nhanes_files/figure-html/nh_1cc_ht_age_sex_fig2-1.png" width="672" />
 
 ### Can we add a smooth curve to show the relationship in each plot?
 
-Yep, and let's change the theme of the graph to remove the gray background, too.
+Yes, by adding a call to the `geom_smooth()` function.
 
 
 ```r
-ggplot(data = nh_dat2, aes(x = Age, y = Height, color = Sex)) +
+ggplot(data = nh_1cc, aes(x = Age, y = Height, color = Sex)) +
     geom_point() + 
     geom_smooth(method = "loess", formula = y ~ x) +
     labs(title = "Height-Age Relationship in NHANES sample", 
          y = "Height in cm.") +
-    theme_bw() +
     facet_wrap(~ Sex)
 ```
 
-<img src="03-nhanes_files/figure-html/nh_dat2_heightbyageandsex3-fig-1.png" width="672" />
+<img src="03-nhanes_files/figure-html/nh_1cc_ht_age_sex_fig3-1.png" width="672" />
 
 
 ### What if we want to assume straight line relationships?
 
-We could look at a linear model in the plot. Does this make sense here?
+We could look at a linear model in each part of the plot instead. Does this make sense here?
 
 
 ```r
-ggplot(data = nh_dat2, aes(x = Age, y = Height, color = Sex)) +
+ggplot(data = nh_1cc, aes(x = Age, y = Height, color = Sex)) +
     geom_point() + 
     geom_smooth(method = "lm", formula = y ~ x) +
     labs(title = "Height-Age Relationship in NHANES sample", 
          y = "Height in cm.") +
-    theme_bw() +
     facet_wrap(~ Sex)
 ```
 
-<img src="03-nhanes_files/figure-html/nh_dat2_heightbyageandsex4-fig-1.png" width="672" />
+<img src="03-nhanes_files/figure-html/nh_1cc_ht_age_sex_fig4-1.png" width="672" />
 
-I hope it seems clear from the graphs that a more complex relationship is going on here than just a straight line.
+It seems like the more complex relationship between Height and Age isn't well described by the straight line model.
 
-In the next Section of these Notes, we'll take a more carefully selected sample of NHANES respondents, and study those subjects in greater detail.
+Next, we'll select a new sample of NHANES respondents a bit more carefully, introduce some new ways of thinking about data and variables, then we'll study those subjects in greater detail.
+

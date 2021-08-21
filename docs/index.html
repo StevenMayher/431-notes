@@ -44,7 +44,8 @@
 <li><a class="" href="data-science.html"><span class="header-section-number">1</span> Data Science</a></li>
 <li class="book-part">Part A. Exploring Data</li>
 <li><a class="" href="looking-at-the-palmer-penguins.html"><span class="header-section-number">2</span> Looking at the Palmer Penguins</a></li>
-<li><a class="" href="dataviz.html"><span class="header-section-number">3</span> NHANES: Initial Exploring</a></li>
+<li><a class="" href="nhanes1.html"><span class="header-section-number">3</span> NHANES: Initial Exploring</a></li>
+<li><a class="" href="data-structures-and-types-of-variables.html"><span class="header-section-number">4</span> Data Structures and Types of Variables</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -106,7 +107,7 @@
 <div id="initial-setup-of-r-packages" class="section level2 unnumbered">
 <h2>Initial Setup of R Packages<a class="anchor" aria-label="anchor" href="#initial-setup-of-r-packages"><i class="fas fa-link"></i></a>
 </h2>
-<p>To start, I’ll present a series of commands I run (silently) at the beginning of each chapter of these Notes. These particular commands set up the output so it will look nice as either an HTML or PDF file, and also set up R to use several packages (libraries) of functions that expand its capabilities. A chunk of code like this will occur near the top of any R Markdown work.</p>
+<p>To start, I’ll present a series of commands I run (silently) at the beginning of each chapter of these Notes. These particular commands set up R to use several packages (libraries) of functions that expand its capabilities, make a specific change to how I want R output to be displayed (that’s the <code>comment = NA</code> piece) and sets the theme for most of the graphs I will build to one called <code>theme_bw()</code>. A chunk of code like this will occur near the top of any R Markdown work.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>comment <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>
 
@@ -124,7 +125,7 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span> <span class="co"># note: tidyverse includes the dplyr and ggplot2 packages</span>
 
 <span class="fu">theme_set</span><span class="op">(</span><span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>I have deliberately set up this list of loaded packages to be relatively small, and will add some others later in these Notes. You only need to install a package once, but you need to reload it every time you start a new session.</p>
+<p>I have deliberately set up this list of loaded packages to be relatively small. You only need to install a package once, but you need to reload it every time you start a new session.</p>
 </div>
 <div id="the-love-boost.r-script" class="section level2 unnumbered">
 <h2>The <code>Love-boost.R</code> script<a class="anchor" aria-label="anchor" href="#the-love-boost.r-script"><i class="fas fa-link"></i></a>
@@ -178,7 +179,7 @@ visdat</code></pre>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</strong>" was written by Thomas E. Love. It was last built on 2021-08-19.</p>
+    <p>"<strong>Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</strong>" was written by Thomas E. Love. It was last built on 2021-08-21.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
