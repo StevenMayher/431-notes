@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 5 Visualizing NHANES Complete Cases | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</title>
+<meta name="author" content="Thomas E. Love">
+<meta name="description" content="5.1 Loading in the “Complete Cases” Sample Let’s begin by loading into the nh_500cc data frame the information from the nh_adult500cc.Rds file we created in Section (#nh_cc) nh_500cc &lt;-...">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="Chapter 5 Visualizing NHANES Complete Cases | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta property="og:type" content="book">
+<meta property="og:url" content="your book url like https://thomaselove.github.io/431-book/visualizing-nhanes-complete-cases.html">
+<meta property="og:description" content="5.1 Loading in the “Complete Cases” Sample Let’s begin by loading into the nh_500cc data frame the information from the nh_adult500cc.Rds file we created in Section (#nh_cc) nh_500cc &lt;-...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 5 Visualizing NHANES Complete Cases | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta name="twitter:description" content="5.1 Loading in the “Complete Cases” Sample Let’s begin by loading into the nh_500cc data frame the information from the nh_adult500cc.Rds file we created in Section (#nh_cc) nh_500cc &lt;-...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Working with These Notes</a></li>
+<li><a class="" href="data-science.html"><span class="header-section-number">1</span> Data Science</a></li>
+<li class="book-part">Part A. Exploring Data</li>
+<li><a class="" href="looking-at-the-palmer-penguins.html"><span class="header-section-number">2</span> Looking at the Palmer Penguins</a></li>
+<li><a class="" href="nhanes1.html"><span class="header-section-number">3</span> NHANES: Initial Exploring</a></li>
+<li><a class="" href="data-structures-and-types-of-variables.html"><span class="header-section-number">4</span> Data Structures and Types of Variables</a></li>
+<li><a class="active" href="visualizing-nhanes-complete-cases.html"><span class="header-section-number">5</span> Visualizing NHANES Complete Cases</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/THOMASELOVE/431-notes">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="visualizing-nhanes-complete-cases" class="section level1" number="5">
+<h1>
+<span class="header-section-number">5</span> Visualizing NHANES Complete Cases<a class="anchor" aria-label="anchor" href="#visualizing-nhanes-complete-cases"><i class="fas fa-link"></i></a>
+</h1>
+<div id="loading-in-the-complete-cases-sample" class="section level2" number="5.1">
+<h2>
+<span class="header-section-number">5.1</span> Loading in the “Complete Cases” Sample<a class="anchor" aria-label="anchor" href="#loading-in-the-complete-cases-sample"><i class="fas fa-link"></i></a>
+</h2>
+<p>Let’s begin by loading into the <code>nh_500cc</code> data frame the information from the <code>nh_adult500cc.Rds</code> file we created in Section (#nh_cc)</p>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_500cc</span> <span class="op">&lt;-</span> <span class="fu">read_rds</span><span class="op">(</span><span class="st">"data/nh_adult500cc.Rds"</span><span class="op">)</span></code></pre></div>
+<p>One obvious hurdle we’ll avoid for the moment is what to do about missing data, since the <code>nh_500cc</code> data are specifically drawn from complete responses. Working with complete cases only can introduce bias to our estimates and visualizations, so it will be necessary in time to address what we should do when a complete-case analysis isn’t a good choice.</p>
+</div>
+<div id="distribution-of-heights" class="section level2" number="5.2">
+<h2>
+<span class="header-section-number">5.2</span> Distribution of Heights<a class="anchor" aria-label="anchor" href="#distribution-of-heights"><i class="fas fa-link"></i></a>
+</h2>
+<p>What is the distribution of height in this new sample?</p>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="op">)</span> </code></pre></div>
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with
+`binwidth`.</code></pre>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/c5_htfig1-1.png" width="672"></div>
+<p>We can do several things to clean this up.</p>
+<ol style="list-style-type: decimal">
+<li>We’ll change the color of the lines for each bar of the histogram.</li>
+<li>We’ll change the fill inside each bar to make them stand out a bit more.</li>
+<li>We’ll add a title and relabel the horizontal (x) axis to include the units of measurement.</li>
+<li>We’ll avoid the warning by selecting a number of bins (we’ll use 25 here) into which we’ll group the heights before drawing the histogram.</li>
+</ol>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">25</span>, col <span class="op">=</span> <span class="st">"yellow"</span>, fill <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Height of NHANES subjects ages 21-64"</span>,
+         x <span class="op">=</span> <span class="st">"Height in cm."</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/c5_htfig2-1.png" width="672"></div>
+<div id="changing-a-histograms-fill-and-color" class="section level3" number="5.2.1">
+<h3>
+<span class="header-section-number">5.2.1</span> Changing a Histogram’s Fill and Color<a class="anchor" aria-label="anchor" href="#changing-a-histograms-fill-and-color"><i class="fas fa-link"></i></a>
+</h3>
+<p>The CWRU color guide (<a href="https://case.edu/umc/our-brand/visual-guidelines/" class="uri">https://case.edu/umc/our-brand/visual-guidelines/</a>) lists the HTML color schemes for CWRU blue and CWRU gray. Let’s match that color scheme. We will also change the bins for the histogram, to gather observations into groups of 2 cm. each, by specifying the width of the bins, rather than the number of bins.</p>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cwru.blue</span> <span class="op">&lt;-</span> <span class="st">'#0a304e'</span>
+<span class="va">cwru.gray</span> <span class="op">&lt;-</span> <span class="st">'#626262'</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">2</span>, 
+                   col <span class="op">=</span> <span class="va">cwru.gray</span>, fill <span class="op">=</span> <span class="va">cwru.blue</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Height of NHANES subjects ages 21-64"</span>,
+         x <span class="op">=</span> <span class="st">"Height in cm."</span><span class="op">)</span> </code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/nh_500cc_fig3-1.png" width="672"></div>
+</div>
+</div>
+<div id="height-and-sex" class="section level2" number="5.3">
+<h2>
+<span class="header-section-number">5.3</span> Height and Sex<a class="anchor" aria-label="anchor" href="#height-and-sex"><i class="fas fa-link"></i></a>
+</h2>
+<p>Let’s look again at the impact of a respondent’s sex on their height, but now within our sample of adults.</p>
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, 
+       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sex</span>, y <span class="op">=</span> <span class="va">Height</span>, color <span class="op">=</span> <span class="va">Sex</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Height by Sex for NHANES subjects ages 21-64"</span>,
+         y <span class="op">=</span> <span class="st">"Height in cm."</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/nh_500cc_fig4-1.png" width="672"></div>
+<p>This plot isn’t so useful. We can improve things a little by jittering the points horizontally, so that the overlap is reduced.</p>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sex</span>, y <span class="op">=</span> <span class="va">Height</span>, color <span class="op">=</span> <span class="va">Sex</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Height by Sex (jittered) for NHANES subjects ages 21-64"</span>,
+         y <span class="op">=</span> <span class="st">"Height in cm."</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/nh_500cc_fig5-1.png" width="672"></div>
+<p>Perhaps it might be better to summarise the distribution in a different way. We might consider a boxplot of the data.</p>
+<div id="a-boxplot-of-height-by-sex" class="section level3" number="5.3.1">
+<h3>
+<span class="header-section-number">5.3.1</span> A Boxplot of Height by Sex<a class="anchor" aria-label="anchor" href="#a-boxplot-of-height-by-sex"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sex</span>, y <span class="op">=</span> <span class="va">Height</span>, fill <span class="op">=</span> <span class="va">Sex</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Boxplot of Height by Sex for NHANES subjects ages 21-64"</span>,
+         y <span class="op">=</span> <span class="st">"Height in cm."</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/nh_500cc_fig6-1.png" width="672"></div>
+<p>Or perhaps we’d like to see a pair of histograms?</p>
+</div>
+<div id="histograms-of-height-by-sex" class="section level3" number="5.3.2">
+<h3>
+<span class="header-section-number">5.3.2</span> Histograms of Height by Sex<a class="anchor" aria-label="anchor" href="#histograms-of-height-by-sex"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Height</span>, fill <span class="op">=</span> <span class="va">Sex</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"white"</span>, bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Histogram of Height by Sex for NHANES subjects ages 21-64"</span>,
+         x <span class="op">=</span> <span class="st">"Height in cm."</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">Sex</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/nh_500cc_fig7-1.png" width="672"></div>
+<p>Can we redraw these histograms so that they are a little more comparable, and to get rid of the unnecessary legend?</p>
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Height</span>, fill <span class="op">=</span> <span class="va">Sex</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"white"</span>, bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Histogram of Height by Sex for NHANES subjects ages 21-64 (Revised)"</span>,
+         x <span class="op">=</span> <span class="st">"Height in cm."</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">Sex</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/nh_500cc_fig8-1.png" width="672"></div>
+</div>
+</div>
+<div id="looking-at-pulse-rate" class="section level2" number="5.4">
+<h2>
+<span class="header-section-number">5.4</span> Looking at Pulse Rate<a class="anchor" aria-label="anchor" href="#looking-at-pulse-rate"><i class="fas fa-link"></i></a>
+</h2>
+<p>Let’s look at a different outcome, the <em>pulse rate</em> for our subjects.</p>
+<p>Here’s a histogram, again with CWRU colors, for the pulse rates in our sample.</p>
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Pulse</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">1</span>, 
+                   fill <span class="op">=</span> <span class="va">cwru.blue</span>, col <span class="op">=</span> <span class="va">cwru.gray</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Histogram of Pulse Rate: NHANES subjects ages 21-64"</span>,
+         x <span class="op">=</span> <span class="st">"Pulse Rate (beats per minute)"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/nh_500cc_fig9-1.png" width="672"></div>
+<p>Suppose we instead bin up groups of 5 beats per minute together as we plot the Pulse rates.</p>
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Pulse</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">5</span>, 
+                   fill <span class="op">=</span> <span class="va">cwru.blue</span>, col <span class="op">=</span> <span class="va">cwru.gray</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Histogram of Pulse Rate: NHANES subjects ages 21-64"</span>,
+         x <span class="op">=</span> <span class="st">"Pulse Rate (beats per minute)"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/nh_500cc_fig10-1.png" width="672"></div>
+<p>Which is the more useful representation will depend a lot on what questions you’re trying to answer.</p>
+<div id="pulse-rate-and-physical-activity" class="section level3" number="5.4.1">
+<h3>
+<span class="header-section-number">5.4.1</span> Pulse Rate and Physical Activity<a class="anchor" aria-label="anchor" href="#pulse-rate-and-physical-activity"><i class="fas fa-link"></i></a>
+</h3>
+<p>We can also split up our data into groups based on whether the subjects are physically active. Let’s try a boxplot.</p>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, 
+       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">Pulse</span>, x <span class="op">=</span> <span class="va">PhysActive</span>, fill <span class="op">=</span> <span class="va">PhysActive</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Pulse Rate by Physical Activity Status for NHANES ages 21-64"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/nh_500cc_fig11-1.png" width="672"></div>
+<p>As an accompanying numerical summary, we might ask how many people fall into each of these <code>PhysActive</code> categories, and what is their “average” <code>Pulse</code> rate.</p>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_500cc</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">PhysActive</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">mean</a></span><span class="op">(</span><span class="va">Pulse</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">median</a></span><span class="op">(</span><span class="va">Pulse</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> </code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">PhysActive</th>
+<th align="right">count</th>
+<th align="right">mean(Pulse)</th>
+<th align="right">median(Pulse)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">No</td>
+<td align="right">216</td>
+<td align="right">74.44</td>
+<td align="right">74</td>
+</tr>
+<tr class="even">
+<td align="left">Yes</td>
+<td align="right">284</td>
+<td align="right">73.96</td>
+<td align="right">74</td>
+</tr>
+</tbody>
+</table></div>
+<p>The <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">knitr::kable(digits = 2)</a></code> piece of this command tells R Markdown to generate a table with some attractive formatting, and rounding any decimals to two figures.</p>
+</div>
+<div id="pulse-by-sleeping-trouble" class="section level3" number="5.4.2">
+<h3>
+<span class="header-section-number">5.4.2</span> Pulse by Sleeping Trouble<a class="anchor" aria-label="anchor" href="#pulse-by-sleeping-trouble"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Pulse</span>, fill <span class="op">=</span> <span class="va">SleepTrouble</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"white"</span>, bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Histogram of Pulse Rate by Sleep Trouble for NHANES subjects ages 21-64"</span>,
+         x <span class="op">=</span> <span class="st">"Pulse Rate (beats per minute)"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">SleepTrouble</span> <span class="op">~</span> <span class="va">.</span>, labeller <span class="op">=</span> <span class="st">"label_both"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/nh_500cc_fig12-1.png" width="672"></div>
+<p>How many people fall into each of these <code>SleepTrouble</code> categories, and what is their “average” Pulse rate?</p>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_500cc</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">SleepTrouble</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">mean</a></span><span class="op">(</span><span class="va">Pulse</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">median</a></span><span class="op">(</span><span class="va">Pulse</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> </code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">SleepTrouble</th>
+<th align="right">count</th>
+<th align="right">mean(Pulse)</th>
+<th align="right">median(Pulse)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">No</td>
+<td align="right">380</td>
+<td align="right">73.45</td>
+<td align="right">73</td>
+</tr>
+<tr class="even">
+<td align="left">Yes</td>
+<td align="right">120</td>
+<td align="right">76.43</td>
+<td align="right">76</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="pulse-and-healthgen" class="section level3" number="5.4.3">
+<h3>
+<span class="header-section-number">5.4.3</span> Pulse and HealthGen<a class="anchor" aria-label="anchor" href="#pulse-and-healthgen"><i class="fas fa-link"></i></a>
+</h3>
+<p>We can compare the distribution of Pulse rate across groups by the subject’s self-reported overall health (<code>HealthGen</code>), as well.</p>
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">HealthGen</span>, y <span class="op">=</span> <span class="va">Pulse</span>, fill <span class="op">=</span> <span class="va">HealthGen</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Pulse by Self-Reported Overall Health for NHANES ages 21-64"</span>,
+         x <span class="op">=</span> <span class="st">"Self-Reported Overall Health"</span>, y <span class="op">=</span> <span class="st">"Pulse Rate"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> </code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/nh_500cc_fig13-1.png" width="672"></div>
+<p>How many people fall into each of these <code>HealthGen</code> categories, and what is their “average” Pulse rate?</p>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_500cc</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">HealthGen</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">mean</a></span><span class="op">(</span><span class="va">Pulse</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">median</a></span><span class="op">(</span><span class="va">Pulse</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> </code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">HealthGen</th>
+<th align="right">count</th>
+<th align="right">mean(Pulse)</th>
+<th align="right">median(Pulse)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Excellent</td>
+<td align="right">52</td>
+<td align="right">72.08</td>
+<td align="right">72</td>
+</tr>
+<tr class="even">
+<td align="left">Vgood</td>
+<td align="right">167</td>
+<td align="right">71.78</td>
+<td align="right">72</td>
+</tr>
+<tr class="odd">
+<td align="left">Good</td>
+<td align="right">204</td>
+<td align="right">75.22</td>
+<td align="right">74</td>
+</tr>
+<tr class="even">
+<td align="left">Fair</td>
+<td align="right">65</td>
+<td align="right">76.55</td>
+<td align="right">76</td>
+</tr>
+<tr class="odd">
+<td align="left">Poor</td>
+<td align="right">12</td>
+<td align="right">85.50</td>
+<td align="right">82</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="pulse-rate-and-systolic-blood-pressure" class="section level3" number="5.4.4">
+<h3>
+<span class="header-section-number">5.4.4</span> Pulse Rate and Systolic Blood Pressure<a class="anchor" aria-label="anchor" href="#pulse-rate-and-systolic-blood-pressure"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">SBP</span>, y <span class="op">=</span> <span class="va">Pulse</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"loess"</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Pulse Rate vs. SBP for NHANES subjects, ages 21-64"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/nh_500cc_fig14-1.png" width="672"></div>
+</div>
+<div id="sleep-trouble-vs.-no-sleep-trouble" class="section level3" number="5.4.5">
+<h3>
+<span class="header-section-number">5.4.5</span> Sleep Trouble vs. No Sleep Trouble?<a class="anchor" aria-label="anchor" href="#sleep-trouble-vs.-no-sleep-trouble"><i class="fas fa-link"></i></a>
+</h3>
+<p>Could we see whether subjects who have described <code>SleepTrouble</code> show different SBP-pulse rate patterns than the subjects who haven’t?</p>
+<ul>
+<li>Let’s try doing this by changing the shape <em>and</em> the color of the points based on <code>SleepTrouble</code>.</li>
+</ul>
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, 
+       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">SBP</span>, y <span class="op">=</span> <span class="va">Pulse</span>, 
+           color <span class="op">=</span> <span class="va">SleepTrouble</span>, shape <span class="op">=</span> <span class="va">SleepTrouble</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"loess"</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Pulse Rate vs. SBP for NHANES subjects, ages 21-64"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/nh_500cc_fig15-1.png" width="672"></div>
+<p>This plot might be easier to interpret if we faceted by <code>SleepTrouble</code>, as well.</p>
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, 
+       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">SBP</span>, y <span class="op">=</span> <span class="va">Pulse</span>, 
+           color <span class="op">=</span> <span class="va">SleepTrouble</span>, shape <span class="op">=</span> <span class="va">SleepTrouble</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"loess"</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Pulse Rate vs. SBP for NHANES subjects, ages 21-64"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">SleepTrouble</span>, labeller <span class="op">=</span> <span class="st">"label_both"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/nh_500cc_fig16-1.png" width="672"></div>
+</div>
+</div>
+<div id="general-health-status" class="section level2" number="5.5">
+<h2>
+<span class="header-section-number">5.5</span> General Health Status<a class="anchor" aria-label="anchor" href="#general-health-status"><i class="fas fa-link"></i></a>
+</h2>
+<p>Here’s a Table of the General Health Status results. Again, this is a self-reported rating of each subject’s health on a five point scale (Excellent, Very Good, Good, Fair, Poor.)</p>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_500cc</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">HealthGen</span><span class="op">)</span> </code></pre></div>
+<pre><code> HealthGen   n percent
+ Excellent  52   0.104
+     Vgood 167   0.334
+      Good 204   0.408
+      Fair  65   0.130
+      Poor  12   0.024</code></pre>
+<p>The HealthGen data are categorical, which means that summarizing them with averages isn’t as appealing as looking at percentages, proportions and rates. The <code>tabyl</code> function comes from the <code>janitor</code> package in R.</p>
+<ul>
+<li>I don’t actually like the title of <code>percent</code> here, as it’s really a proportion, but that can be adjusted, and we can add a total.</li>
+</ul>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_500cc</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">HealthGen</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html">adorn_totals</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code> HealthGen   n percent
+ Excellent  52   10.4%
+     Vgood 167   33.4%
+      Good 204   40.8%
+      Fair  65   13.0%
+      Poor  12    2.4%
+     Total 500  100.0%</code></pre>
+<p>When working with an unordered categorical variable, like <code>MaritalStatus</code>, the same approach can work.</p>
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_500cc</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">MaritalStatus</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html">adorn_totals</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code> MaritalStatus   n percent
+      Divorced  47    9.4%
+   LivePartner  46    9.2%
+       Married 256   51.2%
+  NeverMarried 125   25.0%
+     Separated  17    3.4%
+       Widowed   9    1.8%
+         Total 500  100.0%</code></pre>
+<div id="bar-chart-for-categorical-data" class="section level3" number="5.5.1">
+<h3>
+<span class="header-section-number">5.5.1</span> Bar Chart for Categorical Data<a class="anchor" aria-label="anchor" href="#bar-chart-for-categorical-data"><i class="fas fa-link"></i></a>
+</h3>
+<p>Usually, a <strong>bar chart</strong> is the best choice for a graphing a variable made up of categories.</p>
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">HealthGen</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/c5_Health_fig1-1.png" width="672"></div>
+<p>There are lots of things we can do to make this plot fancier.</p>
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">HealthGen</span>, fill <span class="op">=</span> <span class="va">HealthGen</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Self-Reported Health Status"</span>,
+         y <span class="op">=</span> <span class="st">"Number of NHANES subjects"</span>,
+         title <span class="op">=</span> <span class="st">"Self-Reported Health Status in NHANES subjects ages 21-64"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/c5_Health_fig2-1.png" width="672"></div>
+<p>Or, we can really go crazy…</p>
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_500cc</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">HealthGen</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>pct <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/round_half_up.html">round_half_up</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">HealthGen</span>, y <span class="op">=</span> <span class="va">pct</span>, fill <span class="op">=</span> <span class="va">HealthGen</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_fill_viridis_d</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">pct</span> <span class="op">+</span> <span class="fl">1</span>,    <span class="co"># nudge above top of bar</span>
+                  label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">pct</span>, <span class="st">'%'</span><span class="op">)</span><span class="op">)</span>,  <span class="co"># prettify</span>
+              position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html">position_dodge</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span>, 
+              size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Self-Reported Health Status"</span>,
+         y <span class="op">=</span> <span class="st">"Percentage of NHANES subjects"</span>,
+         title <span class="op">=</span> <span class="st">"Self-Reported Health Status in NHANES subjects ages 21-64"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/c5_Health_fig3-1.png" width="672"></div>
+</div>
+<div id="two-way-tables" class="section level3" number="5.5.2">
+<h3>
+<span class="header-section-number">5.5.2</span> Two-Way Tables<a class="anchor" aria-label="anchor" href="#two-way-tables"><i class="fas fa-link"></i></a>
+</h3>
+<p>We can create cross-classifications of two categorical variables (for example HealthGen and Smoke100), adding both row and column marginal totals, and compare subjects by Sex, as follows…</p>
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_500cc</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Smoke100</span>, <span class="va">HealthGen</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html">adorn_totals</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"row"</span>, <span class="st">"col"</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
+<pre><code> Smoke100 Excellent Vgood Good Fair Poor Total
+       No        44   108  105   29    5   291
+      Yes         8    59   99   36    7   209
+    Total        52   167  204   65   12   500</code></pre>
+<p>If we like, we can make this look a little more polished with the <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">knitr::kable</a></code> function…</p>
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_500cc</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Smoke100</span>, <span class="va">HealthGen</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html">adorn_totals</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"row"</span>, <span class="st">"col"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">Smoke100</th>
+<th align="right">Excellent</th>
+<th align="right">Vgood</th>
+<th align="right">Good</th>
+<th align="right">Fair</th>
+<th align="right">Poor</th>
+<th align="right">Total</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">No</td>
+<td align="right">44</td>
+<td align="right">108</td>
+<td align="right">105</td>
+<td align="right">29</td>
+<td align="right">5</td>
+<td align="right">291</td>
+</tr>
+<tr class="even">
+<td align="left">Yes</td>
+<td align="right">8</td>
+<td align="right">59</td>
+<td align="right">99</td>
+<td align="right">36</td>
+<td align="right">7</td>
+<td align="right">209</td>
+</tr>
+<tr class="odd">
+<td align="left">Total</td>
+<td align="right">52</td>
+<td align="right">167</td>
+<td align="right">204</td>
+<td align="right">65</td>
+<td align="right">12</td>
+<td align="right">500</td>
+</tr>
+</tbody>
+</table></div>
+<p>Or, we can get a complete cross-tabulation, including (in this case) the percentages of people within each of the two categories of <code>Smoke100</code> that fall in each <code>HealthGen</code> category (percentages within each row) like this.</p>
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_500cc</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Smoke100</span>, <span class="va">HealthGen</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html">adorn_totals</a></span><span class="op">(</span><span class="st">"row"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span><span class="st">"row"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_ns.html">adorn_ns</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">Smoke100</th>
+<th align="left">Excellent</th>
+<th align="left">Vgood</th>
+<th align="left">Good</th>
+<th align="left">Fair</th>
+<th align="left">Poor</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">No</td>
+<td align="left">15.1% (44)</td>
+<td align="left">37.1% (108)</td>
+<td align="left">36.1% (105)</td>
+<td align="left">10.0% (29)</td>
+<td align="left">1.7% (5)</td>
+</tr>
+<tr class="even">
+<td align="left">Yes</td>
+<td align="left">3.8% (8)</td>
+<td align="left">28.2% (59)</td>
+<td align="left">47.4% (99)</td>
+<td align="left">17.2% (36)</td>
+<td align="left">3.3% (7)</td>
+</tr>
+<tr class="odd">
+<td align="left">Total</td>
+<td align="left">10.4% (52)</td>
+<td align="left">33.4% (167)</td>
+<td align="left">40.8% (204)</td>
+<td align="left">13.0% (65)</td>
+<td align="left">2.4% (12)</td>
+</tr>
+</tbody>
+</table></div>
+<p>And, if we wanted the column percentages, to determine which sex had the higher rate of each HealthGen status level, we can get that by changing the adorn_percentages to describe results at the column level:</p>
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_500cc</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Sex</span>, <span class="va">HealthGen</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html">adorn_totals</a></span><span class="op">(</span><span class="st">"col"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span><span class="st">"col"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_ns.html">adorn_ns</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">Sex</th>
+<th align="left">Excellent</th>
+<th align="left">Vgood</th>
+<th align="left">Good</th>
+<th align="left">Fair</th>
+<th align="left">Poor</th>
+<th align="left">Total</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">female</td>
+<td align="left">63.5% (33)</td>
+<td align="left">44.3% (74)</td>
+<td align="left">43.6% (89)</td>
+<td align="left">47.7% (31)</td>
+<td align="left">75.0% (9)</td>
+<td align="left">47.2% (236)</td>
+</tr>
+<tr class="even">
+<td align="left">male</td>
+<td align="left">36.5% (19)</td>
+<td align="left">55.7% (93)</td>
+<td align="left">56.4% (115)</td>
+<td align="left">52.3% (34)</td>
+<td align="left">25.0% (3)</td>
+<td align="left">52.8% (264)</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="sbp-by-general-health-status" class="section level3" number="5.5.3">
+<h3>
+<span class="header-section-number">5.5.3</span> SBP by General Health Status<a class="anchor" aria-label="anchor" href="#sbp-by-general-health-status"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let’s consider now the relationship between self-reported overall health and systolic blood pressure.</p>
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">HealthGen</span>, y <span class="op">=</span> <span class="va">SBP</span>, 
+                            fill <span class="op">=</span> <span class="va">HealthGen</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"SBP by Health Status, Overall Health for NHANES ages 21-64"</span>,
+         y <span class="op">=</span> <span class="st">"Systolic Blood Pressure"</span>, 
+         x <span class="op">=</span> <span class="st">"Self-Reported Overall Health"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> </code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/nh_500cc_sbphealth_fig1-1.png" width="672"></div>
+<p>We can see that not too many people self-identify with the “Poor” health category.</p>
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_500cc</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">HealthGen</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">mean</a></span><span class="op">(</span><span class="va">SBP</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">median</a></span><span class="op">(</span><span class="va">SBP</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> </code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">HealthGen</th>
+<th align="right">count</th>
+<th align="right">mean(SBP)</th>
+<th align="right">median(SBP)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Excellent</td>
+<td align="right">52</td>
+<td align="right">113.9231</td>
+<td align="right">113</td>
+</tr>
+<tr class="even">
+<td align="left">Vgood</td>
+<td align="right">167</td>
+<td align="right">117.5928</td>
+<td align="right">118</td>
+</tr>
+<tr class="odd">
+<td align="left">Good</td>
+<td align="right">204</td>
+<td align="right">121.5931</td>
+<td align="right">120</td>
+</tr>
+<tr class="even">
+<td align="left">Fair</td>
+<td align="right">65</td>
+<td align="right">120.3846</td>
+<td align="right">118</td>
+</tr>
+<tr class="odd">
+<td align="left">Poor</td>
+<td align="right">12</td>
+<td align="right">122.8333</td>
+<td align="right">124</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="sbp-by-physical-activity-and-general-health-status" class="section level3" number="5.5.4">
+<h3>
+<span class="header-section-number">5.5.4</span> SBP by Physical Activity and General Health Status<a class="anchor" aria-label="anchor" href="#sbp-by-physical-activity-and-general-health-status"><i class="fas fa-link"></i></a>
+</h3>
+<p>We’ll build a panel of boxplots to try to understand the relationships between Systolic Blood Pressure, General Health Status and Physical Activity. Note the use of <code>coord_flip</code> to rotate the graph 90 degrees, and the use of <code>labeller</code> within <code>facet_wrap</code> to include both the name of the (Physical Activity) variable and its value.</p>
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">HealthGen</span>, y <span class="op">=</span> <span class="va">SBP</span>, fill <span class="op">=</span> <span class="va">HealthGen</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"SBP by Health Status, Overall Health for NHANES ages 21-64"</span>,
+         y <span class="op">=</span> <span class="st">"Systolic BP"</span>, x <span class="op">=</span> <span class="st">"Self-Reported Overall Health"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">PhysActive</span>, labeller <span class="op">=</span> <span class="st">"label_both"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/nh_500cc_sbphealth_fig2-1.png" width="672"></div>
+</div>
+<div id="sbp-by-sleep-trouble-and-general-health-status" class="section level3" number="5.5.5">
+<h3>
+<span class="header-section-number">5.5.5</span> SBP by Sleep Trouble and General Health Status<a class="anchor" aria-label="anchor" href="#sbp-by-sleep-trouble-and-general-health-status"><i class="fas fa-link"></i></a>
+</h3>
+<p>Here’s a plot of faceted histograms, which might be used to address similar questions related to the relationship between Overall Health, Systolic Blood Pressure and whether someone has trouble sleeping.</p>
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nh_500cc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">SBP</span>, fill <span class="op">=</span> <span class="va">HealthGen</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"white"</span>, bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"SBP by Overall Health and Sleep Trouble for NHANES ages 21-64"</span>,
+         x <span class="op">=</span> <span class="st">"Systolic BP"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">SleepTrouble</span> <span class="op">~</span> <span class="va">HealthGen</span>, labeller <span class="op">=</span> <span class="st">"label_both"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="05_nhanes_cc_files/figure-html/nh_500cc_sbphealthsleep_fig1-1.png" width="672"></div>
+</div>
+</div>
+<div id="conclusions" class="section level2" number="5.6">
+<h2>
+<span class="header-section-number">5.6</span> Conclusions<a class="anchor" aria-label="anchor" href="#conclusions"><i class="fas fa-link"></i></a>
+</h2>
+<p>This is just a small piece of the toolbox for visualizations that we’ll create in this class. Many additional tools are on the way, but the main idea won’t change. Using the <code>ggplot2</code> package, we can accomplish several critical tasks in creating a visualization, including:</p>
+<ul>
+<li>Identifying (and labeling) the axes and titles</li>
+<li>Identifying a type of <code>geom</code> to use, like a point, bar or histogram</li>
+<li>Changing fill, color, shape, size to facilitate comparisons</li>
+<li>Building “small multiples” of plots with faceting</li>
+</ul>
+<p>Good data visualizations make it easy to see the data, and <code>ggplot2</code>’s tools make it relatively difficult to make a really bad graph.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="data-structures-and-types-of-variables.html"><span class="header-section-number">4</span> Data Structures and Types of Variables</a></div>
+<div class="next"><a href="references.html">References</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#visualizing-nhanes-complete-cases"><span class="header-section-number">5</span> Visualizing NHANES Complete Cases</a></li>
+<li><a class="nav-link" href="#loading-in-the-complete-cases-sample"><span class="header-section-number">5.1</span> Loading in the “Complete Cases” Sample</a></li>
+<li>
+<a class="nav-link" href="#distribution-of-heights"><span class="header-section-number">5.2</span> Distribution of Heights</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#changing-a-histograms-fill-and-color"><span class="header-section-number">5.2.1</span> Changing a Histogram’s Fill and Color</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#height-and-sex"><span class="header-section-number">5.3</span> Height and Sex</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#a-boxplot-of-height-by-sex"><span class="header-section-number">5.3.1</span> A Boxplot of Height by Sex</a></li>
+<li><a class="nav-link" href="#histograms-of-height-by-sex"><span class="header-section-number">5.3.2</span> Histograms of Height by Sex</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#looking-at-pulse-rate"><span class="header-section-number">5.4</span> Looking at Pulse Rate</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#pulse-rate-and-physical-activity"><span class="header-section-number">5.4.1</span> Pulse Rate and Physical Activity</a></li>
+<li><a class="nav-link" href="#pulse-by-sleeping-trouble"><span class="header-section-number">5.4.2</span> Pulse by Sleeping Trouble</a></li>
+<li><a class="nav-link" href="#pulse-and-healthgen"><span class="header-section-number">5.4.3</span> Pulse and HealthGen</a></li>
+<li><a class="nav-link" href="#pulse-rate-and-systolic-blood-pressure"><span class="header-section-number">5.4.4</span> Pulse Rate and Systolic Blood Pressure</a></li>
+<li><a class="nav-link" href="#sleep-trouble-vs.-no-sleep-trouble"><span class="header-section-number">5.4.5</span> Sleep Trouble vs. No Sleep Trouble?</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#general-health-status"><span class="header-section-number">5.5</span> General Health Status</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#bar-chart-for-categorical-data"><span class="header-section-number">5.5.1</span> Bar Chart for Categorical Data</a></li>
+<li><a class="nav-link" href="#two-way-tables"><span class="header-section-number">5.5.2</span> Two-Way Tables</a></li>
+<li><a class="nav-link" href="#sbp-by-general-health-status"><span class="header-section-number">5.5.3</span> SBP by General Health Status</a></li>
+<li><a class="nav-link" href="#sbp-by-physical-activity-and-general-health-status"><span class="header-section-number">5.5.4</span> SBP by Physical Activity and General Health Status</a></li>
+<li><a class="nav-link" href="#sbp-by-sleep-trouble-and-general-health-status"><span class="header-section-number">5.5.5</span> SBP by Sleep Trouble and General Health Status</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#conclusions"><span class="header-section-number">5.6</span> Conclusions</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/THOMASELOVE/431-notes/blob/master/05_nhanes_cc.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/THOMASELOVE/431-notes/edit/master/05_nhanes_cc.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</strong>" was written by Thomas E. Love. It was last built on 2021-08-21.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

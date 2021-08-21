@@ -452,7 +452,7 @@ miss_case_summary(nh_adult750)
 ```
 
 
-## `nh_adults500cc`: A Sample of Complete Cases
+## `nh_adults500cc`: A Sample of Complete Cases {#nh_cc} 
 
 If we wanted a sample of exactly 750 subjects with complete data, we would have needed to add a step in the development of our `nh_temp` sampling frame to filter for complete cases.
 
@@ -521,8 +521,8 @@ We'll save the `nh_adult750` and `nh_adult500cc` samples to use in later parts o
 
 
 ```r
-saveRDS(nh_adult750, file = "data/nh_adult750.Rds")
-saveRDS(nh_adult500cc, file = "data/nh_adult500cc.Rds")
+write_rds(nh_adult750, file = "data/nh_adult750.Rds")
+write_rds(nh_adult500cc, file = "data/nh_adult500cc.Rds")
 ```
 
 You will also find these `.Rds` files as part of the [`431-data` repository](https://github.com/THOMASELOVE/431-data) for the course.

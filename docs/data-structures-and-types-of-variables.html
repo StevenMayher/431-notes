@@ -46,6 +46,7 @@
 <li><a class="" href="looking-at-the-palmer-penguins.html"><span class="header-section-number">2</span> Looking at the Palmer Penguins</a></li>
 <li><a class="" href="nhanes1.html"><span class="header-section-number">3</span> NHANES: Initial Exploring</a></li>
 <li><a class="active" href="data-structures-and-types-of-variables.html"><span class="header-section-number">4</span> Data Structures and Types of Variables</a></li>
+<li><a class="" href="visualizing-nhanes-complete-cases.html"><span class="header-section-number">5</span> Visualizing NHANES Complete Cases</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -525,9 +526,9 @@ $ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgo~</code></pre>
 10   483      4     25  
 # ... with 740 more rows</code></pre>
 </div>
-<div id="nh_adults500cc-a-sample-of-complete-cases" class="section level2" number="4.6">
+<div id="nh_cc" class="section level2" number="4.6">
 <h2>
-<span class="header-section-number">4.6</span> <code>nh_adults500cc</code>: A Sample of Complete Cases<a class="anchor" aria-label="anchor" href="#nh_adults500cc-a-sample-of-complete-cases"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.6</span> <code>nh_adults500cc</code>: A Sample of Complete Cases<a class="anchor" aria-label="anchor" href="#nh_cc"><i class="fas fa-link"></i></a>
 </h2>
 <p>If we wanted a sample of exactly 750 subjects with complete data, we would have needed to add a step in the development of our <code>nh_temp</code> sampling frame to filter for complete cases.</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
@@ -579,8 +580,8 @@ $ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgo~</code></pre>
 </h2>
 <p>We’ll save the <code>nh_adult750</code> and <code>nh_adult500cc</code> samples to use in later parts of the notes. To do this, we’ll save them as <code>.Rds</code> files, which will have some advantages for us later on.</p>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span><span class="va">nh_adult750</span>, file <span class="op">=</span> <span class="st">"data/nh_adult750.Rds"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span><span class="va">nh_adult500cc</span>, file <span class="op">=</span> <span class="st">"data/nh_adult500cc.Rds"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">write_rds</span><span class="op">(</span><span class="va">nh_adult750</span>, file <span class="op">=</span> <span class="st">"data/nh_adult750.Rds"</span><span class="op">)</span>
+<span class="fu">write_rds</span><span class="op">(</span><span class="va">nh_adult500cc</span>, file <span class="op">=</span> <span class="st">"data/nh_adult500cc.Rds"</span><span class="op">)</span></code></pre></div>
 <p>You will also find these <code>.Rds</code> files as part of the <a href="https://github.com/THOMASELOVE/431-data"><code>431-data</code> repository</a> for the course.</p>
 <p>Next, we’ll load, explore and learn about some of the variables in these two samples.</p>
 
@@ -589,7 +590,7 @@ $ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgo~</code></pre>
 
   <div class="chapter-nav">
 <div class="prev"><a href="nhanes1.html"><span class="header-section-number">3</span> NHANES: Initial Exploring</a></div>
-<div class="next"><a href="references.html">References</a></div>
+<div class="next"><a href="visualizing-nhanes-complete-cases.html"><span class="header-section-number">5</span> Visualizing NHANES Complete Cases</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -608,7 +609,7 @@ $ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgo~</code></pre>
 </li>
 <li><a class="nav-link" href="#qualitative-categorical-variables"><span class="header-section-number">4.4</span> Qualitative (Categorical) Variables</a></li>
 <li><a class="nav-link" href="#counting-missing-values"><span class="header-section-number">4.5</span> Counting Missing Values</a></li>
-<li><a class="nav-link" href="#nh_adults500cc-a-sample-of-complete-cases"><span class="header-section-number">4.6</span> nh_adults500cc: A Sample of Complete Cases</a></li>
+<li><a class="nav-link" href="#nh_cc"><span class="header-section-number">4.6</span> nh_adults500cc: A Sample of Complete Cases</a></li>
 <li><a class="nav-link" href="#saving-our-samples-in-.rds-files"><span class="header-section-number">4.7</span> Saving our Samples in .Rds files</a></li>
 </ul>
 
