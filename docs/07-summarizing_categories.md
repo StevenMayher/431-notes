@@ -121,6 +121,57 @@ nh_750 %>%
          Total 750  100.0%
 ```
 
+## Constructing Tables Well
+
+The prolific Howard Wainer is responsible for many interesting books on visualization and related issues, including @HW_GraphicDiscovery and @HW_MedicalIlluminations. These rules come from Chapter 10 of @HW_VisualRevelations.
+
+1. Order the rows and columns in a way that makes sense.
+2. Round, a lot!
+3. ALL is different and important
+
+### Alabama First!
+
+Which of these Tables is more useful to you?
+    
+2013 Percent of Students in grades 9-12 who are obese
+
+State | % Obese | 95% CI | Sample Size
+:----- | :-------: | :------: | :-----------:
+Alabama | 17.1 | (14.6 - 19.9) | 1,499
+Alaska | 12.4 | (10.5-14.6)	| 1,167
+Arizona |	10.7 |	(8.3-13.6)	| 1,520
+Arkansas |	17.8	| (15.7-20.1)	| 1,470
+Connecticut |	12.3 |	(10.2-14.7)	| 2,270
+Delaware |	14.2 |	(12.9-15.6) |	2,475
+Florida |	11.6	| (10.5-12.8)	| 5,491
+... | | | 
+Wisconsin |	11.6 | 	(9.7-13.9)	| 2,771
+Wyoming	| 10.7 |	(9.4-12.2)	| 2,910
+
+or ...
+
+State | % Obese | 95% CI | Sample Size
+:----- | :-------: | :------: | :-----------:
+Kentucky | 18.0 | (15.7 - 20.6) | 1,537
+Arkansas | 17.8 | (15.7 - 20.1) | 1,470
+Alabama | 17.1 | (14.6 - 19.9) | 1,499
+Tennessee | 16.9 | (15.1 - 18.8) | 1,831
+Texas | 15.7 | (13.9 - 17.6) | 3,039
+... | | |
+Massachusetts | 10.2 | (8.5 - 12.1) | 2,547
+Idaho | 9.6 | (8.2 - 11.1) | 1,841
+Montana | 9.4 | (8.4 - 10.5) | 4,679
+New Jersey | 8.7 | (6.8 - 11.2) | 1,644
+Utah | 6.4 | (4.8 - 8.5) | 2,136
+
+It is a rare event when Alabama first is the best choice.
+
+### ALL is different and important
+
+Summaries of rows and columns provide a measure of what is typical or usual. Sometimes a sum is helpful, at other times, consider presenting a median or other summary. The ALL category, as @HW_VisualRevelations suggests, should be both visually different from the individual entries and set spatially apart.
+
+On the whole, it's *far* easier to fall into a good graph in R (at least if you have some ggplot2 skills) than to produce a good table.
+
 ## The Mode of a Categorical Variable
 
 A common measure applied to a categorical variable is to identify the mode, the most frequently observed value. To find the mode for variables with lots of categories (so that the `summary` may not be sufficient), we usually tabulate the data, and then sort by the counts of the numbers of observations, as we did with discrete quantitative variables.
@@ -254,7 +305,7 @@ Proportion        0.239        0.025        0.021
 ------------------------------------------------------------
 ```
 
-## Cross-Tabulations 
+## Cross-Tabulations of Two Variables
 
 It is very common for us to want to describe the association of one categorical variable with another. For instance, is there a relationship between Education and SleepTrouble in these data?
 
@@ -439,7 +490,7 @@ Race       Excellent Vgood Good Fair Poor
   Other            1     3    8    3    0
 ```
 
-### Cross-Classifying Three Categorical Variables
+## Cross-Classifying Three Categorical Variables
 
 Suppose we are interested in `Smoke100` and its relationship to `PhysActive` and `SleepTrouble`.
 
@@ -531,83 +582,403 @@ Smoke100  No Yes
      Yes  55  43
 ```
 
-## Constructing Tables Well
-
-The prolific Howard Wainer is responsible for many interesting books on visualization and related issues, including @HW_GraphicDiscovery and @HW_MedicalIlluminations. These rules come from Chapter 10 of @HW_VisualRevelations.
-
-1. Order the rows and columns in a way that makes sense.
-2. Round, a lot!
-3. ALL is different and important
-
-### Alabama First!
-
-Which of these Tables is more useful to you?
-    
-2013 Percent of Students in grades 9-12 who are obese
-
-State | % Obese | 95% CI | Sample Size
-:----- | :-------: | :------: | :-----------:
-Alabama | 17.1 | (14.6 - 19.9) | 1,499
-Alaska | 12.4 | (10.5-14.6)	| 1,167
-Arizona |	10.7 |	(8.3-13.6)	| 1,520
-Arkansas |	17.8	| (15.7-20.1)	| 1,470
-Connecticut |	12.3 |	(10.2-14.7)	| 2,270
-Delaware |	14.2 |	(12.9-15.6) |	2,475
-Florida |	11.6	| (10.5-12.8)	| 5,491
-... | | | 
-Wisconsin |	11.6 | 	(9.7-13.9)	| 2,771
-Wyoming	| 10.7 |	(9.4-12.2)	| 2,910
-
-or ...
-
-State | % Obese | 95% CI | Sample Size
-:----- | :-------: | :------: | :-----------:
-Kentucky | 18.0 | (15.7 - 20.6) | 1,537
-Arkansas | 17.8 | (15.7 - 20.1) | 1,470
-Alabama | 17.1 | (14.6 - 19.9) | 1,499
-Tennessee | 16.9 | (15.1 - 18.8) | 1,831
-Texas | 15.7 | (13.9 - 17.6) | 3,039
-... | | |
-Massachusetts | 10.2 | (8.5 - 12.1) | 2,547
-Idaho | 9.6 | (8.2 - 11.1) | 1,841
-Montana | 9.4 | (8.4 - 10.5) | 4,679
-New Jersey | 8.7 | (6.8 - 11.2) | 1,644
-Utah | 6.4 | (4.8 - 8.5) | 2,136
-
-It is a rare event when Alabama first is the best choice.
-
-### Order rows and columns sensibly
-
-- Alabama First!
-    + Size places - put the largest first. We often look most carefully at the top.
-- Order time from the past to the future to help the viewer.
-- If there is a clear predictor-outcome relationship, put the predictors in the rows and the outcomes in the columns.
-
-### Round - a lot!
-
-- Humans cannot understand more than two digits very easily.
-- We almost never care about accuracy of more than two digits.
-- We can almost never justify more than two digits of accuracy statistically.
-- It's also helpful to remember that we are almost invariably publishing progress to date, rather than a truly final answer.
-
-Suppose, for instance, we report a correlation coefficient of 0.25. How many observations do you think you would need to justify such a choice?
-
-- To report 0.25 meaningfully, we want to be sure that the second digit isn't 4 or 6.
-- That requires a standard error less than 0.005
-- The *standard error* of any statistic is proportional to 1 over the square root of the sample size, *n*.
-
-So $\frac{1}{\sqrt{n}}$ ~ 0.005, but that means $\sqrt{n} = \frac{1}{0.005} = 200$. If $\sqrt{n} = 200$, then *n* = (200)^2^ = 40,000. 
-
-Do we usually have 40,000 observations?
-
-### ALL is different and important
-
-Summaries of rows and columns provide a measure of what is typical or usual. Sometimes a sum is helpful, at other times, consider presenting a median or other summary. The ALL category, as @HW_VisualRevelations suggests, should be both visually different from the individual entries and set spatially apart.
-
-On the whole, it's *far* easier to fall into a good graph in R (at least if you have some ggplot2 skills) than to produce a good table.
-
 ## Gaining Control over Tables in R: the `gt` package
 
 With the `gt` package, anyone can make wonderful-looking tables using the R programming language. The `gt` package allows you to start with a tibble or data frame, and use it to make very detailed tables that look professional, and includes tools that enable you to include titles and subtitles, all sorts of labels, as well as footnotes and source notes. 
 
-The `gt` package is described in substantial detail at https://gt.rstudio.com/.
+Here's a fairly simple example of a cross-tabulation of part of the `nh_750` data built using a few tools from the `gt` package.
+
+
+```r
+library(gt)
+
+temp_tbl <- nh_750 %>% filter(complete.cases(PhysActive, HealthGen)) %>%
+  tabyl(PhysActive, HealthGen) %>%
+  tibble() 
+
+gt(temp_tbl) %>%
+  tab_header(title = md("**Cross-Tabulation from nh_750**"),
+             subtitle = md("Physical Activity vs. Overall Health"))
+```
+
+```{=html}
+<div id="fwnyizmcts" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#fwnyizmcts .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#fwnyizmcts .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#fwnyizmcts .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#fwnyizmcts .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#fwnyizmcts .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fwnyizmcts .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#fwnyizmcts .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#fwnyizmcts .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#fwnyizmcts .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#fwnyizmcts .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#fwnyizmcts .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#fwnyizmcts .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#fwnyizmcts .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#fwnyizmcts .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#fwnyizmcts .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#fwnyizmcts .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#fwnyizmcts .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#fwnyizmcts .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fwnyizmcts .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#fwnyizmcts .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fwnyizmcts .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#fwnyizmcts .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#fwnyizmcts .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fwnyizmcts .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#fwnyizmcts .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#fwnyizmcts .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#fwnyizmcts .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#fwnyizmcts .gt_left {
+  text-align: left;
+}
+
+#fwnyizmcts .gt_center {
+  text-align: center;
+}
+
+#fwnyizmcts .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#fwnyizmcts .gt_font_normal {
+  font-weight: normal;
+}
+
+#fwnyizmcts .gt_font_bold {
+  font-weight: bold;
+}
+
+#fwnyizmcts .gt_font_italic {
+  font-style: italic;
+}
+
+#fwnyizmcts .gt_super {
+  font-size: 65%;
+}
+
+#fwnyizmcts .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 65%;
+}
+</style>
+<table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="6" class="gt_heading gt_title gt_font_normal" style><strong>Cross-Tabulation from nh_750</strong></th>
+    </tr>
+    <tr>
+      <th colspan="6" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>Physical Activity vs. Overall Health</th>
+    </tr>
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">PhysActive</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Excellent</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Vgood</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Good</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Fair</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Poor</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_center">No</td>
+<td class="gt_row gt_right">24</td>
+<td class="gt_row gt_right">66</td>
+<td class="gt_row gt_right">126</td>
+<td class="gt_row gt_right">59</td>
+<td class="gt_row gt_right">10</td></tr>
+    <tr><td class="gt_row gt_center">Yes</td>
+<td class="gt_row gt_right">60</td>
+<td class="gt_row gt_right">131</td>
+<td class="gt_row gt_right">126</td>
+<td class="gt_row gt_right">45</td>
+<td class="gt_row gt_right">4</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+```
+
+The `gt` package and its usage is described in detail at https://gt.rstudio.com/.
+
+

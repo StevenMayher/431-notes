@@ -106,7 +106,7 @@ ID           | a numerical code identifying the subject   | 68648, 67200
 Sex          | sex of subject (2 levels)                  | female, male
 Age          | age (years) at screening of subject        | 30, 35
 Height       | height (in cm) at screening of subject     | 181.3, 180.2
-Weight       | weight (in kg) at screeening of subject    | 67.1, 86.6
+Weight       | weight (in kg) at screening of subject    | 67.1, 86.6
 Race         | reported race of subject (6 levels)        | White, Black
 Education    | educational level of subject (5 levels)    | College Grad, High School
 BMI          | body-mass index, in kg/m^2^                | 20.4, 26.7
@@ -150,7 +150,7 @@ Variables recorded in numbers that we use as numbers are called **quantitative**
     + We know these are quantitative because they have units: `Age` in years, `Height` in centimeters, `BMI` in kg/m^2^, the `BP` measurements in mm Hg, and `Pulse` in beats per minute.
     + Depending on the context, we would likely treat most of these as *discrete* given that are measurements are fairly crude (this is certainly true for `Age`, measured in years) although BMI is probably *continuous* in most settings, even though it is a function of two other measures (`Height` and `Weight`) which are rounded off to integer numbers of centimeters and kilograms, respectively.
 
-- It is also possible to separate out quantitative variables into **ratio** variables or **interval** variables. An interval variable has equal distances between values, but the zero point is arbitrary. A ratio variable has equal intervals between values, and a meaningful zero point. For example, weight is an example of a ratio variable, while IQ is an example of an interval variable. We all know what zero weight is. An intelligence score like IQ is a different matter. We say that the average IQ is 100, but that's only by convention. We could just as easily have decided to add 400 to every IQ value and make the average 500 instead. Because IQ's intervals are equal, the difference between and IQ of 70 and an IQ of 80 is the same as the difference between 120 and 130. However, an IQ of 100 is not twice as high as an IQ of 50. The point is that if the zero point is artificial and moveable, then the differences between numbers are meaningful but the ratios between them are not. On the other hand, most lab test values are ratio variables, as are physical characteristics like height and weight. A person who weighs 100 kg is twice as heavy as one who weighs 50 kg; even when we convert kg to pounds, this is still true. For the most part, we can treat and analyze interval or ratio variables the same way.
+- It is also possible to separate out quantitative variables into **ratio** variables or **interval** variables. An interval variable has equal distances between values, but the zero point is arbitrary. A ratio variable has equal intervals between values, and a meaningful zero point. For example, weight is an example of a ratio variable, while IQ is an example of an interval variable. We all know what zero weight is. An intelligence score like IQ is a different matter. We say that the average IQ is 100, but that's only by convention. We could just as easily have decided to add 400 to every IQ value and make the average 500 instead. Because IQ's intervals are equal, the difference between and IQ of 70 and an IQ of 80 is the same as the difference between 120 and 130. However, an IQ of 100 is not twice as high as an IQ of 50. The point is that if the zero point is artificial and movable, then the differences between numbers are meaningful but the ratios between them are not. On the other hand, most lab test values are ratio variables, as are physical characteristics like height and weight. A person who weighs 100 kg is twice as heavy as one who weighs 50 kg; even when we convert kg to pounds, this is still true. For the most part, we can treat and analyze interval or ratio variables the same way.
 
     + Each of the quantitative variables in our `nh_adult750` data can be thought of as ratio variables.
 
@@ -203,7 +203,7 @@ miss_var_table(nh_adult750)
 
 So, for instance, we have `r miss_var_table(nh_temp) %>% filter(n_miss_in_var == 0) %>% select(n_vars)` variables with no missing data, and that constitutes `r miss_var_table(nh_temp) %>% filter(n_miss_in_var == 0) %>% select(pct_vars)`% of the 16 variables in our `nh_adult750` data.
 
-The `miss_var_summary()` function tabultes the number, percent missings, and cumulative sum of missings of each variable in our data frame, in order of most to least missingness.
+The `miss_var_summary()` function tabulates the number, percent missing, and cumulative sum of missing of each variable in our data frame, in order of most to least missing values.
 
 ```{r}
 miss_var_summary(nh_adult750)

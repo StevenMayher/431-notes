@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 9 National Youth Fitness Survey | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</title>
+<meta name="author" content="Thomas E. Love">
+<meta name="description" content="The nnyfs.csv and the nnyfs.Rds data files were built by Professor Love using data from the 2012 National Youth Fitness Survey. The NHANES National Youth Fitness Survey (NNYFS) was conducted in...">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="Chapter 9 National Youth Fitness Survey | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta property="og:type" content="book">
+<meta property="og:url" content="your book url like https://thomaselove.github.io/431-book/NYFS-Study.html">
+<meta property="og:description" content="The nnyfs.csv and the nnyfs.Rds data files were built by Professor Love using data from the 2012 National Youth Fitness Survey. The NHANES National Youth Fitness Survey (NNYFS) was conducted in...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 9 National Youth Fitness Survey | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta name="twitter:description" content="The nnyfs.csv and the nnyfs.Rds data files were built by Professor Love using data from the 2012 National Youth Fitness Survey. The NHANES National Youth Fitness Survey (NNYFS) was conducted in...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Working with These Notes</a></li>
+<li><a class="" href="data-science.html"><span class="header-section-number">1</span> Data Science</a></li>
+<li class="book-part">Part A. Exploring Data</li>
+<li><a class="" href="the-palmer-penguins.html"><span class="header-section-number">2</span> The Palmer Penguins</a></li>
+<li><a class="" href="nhanes1.html"><span class="header-section-number">3</span> NHANES: A First Look</a></li>
+<li><a class="" href="data-structures-variable-types-sampling-nhanes.html"><span class="header-section-number">4</span> Data Structures, Variable Types &amp; Sampling NHANES</a></li>
+<li><a class="" href="visualizing-nhanes-data.html"><span class="header-section-number">5</span> Visualizing NHANES Data</a></li>
+<li><a class="" href="summarizing_quantities.html"><span class="header-section-number">6</span> Summarizing Quantities</a></li>
+<li><a class="" href="summarizing-categories.html"><span class="header-section-number">7</span> Summarizing Categories</a></li>
+<li><a class="" href="miss.html"><span class="header-section-number">8</span> Missing Data and Single Imputation</a></li>
+<li><a class="active" href="NYFS-Study.html"><span class="header-section-number">9</span> National Youth Fitness Survey</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/THOMASELOVE/431-notes">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="NYFS-Study" class="section level1" number="9">
+<h1>
+<span class="header-section-number">9</span> National Youth Fitness Survey<a class="anchor" aria-label="anchor" href="#NYFS-Study"><i class="fas fa-link"></i></a>
+</h1>
+<p>The <code>nnyfs.csv</code> and the <code>nnyfs.Rds</code> data files were built by Professor Love using data from the <a href="http://www.cdc.gov/Nchs/Nnyfs.htm">2012 National Youth Fitness Survey</a>.</p>
+<blockquote>
+<p>The NHANES National Youth Fitness Survey (NNYFS) was conducted in 2012 to collect data on physical activity and fitness levels in order to provide an evaluation of the health and fitness of children in the U.S. ages 3 to 15. The NNYFS collected data on physical activity and fitness levels of our youth through interviews and fitness tests.</p>
+</blockquote>
+<p>In the <code>nnyfs</code> data file (either <code>.csv</code> or <code>.Rds</code>), I’m only providing a modest fraction of the available information. More on the NNYFS (including information I’m not using) is available at <a href="https://wwwn.cdc.gov/nchs/nhanes/search/nnyfs12.aspx" class="uri">https://wwwn.cdc.gov/nchs/nhanes/search/nnyfs12.aspx</a>.</p>
+<p>The data elements I’m using fall into four main groups, or components:</p>
+<ul>
+<li><a href="https://wwwn.cdc.gov/nchs/nhanes/search/nnyfsdata.aspx?Component=Demographics">Demographics</a></li>
+<li><a href="https://wwwn.cdc.gov/nchs/nhanes/search/nnyfsdata.aspx?Component=Dietary">Dietary</a></li>
+<li>
+<a href="http://wwwn.cdc.gov/nchs/nhanes/search/nnyfsdata.aspx?Component=Examination">Examination</a> and</li>
+<li><a href="https://wwwn.cdc.gov/nchs/nhanes/search/nnyfsdata.aspx?Component=Questionnaire">Questionnaire</a></li>
+</ul>
+<p>What I did was merge a few elements from each of the available components of the NHANES National Youth Fitness Survey, reformulated (and in some cases simplified) some variables, and restricted the sample to kids who had completed elements of each of the four components.</p>
+<div id="the-variables-included-in-nnyfs" class="section level2" number="9.1">
+<h2>
+<span class="header-section-number">9.1</span> The Variables included in <code>nnyfs</code><a class="anchor" aria-label="anchor" href="#the-variables-included-in-nnyfs"><i class="fas fa-link"></i></a>
+</h2>
+<p>This section tells you where the data come from, and briefly describe what is collected.</p>
+<div id="from-the-nnyfs-demographic-component" class="section level3" number="9.1.1">
+<h3>
+<span class="header-section-number">9.1.1</span> From the <a href="https://wwwn.cdc.gov/nchs/nhanes/search/nnyfsdata.aspx?Component=Demographics">NNYFS Demographic Component</a><a class="anchor" aria-label="anchor" href="#from-the-nnyfs-demographic-component"><i class="fas fa-link"></i></a>
+</h3>
+<p>All of these come from the <code>Y_DEMO</code> file.</p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="21%">
+<col width="17%">
+<col width="60%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">In <code>nnyfs</code>
+</th>
+<th align="right">In <code>Y_DEMO</code>
+</th>
+<th align="left">Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right"><code>SEQN</code></td>
+<td align="right"><code>SEQN</code></td>
+<td align="left">Subject ID, connects all of the files</td>
+</tr>
+<tr class="even">
+<td align="right"><code>sex</code></td>
+<td align="right"><code>RIAGENDR</code></td>
+<td align="left">Really, this is sex, not gender</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>age_child</code></td>
+<td align="right"><code>RIDAGEYR</code></td>
+<td align="left">Age in years at screening</td>
+</tr>
+<tr class="even">
+<td align="right"><code>race_eth</code></td>
+<td align="right"><code>RIDRETH1</code></td>
+<td align="left">Race/Hispanic origin (collapsed to 4 levels)</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>educ_child</code></td>
+<td align="right"><code>DMDEDUC3</code></td>
+<td align="left">Education Level (for children ages 6-15). 0 = Kindergarten, 9 = Ninth grade or higher</td>
+</tr>
+<tr class="even">
+<td align="right"><code>language</code></td>
+<td align="right"><code>SIALANG</code></td>
+<td align="left">Language in which the interview was conducted</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>sampling_wt</code></td>
+<td align="right"><code>WTMEC</code></td>
+<td align="left">Full-sample MEC exam weight (for inference)</td>
+</tr>
+<tr class="even">
+<td align="right"><code>income_pov</code></td>
+<td align="right"><code>INDFMPIR</code></td>
+<td align="left">Ratio of family income to poverty (ceiling is 5.0)</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>age_adult</code></td>
+<td align="right"><code>DMDHRAGE</code></td>
+<td align="left">Age of adult who brought child to interview</td>
+</tr>
+<tr class="even">
+<td align="right"><code>educ_adult</code></td>
+<td align="right"><code>DMDHREDU</code></td>
+<td align="left">Education level of adult who brought child</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="from-the-nnyfs-dietary-component" class="section level3" number="9.1.2">
+<h3>
+<span class="header-section-number">9.1.2</span> From the <a href="https://wwwn.cdc.gov/nchs/nhanes/search/nnyfsdata.aspx?Component=Dietary">NNYFS Dietary Component</a><a class="anchor" aria-label="anchor" href="#from-the-nnyfs-dietary-component"><i class="fas fa-link"></i></a>
+</h3>
+<p>From the <code>Y_DR1TOT</code> file, we have a number of variables related to the child’s diet, with the following summaries mostly describing consumption “yesterday” in a dietary recall questionnaire.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">In <code>nnyfs</code>
+</th>
+<th align="right">In <code>Y_DR1TOT</code>
+</th>
+<th align="left">Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right"><code>respondent</code></td>
+<td align="right"><code>DR1MNRSP</code></td>
+<td align="left">who responded to interview (child, Mom, someone else)</td>
+</tr>
+<tr class="even">
+<td align="right"><code>salt_used</code></td>
+<td align="right"><code>DBQ095Z</code></td>
+<td align="left">uses salt, lite salt or salt substitute at the table</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>energy</code></td>
+<td align="right"><code>DR1TKCAL</code></td>
+<td align="left">energy consumed (kcal)</td>
+</tr>
+<tr class="even">
+<td align="right"><code>protein</code></td>
+<td align="right"><code>DR1TPROT</code></td>
+<td align="left">protein consumed (g)</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>sugar</code></td>
+<td align="right"><code>DR1TSUGR</code></td>
+<td align="left">total sugar consumed (g)</td>
+</tr>
+<tr class="even">
+<td align="right"><code>fat</code></td>
+<td align="right"><code>DR1TTFAT</code></td>
+<td align="left">total fat consumed (g)</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>diet_yesterday</code></td>
+<td align="right"><code>DR1_300</code></td>
+<td align="left">compare food consumed yesterday to usual amount</td>
+</tr>
+<tr class="even">
+<td align="right"><code>water</code></td>
+<td align="right"><code>DR1_320Z</code></td>
+<td align="left">total plain water drank (g)</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="from-the-nnyfs-examination-component" class="section level3" number="9.1.3">
+<h3>
+<span class="header-section-number">9.1.3</span> From the <a href="https://wwwn.cdc.gov/nchs/nhanes/search/nnyfsdata.aspx?Component=Examination">NNYFS Examination Component</a><a class="anchor" aria-label="anchor" href="#from-the-nnyfs-examination-component"><i class="fas fa-link"></i></a>
+</h3>
+<p>From the <code>Y_BMX</code> file of Body Measures:</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">In <code>nnyfs</code>
+</th>
+<th align="right">In <code>Y_BMX</code>
+</th>
+<th align="left">Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right"><code>height</code></td>
+<td align="right">BMXHT</td>
+<td align="left">standing height (cm)</td>
+</tr>
+<tr class="even">
+<td align="right"><code>weight</code></td>
+<td align="right">BMXWT</td>
+<td align="left">weight (kg)</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>bmi</code></td>
+<td align="right">BMXBMI</td>
+<td align="left">body mass index (<span class="math inline">\(kg/m^2\)</span>)</td>
+</tr>
+<tr class="even">
+<td align="right"><code>bmi_cat</code></td>
+<td align="right">BMDBMIC</td>
+<td align="left">BMI category (4 levels)</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>arm_length</code></td>
+<td align="right">BMXARML</td>
+<td align="left">Upper arm length (cm)</td>
+</tr>
+<tr class="even">
+<td align="right"><code>waist</code></td>
+<td align="right">BMXWAIST</td>
+<td align="left">Waist circumference (cm)</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>arm_circ</code></td>
+<td align="right">BMXARMC</td>
+<td align="left">Arm circumference (cm)</td>
+</tr>
+<tr class="even">
+<td align="right"><code>calf_circ</code></td>
+<td align="right">BMXCALF</td>
+<td align="left">Maximal calf circumference (cm)</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>calf_skinfold</code></td>
+<td align="right">BMXCALFF</td>
+<td align="left">Calf skinfold (mm)</td>
+</tr>
+<tr class="even">
+<td align="right"><code>triceps_skinfold</code></td>
+<td align="right">BMXTRI</td>
+<td align="left">Triceps skinfold (mm)</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>subscapular_skinfold</code></td>
+<td align="right">BMXSUB</td>
+<td align="left">Subscapular skinfold (mm)</td>
+</tr>
+</tbody>
+</table></div>
+<p>From the <code>Y_PLX</code> file of Plank test results:</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">In <code>nnyfs</code>
+</th>
+<th align="right">In <code>Y_PLX</code>
+</th>
+<th align="left">Description</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="right"><code>plank_time</code></td>
+<td align="right">MPXPLANK</td>
+<td align="left"># of seconds plank position is held</td>
+</tr></tbody>
+</table></div>
+</div>
+<div id="from-the-nnyfs-questionnaire-component" class="section level3" number="9.1.4">
+<h3>
+<span class="header-section-number">9.1.4</span> From the <a href="https://wwwn.cdc.gov/nchs/nhanes/search/nnyfsdata.aspx?Component=Questionnaire">NNYFS Questionnaire Component</a><a class="anchor" aria-label="anchor" href="#from-the-nnyfs-questionnaire-component"><i class="fas fa-link"></i></a>
+</h3>
+<p>From the <code>Y_PAQ</code> file of Physical Activity questions:</p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="22%">
+<col width="17%">
+<col width="60%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">In <code>nnyfs</code>
+</th>
+<th align="right">In <code>Y_PAQ</code>
+</th>
+<th align="left">Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right"><code>active_days</code></td>
+<td align="right">PAQ706</td>
+<td align="left">Days physically active (<span class="math inline">\(\geq 60\)</span> min.) in past week</td>
+</tr>
+<tr class="even">
+<td align="right"><code>tv_hours</code></td>
+<td align="right">PAQ710</td>
+<td align="left">Average hours watching TV/videos past 30d</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>computer_hours</code></td>
+<td align="right">PAQ715</td>
+<td align="left">Average hours on computer past 30d</td>
+</tr>
+<tr class="even">
+<td align="right"><code>physical_last_week</code></td>
+<td align="right">PAQ722</td>
+<td align="left">Any physical activity outside of school past week</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>enjoy_recess</code></td>
+<td align="right">PAQ750</td>
+<td align="left">Enjoy participating in PE/recess</td>
+</tr>
+</tbody>
+</table></div>
+<p>From the <code>Y_DBQ</code> file of Diet Behavior and Nutrition questions:</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">In <code>nnyfs</code>
+</th>
+<th align="right">In <code>Y_DBQ</code>
+</th>
+<th align="left">Description</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="right"><code>meals_out</code></td>
+<td align="right">DBD895</td>
+<td align="left"># meals not home-prepared in past 7 days</td>
+</tr></tbody>
+</table></div>
+<p>From the <code>Y_HIQ</code> file of Health Insurance questions:</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">In <code>nnyfs</code>
+</th>
+<th align="right">In <code>Y_HIQ</code>
+</th>
+<th align="left">Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right"><code>insured</code></td>
+<td align="right">HIQ011</td>
+<td align="left">Covered by Health Insurance?</td>
+</tr>
+<tr class="even">
+<td align="right"><code>insurance</code></td>
+<td align="right">HIQ031</td>
+<td align="left">Type of Health Insurance coverage</td>
+</tr>
+</tbody>
+</table></div>
+<p>From the <code>Y_HUQ</code> file of Access to Care questions:</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">In <code>nnyfs</code>
+</th>
+<th align="right">In <code>Y_HUQ</code>
+</th>
+<th align="left">Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right"><code>phys_health</code></td>
+<td align="right">HUQ010</td>
+<td align="left">General health condition (Excellent - Poor)</td>
+</tr>
+<tr class="even">
+<td align="right"><code>access_to_care</code></td>
+<td align="right">HUQ030</td>
+<td align="left">Routine place to get care?</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>care_source</code></td>
+<td align="right">HUQ040</td>
+<td align="left">Type of place most often goes to for care</td>
+</tr>
+</tbody>
+</table></div>
+<p>From the <code>Y_MCQ</code> file of Medical Conditions questions:</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">In <code>nnyfs</code>
+</th>
+<th align="right">In <code>Y_MCQ</code>
+</th>
+<th align="left">Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right"><code>asthma_ever</code></td>
+<td align="right">MCQ010</td>
+<td align="left">Ever told you have asthma?</td>
+</tr>
+<tr class="even">
+<td align="right"><code>asthma_now</code></td>
+<td align="right">MCQ035</td>
+<td align="left">Still have asthma?</td>
+</tr>
+</tbody>
+</table></div>
+<p>From the <code>Y_RXQ_RX</code> file of Prescription Medication questions:</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">In <code>nnyfs</code>
+</th>
+<th align="right">In <code>Y_RXQ_RX</code>
+</th>
+<th align="left">Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right"><code>med_use</code></td>
+<td align="right">RXDUSE</td>
+<td align="left">Taken prescription medication in last month?</td>
+</tr>
+<tr class="even">
+<td align="right"><code>med_count</code></td>
+<td align="right">RXDCOUNT</td>
+<td align="left"># of prescription meds taken in past month</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div id="looking-over-a-few-variables" class="section level2" number="9.2">
+<h2>
+<span class="header-section-number">9.2</span> Looking over A Few Variables<a class="anchor" aria-label="anchor" href="#looking-over-a-few-variables"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now, I’ll take a look at the <code>nnyfs</code> data, which I’ve made available in a comma-separated version (<code>nnyfs.csv</code>), if you prefer, as well as in an R data set (<code>nnyfs.Rds</code>) which loads a bit faster. After loading the file, let’s get a handle on its size and contents. In my R Project for these notes, the data are contained in a separate <code>data</code> subdirectory.</p>
+<div class="sourceCode" id="cb225"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nnyfs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"data/nnyfs.Rds"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="co">## size of the tibble</span>
+<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">nnyfs</span><span class="op">)</span></code></pre></div>
+<pre><code>[1] 1518   45</code></pre>
+<p>There are 1518 rows (subjects) and 45 columns (variables), by which I mean that there are 1518 kids in the <code>nnyfs</code> data frame, and we have 45 pieces of information on each subject.
+So, what do we have, exactly?</p>
+<div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nnyfs</span> <span class="co"># this is a tibble, has some nice features in a print-out like this</span></code></pre></div>
+<pre><code># A tibble: 1,518 x 45
+    SEQN sex    age_child race_eth       educ_child language
+   &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;   
+ 1 71917 Female        15 3_Black Non-H~          9 English 
+ 2 71918 Female         8 3_Black Non-H~          2 English 
+ 3 71919 Female        14 2_White Non-H~          8 English 
+ 4 71920 Female        15 2_White Non-H~          8 English 
+ 5 71921 Male           3 2_White Non-H~         NA English 
+ 6 71922 Male          12 1_Hispanic              6 English 
+ 7 71923 Male          12 2_White Non-H~          5 English 
+ 8 71924 Female         8 4_Other Race/~          2 English 
+ 9 71925 Male           7 1_Hispanic              0 English 
+10 71926 Male           8 3_Black Non-H~          2 English 
+# ... with 1,508 more rows, and 39 more variables:
+#   sampling_wt &lt;dbl&gt;, income_pov &lt;dbl&gt;, age_adult &lt;dbl&gt;,
+#   educ_adult &lt;chr&gt;, respondent &lt;chr&gt;, salt_used &lt;chr&gt;,
+#   energy &lt;dbl&gt;, protein &lt;dbl&gt;, sugar &lt;dbl&gt;, fat &lt;dbl&gt;,
+#   diet_yesterday &lt;chr&gt;, water &lt;dbl&gt;, plank_time &lt;dbl&gt;,
+#   height &lt;dbl&gt;, weight &lt;dbl&gt;, bmi &lt;dbl&gt;, bmi_cat &lt;chr&gt;,
+#   arm_length &lt;dbl&gt;, waist &lt;dbl&gt;, arm_circ &lt;dbl&gt;, ...</code></pre>
+<p>Tibbles are a modern reimagining of the main way in which people have stored data in R, called a data frame. Tibbles were developed to keep what time has proven to be effective, and throwing out what is not. We can learn something about the structure of the tibble from such functions as <code>str</code> or <code>glimpse</code>.</p>
+<div class="sourceCode" id="cb229"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">nnyfs</span><span class="op">)</span></code></pre></div>
+<pre><code>tibble [1,518 x 45] (S3: tbl_df/tbl/data.frame)
+ $ SEQN                : num [1:1518] 71917 71918 71919 71920 71921 ...
+ $ sex                 : chr [1:1518] "Female" "Female" "Female" "Female" ...
+ $ age_child           : num [1:1518] 15 8 14 15 3 12 12 8 7 8 ...
+ $ race_eth            : chr [1:1518] "3_Black Non-Hispanic" "3_Black Non-Hispanic" "2_White Non-Hispanic" "2_White Non-Hispanic" ...
+ $ educ_child          : num [1:1518] 9 2 8 8 NA 6 5 2 0 2 ...
+ $ language            : chr [1:1518] "English" "English" "English" "English" ...
+ $ sampling_wt         : num [1:1518] 28299 15127 29977 80652 55592 ...
+ $ income_pov          : num [1:1518] 0.21 5 5 0.87 4.34 5 5 2.74 0.46 1.57 ...
+ $ age_adult           : num [1:1518] 46 46 42 53 31 42 39 31 45 56 ...
+ $ educ_adult          : chr [1:1518] "2_9-11th Grade" "3_High School Graduate" "5_College Graduate" "3_High School Graduate" ...
+ $ respondent          : chr [1:1518] "Child" "Mom" "Child" "Child" ...
+ $ salt_used           : chr [1:1518] "Yes" "Yes" "Yes" "Yes" ...
+ $ energy              : num [1:1518] 2844 1725 2304 1114 1655 ...
+ $ protein             : num [1:1518] 169.1 55.2 199.3 14 50.6 ...
+ $ sugar               : num [1:1518] 128.2 118.7 81.4 119.2 90.3 ...
+ $ fat                 : num [1:1518] 127.9 63.7 86.1 36 53.3 ...
+ $ diet_yesterday      : chr [1:1518] "2_Usual" "2_Usual" "2_Usual" "2_Usual" ...
+ $ water               : num [1:1518] 607 178 503 859 148 ...
+ $ plank_time          : num [1:1518] NA 45 121 45 11 107 127 44 184 58 ...
+ $ height              : num [1:1518] NA 131.6 172 167.1 90.2 ...
+ $ weight              : num [1:1518] NA 38.6 58.7 92.5 12.4 66.4 56.7 22.2 20.9 28.3 ...
+ $ bmi                 : num [1:1518] NA 22.3 19.8 33.1 15.2 25.9 22.5 14.4 15.9 17 ...
+ $ bmi_cat             : chr [1:1518] NA "4_Obese" "2_Normal" "4_Obese" ...
+ $ arm_length          : num [1:1518] NA 27.7 38.4 35.9 18.3 34.2 33 26.5 24.2 26 ...
+ $ waist               : num [1:1518] NA 71.9 79.4 96.4 46.8 90 72.3 56.1 54.5 59.7 ...
+ $ arm_circ            : num [1:1518] NA 25.4 26 37.9 15.1 29.5 27.9 17.6 17.7 19.9 ...
+ $ calf_circ           : num [1:1518] NA 32.3 35.3 46.8 19.4 36.9 36.8 24 24.3 27.3 ...
+ $ calf_skinfold       : num [1:1518] NA 22 18.4 NA 8.4 22 18.3 7 7.2 8.2 ...
+ $ triceps_skinfold    : num [1:1518] NA 19.9 15 20.6 8.6 22.8 20.5 12.9 6.9 8.8 ...
+ $ subscapular_skinfold: num [1:1518] NA 17.4 9.8 22.8 5.7 24.4 12.6 6.8 4.8 6.1 ...
+ $ active_days         : num [1:1518] 3 5 3 3 7 2 5 3 7 7 ...
+ $ tv_hours            : num [1:1518] 2 2 1 3 2 3 0 4 2 2 ...
+ $ computer_hours      : num [1:1518] 1 2 3 3 0 1 0 3 1 1 ...
+ $ physical_last_week  : chr [1:1518] "No" "No" "Yes" "Yes" ...
+ $ enjoy_recess        : chr [1:1518] "1_Strongly Agree" "1_Strongly Agree" "3_Neither Agree nor Disagree" "2_Agree" ...
+ $ meals_out           : num [1:1518] 0 2 3 2 1 1 2 1 0 2 ...
+ $ insured             : chr [1:1518] "Has Insurance" "Has Insurance" "Has Insurance" "Has Insurance" ...
+ $ phys_health         : chr [1:1518] "1_Excellent" "3_Good" "1_Excellent" "3_Good" ...
+ $ access_to_care      : chr [1:1518] "Has Usual Care Source" "Has Usual Care Source" "Has Usual Care Source" "Has Usual Care Source" ...
+ $ care_source         : chr [1:1518] "Clinic or Health Center" "Doctor's Office" "Doctor's Office" "Doctor's Office" ...
+ $ asthma_ever         : chr [1:1518] "Never Had Asthma" "History of Asthma" "Never Had Asthma" "History of Asthma" ...
+ $ asthma_now          : chr [1:1518] "No Asthma Now" "Asthma Now" "No Asthma Now" "Asthma Now" ...
+ $ med_use             : chr [1:1518] "No Medications" "Had Medication" "No Medications" "Had Medication" ...
+ $ med_count           : num [1:1518] 0 1 0 2 0 0 0 0 0 0 ...
+ $ insurance           : chr [1:1518] "State Sponsored" "State Sponsored" "Private" "State Sponsored" ...</code></pre>
+<p>There are a lot of variables here. Let’s run through the first few in a little detail.</p>
+<div id="seqn" class="section level3" number="9.2.1">
+<h3>
+<span class="header-section-number">9.2.1</span> <code>SEQN</code><a class="anchor" aria-label="anchor" href="#seqn"><i class="fas fa-link"></i></a>
+</h3>
+<p>The first variable, <code>SEQN</code> is just a (numerical) identifying code attributable to a given subject of the survey. This is <em>nominal</em> data, which will be of little interest down the line. On some occasions, as in this case, the ID numbers are sequential, in the sense that subject 71919 was included in the data base after subject 71918, but this fact isn’t particularly interesting here, because the protocol remained unchanged throughout the study.</p>
+</div>
+<div id="sex" class="section level3" number="9.2.2">
+<h3>
+<span class="header-section-number">9.2.2</span> <code>sex</code><a class="anchor" aria-label="anchor" href="#sex"><i class="fas fa-link"></i></a>
+</h3>
+<p>The second variable, <code>sex</code>, is listed as a character variable (R uses <strong>factor</strong> and <strong>character</strong> to refer to categorical, especially non-numeric information). Here, as we can see below, we have two levels, <em>Female</em> and <em>Male</em>.</p>
+<div class="sourceCode" id="cb231"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nnyfs</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html">adorn_totals</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>    sex    n percent
+ Female  760   50.1%
+   Male  758   49.9%
+  Total 1518  100.0%</code></pre>
+</div>
+<div id="age_child" class="section level3" number="9.2.3">
+<h3>
+<span class="header-section-number">9.2.3</span> <code>age_child</code><a class="anchor" aria-label="anchor" href="#age_child"><i class="fas fa-link"></i></a>
+</h3>
+<p>The third variable, <code>age_child</code>, is the age of the child at the time of their screening to be in the study, measured in years. Note that age is a continuous concept, but the measure used here (number of full years alive) is a common discrete approach to measurement. Age, of course, has a meaningful zero point, so this can be thought of as a ratio variable; a child who is 6 is half as old as one who is 12. We can tabulate the observed values, since there are only a dozen or so.</p>
+<div class="sourceCode" id="cb233"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nnyfs</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">age_child</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code> age_child   n percent
+         3 110    7.2%
+         4 112    7.4%
+         5 114    7.5%
+         6 129    8.5%
+         7 123    8.1%
+         8 112    7.4%
+         9  99    6.5%
+        10 124    8.2%
+        11 111    7.3%
+        12 137    9.0%
+        13 119    7.8%
+        14 130    8.6%
+        15  98    6.5%</code></pre>
+<p>At the time of initial screening, these children should have been between 3 and 15 years of age, so things look reasonable. Since this is a meaningful quantitative variable, we may be interested in a more descriptive summary.</p>
+<div class="sourceCode" id="cb235"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nnyfs</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age_child</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>   age_child     
+ Min.   : 3.000  
+ 1st Qu.: 6.000  
+ Median : 9.000  
+ Mean   : 9.033  
+ 3rd Qu.:12.000  
+ Max.   :15.000  </code></pre>
+<p>These six numbers provide a nice, if incomplete, look at the ages.</p>
+<ul>
+<li>
+<code>Min.</code> = the minimum, or youngest age at the examination was 3 years old.</li>
+<li>
+<code>1st Qu.</code> = the first quartile (25th percentile) of the ages was 6. This means that 25 percent of the subjects were age 6 or less.</li>
+<li>
+<code>Median</code> = the second quartile (50th percentile) of the ages was 9. This is often used to describe the center of the data. Half of the subjects were age 9 or less.</li>
+<li>
+<code>3rd Qu.</code> = the third quartile (75th percentile) of the ages was 12</li>
+<li>
+<code>Max.</code> = the maximum, or oldest age at the examination was 15 years.</li>
+</ul>
+<p>We could get the standard deviation and a count of missing and non-missing observations with <code>favstats</code> from the <code>mosaic</code> package.</p>
+<div class="sourceCode" id="cb237"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">age_child</span>, data <span class="op">=</span> <span class="va">nnyfs</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left"></th>
+<th align="right">min</th>
+<th align="right">Q1</th>
+<th align="right">median</th>
+<th align="right">Q3</th>
+<th align="right">max</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">n</th>
+<th align="right">missing</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left"></td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="right">9</td>
+<td align="right">12</td>
+<td align="right">15</td>
+<td align="right">9</td>
+<td align="right">3.7</td>
+<td align="right">1518</td>
+<td align="right">0</td>
+</tr></tbody>
+</table></div>
+</div>
+<div id="race_eth" class="section level3" number="9.2.4">
+<h3>
+<span class="header-section-number">9.2.4</span> <code>race_eth</code><a class="anchor" aria-label="anchor" href="#race_eth"><i class="fas fa-link"></i></a>
+</h3>
+<p>The fourth variable in the data set is <code>race_eth</code>, which is a multi-categorical variable describing the child’s race and ethnicity.</p>
+<div class="sourceCode" id="cb238"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nnyfs</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">race_eth</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">race_eth</th>
+<th align="right">n</th>
+<th align="left">percent</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">1_Hispanic</td>
+<td align="right">450</td>
+<td align="left">29.6%</td>
+</tr>
+<tr class="even">
+<td align="left">2_White Non-Hispanic</td>
+<td align="right">610</td>
+<td align="left">40.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">3_Black Non-Hispanic</td>
+<td align="right">338</td>
+<td align="left">22.3%</td>
+</tr>
+<tr class="even">
+<td align="left">4_Other Race/Ethnicity</td>
+<td align="right">120</td>
+<td align="left">7.9%</td>
+</tr>
+</tbody>
+</table></div>
+<p>And now, we get the idea of looking at whether our numerical summaries of the children’s ages varies by their race/ethnicity…</p>
+<div class="sourceCode" id="cb239"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="va">age_child</span> <span class="op">~</span> <span class="va">race_eth</span>, data <span class="op">=</span> <span class="va">nnyfs</span><span class="op">)</span></code></pre></div>
+<pre><code>                race_eth min   Q1 median Q3 max     mean
+1             1_Hispanic   3 5.25    9.0 12  15 8.793333
+2   2_White Non-Hispanic   3 6.00    9.0 12  15 9.137705
+3   3_Black Non-Hispanic   3 6.00    9.0 12  15 9.038462
+4 4_Other Race/Ethnicity   3 7.00    9.5 12  15 9.383333
+        sd   n missing
+1 3.733846 450       0
+2 3.804421 610       0
+3 3.576423 338       0
+4 3.427970 120       0</code></pre>
+</div>
+<div id="income_pov" class="section level3" number="9.2.5">
+<h3>
+<span class="header-section-number">9.2.5</span> <code>income_pov</code><a class="anchor" aria-label="anchor" href="#income_pov"><i class="fas fa-link"></i></a>
+</h3>
+<p>Skipping down a bit, let’s look at the family income as a multiple of the poverty level. Here’s the summary.</p>
+<div class="sourceCode" id="cb241"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nnyfs</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">income_pov</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>   income_pov   
+ Min.   :0.000  
+ 1st Qu.:0.870  
+ Median :1.740  
+ Mean   :2.242  
+ 3rd Qu.:3.520  
+ Max.   :5.000  
+ NA's   :89     </code></pre>
+<p>We see there is some missing data here. Let’s ignore that for the moment and concentrate on interpreting the results for the children with actual data. We should start with a picture.</p>
+<div class="sourceCode" id="cb243"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">income_pov</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">30</span>, fill <span class="op">=</span> <span class="st">"white"</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></code></pre></div>
+<pre><code>Warning: Removed 89 rows containing non-finite values
+(stat_bin).</code></pre>
+<div class="inline-figure"><img src="09_nnyfs_foundations_files/figure-html/c9_nnyfs_inc2-1.png" width="672"></div>
+<p>The histogram shows us that the values are truncated at 5, so that children whose actual family income is above 5 times the poverty line are listed as 5. We also see a message reminding us that some of the data are missing for this variable.</p>
+<p>Is there a relationship between <code>income_pov</code> and <code>race_eth</code> in these data?</p>
+<div class="sourceCode" id="cb245"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="va">income_pov</span> <span class="op">~</span> <span class="va">race_eth</span>, data <span class="op">=</span> <span class="va">nnyfs</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">race_eth</th>
+<th align="right">min</th>
+<th align="right">Q1</th>
+<th align="right">median</th>
+<th align="right">Q3</th>
+<th align="right">max</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">n</th>
+<th align="right">missing</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">1_Hispanic</td>
+<td align="right">0</td>
+<td align="right">0.6</td>
+<td align="right">1.0</td>
+<td align="right">1.7</td>
+<td align="right">5</td>
+<td align="right">1.3</td>
+<td align="right">1.1</td>
+<td align="right">409</td>
+<td align="right">41</td>
+</tr>
+<tr class="even">
+<td align="left">2_White Non-Hispanic</td>
+<td align="right">0</td>
+<td align="right">1.5</td>
+<td align="right">3.0</td>
+<td align="right">4.5</td>
+<td align="right">5</td>
+<td align="right">2.9</td>
+<td align="right">1.6</td>
+<td align="right">588</td>
+<td align="right">22</td>
+</tr>
+<tr class="odd">
+<td align="left">3_Black Non-Hispanic</td>
+<td align="right">0</td>
+<td align="right">0.8</td>
+<td align="right">1.6</td>
+<td align="right">2.8</td>
+<td align="right">5</td>
+<td align="right">2.0</td>
+<td align="right">1.5</td>
+<td align="right">328</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">4_Other Race/Ethnicity</td>
+<td align="right">0</td>
+<td align="right">1.2</td>
+<td align="right">2.7</td>
+<td align="right">4.6</td>
+<td align="right">5</td>
+<td align="right">2.8</td>
+<td align="right">1.7</td>
+<td align="right">104</td>
+<td align="right">16</td>
+</tr>
+</tbody>
+</table></div>
+<p>This deserves a picture. Let’s try a boxplot.</p>
+<div class="sourceCode" id="cb246"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">race_eth</span>, y <span class="op">=</span> <span class="va">income_pov</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>Warning: Removed 89 rows containing non-finite values
+(stat_boxplot).</code></pre>
+<div class="inline-figure"><img src="09_nnyfs_foundations_files/figure-html/c9_nnyfs_inc4-1.png" width="672"></div>
+</div>
+<div id="bmi" class="section level3" number="9.2.6">
+<h3>
+<span class="header-section-number">9.2.6</span> <code>bmi</code><a class="anchor" aria-label="anchor" href="#bmi"><i class="fas fa-link"></i></a>
+</h3>
+<p>Moving into the body measurement data, <code>bmi</code> is the body-mass index of the child. The BMI is a person’s weight in kilograms divided by his or her height in meters squared. Symbolically, BMI = weight in kg / (height in m)<sup>2</sup>. This is a continuous concept, measured to as many decimal places as you like, and it has a meaningful zero point, so it’s a ratio variable.</p>
+<div class="sourceCode" id="cb248"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nnyfs</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">bmi</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>      bmi       
+ Min.   :11.90  
+ 1st Qu.:15.90  
+ Median :18.10  
+ Mean   :19.63  
+ 3rd Qu.:21.90  
+ Max.   :48.30  
+ NA's   :4      </code></pre>
+<p>Why would a table of these BMI values not be a great idea, for these data? A hint is that R represents this variable as <code>num</code> or numeric in its depiction of the data structure, and this implies that R has some decimal values stored. Here, I’ll use the <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code> function and the <code><a href="https://rdrr.io/r/utils/head.html">tail()</a></code> function to show the first few and the last few values of what would prove to be a very long table of <code>bmi</code> values.</p>
+<div class="sourceCode" id="cb250"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nnyfs</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">bmi</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>  bmi n percent valid_percent
+ 11.9 1    0.1%          0.1%
+ 12.6 1    0.1%          0.1%
+ 12.7 1    0.1%          0.1%
+ 12.9 1    0.1%          0.1%
+ 13.0 2    0.1%          0.1%
+ 13.1 1    0.1%          0.1%</code></pre>
+<div class="sourceCode" id="cb252"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nnyfs</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">bmi</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>  bmi n percent valid_percent
+ 42.8 1    0.1%          0.1%
+ 43.0 1    0.1%          0.1%
+ 46.9 1    0.1%          0.1%
+ 48.2 1    0.1%          0.1%
+ 48.3 1    0.1%          0.1%
+   NA 4    0.3%             -</code></pre>
+</div>
+<div id="bmi_cat" class="section level3" number="9.2.7">
+<h3>
+<span class="header-section-number">9.2.7</span> <code>bmi_cat</code><a class="anchor" aria-label="anchor" href="#bmi_cat"><i class="fas fa-link"></i></a>
+</h3>
+<p>Next I’ll look at the <code>bmi_cat</code> information. This is a four-category ordinal variable, which divides the sample according to BMI into four groups. The BMI categories use sex-specific 2000 BMI-for-age (in months) growth charts prepared by the Centers for Disease Control for the US. We can get the breakdown from a table of the variable’s values.</p>
+<div class="sourceCode" id="cb254"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nnyfs</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">bmi_cat</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>       bmi_cat   n percent valid_percent
+ 1_Underweight  41    2.7%          2.7%
+      2_Normal 920   60.6%         60.8%
+  3_Overweight 258   17.0%         17.0%
+       4_Obese 295   19.4%         19.5%
+          &lt;NA&gt;   4    0.3%             -</code></pre>
+<p>In terms of percentiles by age and sex from the growth charts, the meanings of the categories are:</p>
+<ul>
+<li>Underweight (BMI &lt; 5th percentile)</li>
+<li>Normal weight (BMI 5th to &lt; 85th percentile)</li>
+<li>Overweight (BMI 85th to &lt; 95th percentile)</li>
+<li>Obese (BMI <span class="math inline">\(\geq\)</span> 95th percentile)</li>
+</ul>
+<p>Note how I’ve used labels in the <code>bmi_cat</code> variable that include a number at the start so that the table results are sorted in a rational way. R sorts tables alphabetically, in general. We’ll use the <code>forcats</code> package to work with categorical variables that we store as <em>factors</em> eventually, but for now, we’ll keep things relatively simple.</p>
+<p>Note that the <code>bmi_cat</code> data don’t completely separate out the raw <code>bmi</code> data, because the calculation of percentiles requires different tables for each combination of <code>age</code> and <code>sex</code>.</p>
+<div class="sourceCode" id="cb256"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">bmi_cat</span>, data <span class="op">=</span> <span class="va">nnyfs</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">bmi_cat</th>
+<th align="right">min</th>
+<th align="right">Q1</th>
+<th align="right">median</th>
+<th align="right">Q3</th>
+<th align="right">max</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">n</th>
+<th align="right">missing</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">1_Underweight</td>
+<td align="right">11.9</td>
+<td align="right">13.4</td>
+<td align="right">13.7</td>
+<td align="right">15.0</td>
+<td align="right">16.5</td>
+<td align="right">14.1</td>
+<td align="right">1.1</td>
+<td align="right">41</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">2_Normal</td>
+<td align="right">13.5</td>
+<td align="right">15.4</td>
+<td align="right">16.5</td>
+<td align="right">18.7</td>
+<td align="right">24.0</td>
+<td align="right">17.2</td>
+<td align="right">2.3</td>
+<td align="right">920</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">3_Overweight</td>
+<td align="right">16.9</td>
+<td align="right">18.3</td>
+<td align="right">21.4</td>
+<td align="right">23.4</td>
+<td align="right">27.9</td>
+<td align="right">21.2</td>
+<td align="right">2.9</td>
+<td align="right">258</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">4_Obese</td>
+<td align="right">17.9</td>
+<td align="right">22.3</td>
+<td align="right">26.2</td>
+<td align="right">30.2</td>
+<td align="right">48.3</td>
+<td align="right">26.7</td>
+<td align="right">5.7</td>
+<td align="right">295</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="waist" class="section level3" number="9.2.8">
+<h3>
+<span class="header-section-number">9.2.8</span> <code>waist</code><a class="anchor" aria-label="anchor" href="#waist"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let’s also look briefly at <code>waist</code>, which is the circumference of the child’s waist, in centimeters. Again, this is a numeric variable, so perhaps we’ll stick to the simple summary, rather than obtaining a table of observed values.</p>
+<div class="sourceCode" id="cb257"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">waist</span>, data <span class="op">=</span> <span class="va">nnyfs</span><span class="op">)</span> </code></pre></div>
+<pre><code>  min   Q1 median   Q3   max     mean       sd    n missing
+ 42.5 55.6   64.8 76.6 144.7 67.70536 15.19809 1512       6</code></pre>
+<p>Here’s a histogram of the waist circumference data.</p>
+<div class="sourceCode" id="cb259"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">waist</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">25</span>, fill <span class="op">=</span> <span class="st">"tomato"</span>, color <span class="op">=</span> <span class="st">"cyan"</span><span class="op">)</span></code></pre></div>
+<pre><code>Warning: Removed 6 rows containing non-finite values
+(stat_bin).</code></pre>
+<div class="inline-figure"><img src="09_nnyfs_foundations_files/figure-html/c9_nnyfs_waist2-1.png" width="672"></div>
+</div>
+<div id="triceps_skinfold" class="section level3" number="9.2.9">
+<h3>
+<span class="header-section-number">9.2.9</span> <code>triceps_skinfold</code><a class="anchor" aria-label="anchor" href="#triceps_skinfold"><i class="fas fa-link"></i></a>
+</h3>
+<p>The last variable I’ll look at for now is <code>triceps_skinfold</code>, which is measured in millimeters. This is one of several common locations used for the assessment of body fat using skinfold calipers, and is a frequent part of growth assessments in children. Again, this is a numeric variable according to R.</p>
+<div class="sourceCode" id="cb261"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">triceps_skinfold</span>, data <span class="op">=</span> <span class="va">nnyfs</span><span class="op">)</span></code></pre></div>
+<pre><code> min  Q1 median Q3  max     mean       sd    n missing
+   4 9.1   12.4 18 38.8 14.35725 6.758825 1497      21</code></pre>
+<p>And here’s a histogram of the triceps skinfold data, with the fill and color flipped from what we saw in the plot of the waist circumference data a moment ago.</p>
+<div class="sourceCode" id="cb263"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">triceps_skinfold</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">25</span>, fill <span class="op">=</span> <span class="st">"cyan"</span>, color <span class="op">=</span> <span class="st">"tomato"</span><span class="op">)</span></code></pre></div>
+<pre><code>Warning: Removed 21 rows containing non-finite values
+(stat_bin).</code></pre>
+<div class="inline-figure"><img src="09_nnyfs_foundations_files/figure-html/c9_nnyfs_tri2-1.png" width="672"></div>
+<p>OK. We’ve seen a few variables, and we’ll move on now to look more seriously at the data.</p>
+</div>
+</div>
+<div id="additional-numeric-summaries" class="section level2" number="9.3">
+<h2>
+<span class="header-section-number">9.3</span> Additional Numeric Summaries<a class="anchor" aria-label="anchor" href="#additional-numeric-summaries"><i class="fas fa-link"></i></a>
+</h2>
+<div id="the-five-number-summary-quantiles-and-iqr" class="section level3" number="9.3.1">
+<h3>
+<span class="header-section-number">9.3.1</span> The Five Number Summary, Quantiles and IQR<a class="anchor" aria-label="anchor" href="#the-five-number-summary-quantiles-and-iqr"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <strong>five number summary</strong> is most famous when used to form a box plot - it’s the minimum, 25th percentile, median, 75th percentile and maximum. For numerical and integer variables, the <code>summary</code> function produces the five number summary, plus the mean, and a count of any missing values (NA’s).</p>
+<div class="sourceCode" id="cb265"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nnyfs</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">waist</span>, <span class="va">energy</span>, <span class="va">sugar</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>     waist            energy         sugar       
+ Min.   : 42.50   Min.   : 257   Min.   :  1.00  
+ 1st Qu.: 55.60   1st Qu.:1368   1st Qu.: 82.66  
+ Median : 64.80   Median :1794   Median :116.92  
+ Mean   : 67.71   Mean   :1877   Mean   :124.32  
+ 3rd Qu.: 76.60   3rd Qu.:2306   3rd Qu.:157.05  
+ Max.   :144.70   Max.   :5265   Max.   :405.49  
+ NA's   :6                                       </code></pre>
+<p>As an alternative, we can use the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> notation to indicate the variable we wish to study inside a data set, and we can use the <code>fivenum</code> function to get the five numbers used in developing a box plot. We’ll focus for a little while on the number of kilocalories consumed by each child, according to the dietary recall questionnaire. That’s the <code>energy</code> variable.</p>
+<div class="sourceCode" id="cb267"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">fivenum</a></span><span class="op">(</span><span class="va">nnyfs</span><span class="op">$</span><span class="va">energy</span><span class="op">)</span></code></pre></div>
+<pre><code>[1]  257.0 1367.0 1794.5 2306.0 5265.0</code></pre>
+<ul>
+<li>As mentioned in <a href="summarizing_quantities.html#rangeandiqr">6.3.1</a>, the <strong>inter-quartile range</strong>, or IQR, is sometimes used as a competitor for the standard deviation. It’s the difference between the 75th percentile and the 25th percentile. The 25th percentile, median, and 75th percentile are referred to as the quartiles of the data set, because, together, they split the data into quarters.</li>
+</ul>
+<div class="sourceCode" id="cb269"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">IQR</a></span><span class="op">(</span><span class="va">nnyfs</span><span class="op">$</span><span class="va">energy</span><span class="op">)</span></code></pre></div>
+<pre><code>[1] 938.5</code></pre>
+<p>We can obtain <strong>quantiles</strong> (percentiles) as we like - here, I’m asking for the 1st and 99th:</p>
+<div class="sourceCode" id="cb271"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">quantile</a></span><span class="op">(</span><span class="va">nnyfs</span><span class="op">$</span><span class="va">energy</span>, probs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">0.99</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>     1%     99% 
+ 566.85 4051.75 </code></pre>
+</div>
+</div>
+<div id="additional-summaries-from-favstats" class="section level2" number="9.4">
+<h2>
+<span class="header-section-number">9.4</span> Additional Summaries from <code>favstats</code><a class="anchor" aria-label="anchor" href="#additional-summaries-from-favstats"><i class="fas fa-link"></i></a>
+</h2>
+<p>If we’re focusing on a single variable, the <code>favstats</code> function in the <code>mosaic</code> package can be very helpful. Rather than calling up the entire <code>mosaic</code> library here, I’ll just specify the function within the library.</p>
+<div class="sourceCode" id="cb273"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">energy</span>, data <span class="op">=</span> <span class="va">nnyfs</span><span class="op">)</span></code></pre></div>
+<pre><code> min     Q1 median   Q3  max     mean       sd    n missing
+ 257 1367.5 1794.5 2306 5265 1877.157 722.3537 1518       0</code></pre>
+<p>This adds three useful results to the base summary - the standard deviation, the sample size and the number of missing observations.</p>
+</div>
+<div id="the-histogram" class="section level2" number="9.5">
+<h2>
+<span class="header-section-number">9.5</span> The Histogram<a class="anchor" aria-label="anchor" href="#the-histogram"><i class="fas fa-link"></i></a>
+</h2>
+<p>Obtaining a basic <strong>histogram</strong> of, for example, the energy (kilocalories consumed) in the <code>nnyfs</code> data is pretty straightforward.</p>
+<div class="sourceCode" id="cb275"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">energy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">100</span>, col <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="09_nnyfs_foundations_files/figure-html/c9_nnyfs_en_hist1-1.png" width="672"></div>
+<div id="freedman-diaconis-rule-to-select-bin-width" class="section level3" number="9.5.1">
+<h3>
+<span class="header-section-number">9.5.1</span> Freedman-Diaconis Rule to select bin width<a class="anchor" aria-label="anchor" href="#freedman-diaconis-rule-to-select-bin-width"><i class="fas fa-link"></i></a>
+</h3>
+<p>If we like, we can suggest a particular number of cells for the histogram, instead of accepting the defaults. In this case, we have <span class="math inline">\(n\)</span> = 1518 observations. The <strong>Freedman-Diaconis rule</strong> can be helpful here. That rule suggests that we set the bin-width to</p>
+<p><span class="math display">\[
+h = \frac{2*IQR}{n^{1/3}}
+\]</span></p>
+<p>so that the number of bins is equal to the range of the data set (maximum - minimum) divided by <span class="math inline">\(h\)</span>.</p>
+<p>For the <code>energy</code> data in the <code>nnyfs</code> tibble, we have</p>
+<ul>
+<li>IQR of 938.5, <span class="math inline">\(n\)</span> = 1518 and range = 5008</li>
+<li>Thus, by the Freedman-Diaconis rule, the optimal binwidth <span class="math inline">\(h\)</span> is 163.3203676, or, realistically, 163.</li>
+<li>And so the number of bins would be 30.6636586, or, realistically 31.</li>
+</ul>
+<p>Here, we’ll draw the graph again, using the Freedman-Diaconis rule to identify the number of bins, and also play around a bit with the fill and color of the bars.</p>
+<div class="sourceCode" id="cb276"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bw</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">IQR</a></span><span class="op">(</span><span class="va">nnyfs</span><span class="op">$</span><span class="va">energy</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">nnyfs</span><span class="op">$</span><span class="va">energy</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">energy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth<span class="op">=</span><span class="va">bw</span>, color <span class="op">=</span> <span class="st">"white"</span>, fill <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="09_nnyfs_foundations_files/figure-html/c9_nnyfs_en_hist2-1.png" width="672"></div>
+<p>This is a nice start, but it is by no means a finished graph.</p>
+<p>Let’s improve the axis labels, add a title, and fill in the bars with a distinctive blue and use a black outline around each bar. I’ll just use 25 bars, because I like how that looks in this case, and optimizing the number of bins is rarely important.</p>
+<div class="sourceCode" id="cb277"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">energy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins<span class="op">=</span><span class="fl">25</span>, color <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Histogram of Body-Mass Index Results in the nnyfs data"</span>,
+         x <span class="op">=</span> <span class="st">"Energy Consumed (kcal)"</span>, y <span class="op">=</span> <span class="st">"# of Subjects"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="09_nnyfs_foundations_files/figure-html/c9_nnyfs_en_hist3-1.png" width="672"></div>
+</div>
+<div id="a-note-on-colors" class="section level3" number="9.5.2">
+<h3>
+<span class="header-section-number">9.5.2</span> A Note on Colors<a class="anchor" aria-label="anchor" href="#a-note-on-colors"><i class="fas fa-link"></i></a>
+</h3>
+<p>The simplest way to specify a color is with its name, enclosed in parentheses. My favorite list of R colors is <a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf" class="uri">http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf</a>. In a pinch, you can usually find it by googling <strong>Colors in R</strong>. You can also type <code><a href="https://rdrr.io/r/grDevices/colors.html">colors()</a></code> in the R console to obtain a list of the names of the same 657 colors.</p>
+<p>When using colors to make comparisons, you may be interested in using a scale that has some nice properties. The <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html">viridis package vignette</a> describes four color scales (viridis, magma, plasma and inferno) that are designed to be colorful, robust to colorblindness and gray scale printing, and perceptually uniform, which means (as the package authors describe it) that values close to each other have similar-appearing colors and values far away from each other have more different-appearing colors, consistently across the range of values. We can apply these colors with special functions within <code>ggplot</code>.</p>
+<p>Here’s a comparison of several histograms, looking at <code>energy</code> consumed as a function of whether yesterday was typical in terms of food consumption.</p>
+<div class="sourceCode" id="cb278"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">energy</span>, fill <span class="op">=</span> <span class="va">diet_yesterday</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span>, col <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_fill_viridis_d</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">diet_yesterday</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="09_nnyfs_foundations_files/figure-html/c9_nnyfs_en_hist4-1.png" width="672"></div>
+<p>We don’t really need the legend here, and perhaps we should restrict the plot to participants who responded to the <code>diet_yesterday</code> question, and put in a title and better axis labels?</p>
+<div class="sourceCode" id="cb279"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nnyfs</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">energy</span>, <span class="va">diet_yesterday</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">energy</span>, fill <span class="op">=</span> <span class="va">diet_yesterday</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span>, col <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_fill_viridis_d</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">diet_yesterday</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Energy consumed, in kcal"</span>,
+       title <span class="op">=</span> <span class="st">"Energy Consumption and How Typical Was Yesterday's Eating"</span>,
+       subtitle <span class="op">=</span> <span class="st">"NHANES National Youth Fitness Survey, no survey weighting"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="09_nnyfs_foundations_files/figure-html/c9_nnyfs_en_hist5-1.png" width="672"></div>
+</div>
+</div>
+<div id="the-frequency-polygon" class="section level2" number="9.6">
+<h2>
+<span class="header-section-number">9.6</span> The Frequency Polygon<a class="anchor" aria-label="anchor" href="#the-frequency-polygon"><i class="fas fa-link"></i></a>
+</h2>
+<p>As we’ve seen, we can also plot the distribution of a single continuous variable using the <code>freqpoly</code> geom. We can also add a <em>rug plot</em>, which places a small vertical line on the horizontal axis everywhere where an observation appears in the data.</p>
+<div class="sourceCode" id="cb280"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">energy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">150</span>, color <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_rug.html">geom_rug</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Frequency Polygon of nnyfs Energy data"</span>,
+         x <span class="op">=</span> <span class="st">"Energy (kcal)"</span>, y <span class="op">=</span> <span class="st">"# of Patients"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="09_nnyfs_foundations_files/figure-html/c9_nnyfs_en_freqpoly-1.png" width="672"></div>
+</div>
+<div id="plotting-the-probability-density-function" class="section level2" number="9.7">
+<h2>
+<span class="header-section-number">9.7</span> Plotting the Probability Density Function<a class="anchor" aria-label="anchor" href="#plotting-the-probability-density-function"><i class="fas fa-link"></i></a>
+</h2>
+<p>We can also produce a density function, which has the effect of smoothing out the bumps in a histogram or frequency polygon, while also changing what is plotted on the y-axis.</p>
+<div class="sourceCode" id="cb281"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">energy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span>kernel <span class="op">=</span> <span class="st">"gaussian"</span>, color <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Density of nnyfs Energy data"</span>,
+         x <span class="op">=</span> <span class="st">"Energy (kcal)"</span>, y <span class="op">=</span> <span class="st">"Probability Density function"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="09_nnyfs_foundations_files/figure-html/c9_nnyfs_en_density-1.png" width="672"></div>
+<p>So, what’s a density function?</p>
+<ul>
+<li>A probability density function is a function of a continuous variable, x, that represents the probability of x falling within a given range. Specifically, the integral over the interval (a,b) of the density function gives the probability that the value of x is within (a,b).</li>
+<li>If you’re interested in exploring more on the notion of density functions for continuous (and discrete) random variables, some nice elementary material is available at <a href="https://www.khanacademy.org/math/statistics-probability/random-variables-stats-library/discrete-and-continuous-random-variables/v/probability-density-functions">Khan Academy</a>.</li>
+</ul>
+</div>
+<div id="the-boxplot" class="section level2" number="9.8">
+<h2>
+<span class="header-section-number">9.8</span> The Boxplot<a class="anchor" aria-label="anchor" href="#the-boxplot"><i class="fas fa-link"></i></a>
+</h2>
+<p>Sometimes, it’s helpful to picture the five-number summary of the data in such a way as to get a general sense of the distribution. One approach is a <strong>boxplot</strong>, sometimes called a box-and-whisker plot.</p>
+<div id="drawing-a-boxplot-for-one-variable-in-ggplot2" class="section level3" number="9.8.1">
+<h3>
+<span class="header-section-number">9.8.1</span> Drawing a Boxplot for One Variable in <code>ggplot2</code><a class="anchor" aria-label="anchor" href="#drawing-a-boxplot-for-one-variable-in-ggplot2"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <code>ggplot2</code> library easily handles comparison boxplots for multiple distributions, as we’ll see in a moment. However, building a boxplot for a single distribution requires a little trickiness.</p>
+<div class="sourceCode" id="cb282"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="va">energy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"deepskyblue"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Boxplot of Energy for kids in the NNYFS"</span>,
+         y <span class="op">=</span> <span class="st">"Energy (kcal)"</span>,
+         x <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+          axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="09_nnyfs_foundations_files/figure-html/c9_nnyfs_en_box1-1.png" width="672"></div>
+</div>
+<div id="about-the-boxplot" class="section level3" number="9.8.2">
+<h3>
+<span class="header-section-number">9.8.2</span> About the Boxplot<a class="anchor" aria-label="anchor" href="#about-the-boxplot"><i class="fas fa-link"></i></a>
+</h3>
+<p>The boxplot is another John Tukey invention.</p>
+<ul>
+<li>R draws the box (here in yellow) so that its edges of the box fall at the 25<sup>th</sup> and 75<sup>th</sup> percentiles of the data, and the thick line inside the box falls at the median (50<sup>th</sup> percentile).</li>
+<li>The whiskers then extend out to the largest and smallest values that are not classified by the plot as candidate <em>outliers</em>.</li>
+<li>An outlier is an unusual point, far from the center of a distribution.</li>
+<li>Note that I’ve used the <code>horizontal</code> option to show this boxplot in this direction. Most comparison boxplots, as we’ll see below, are oriented vertically.</li>
+</ul>
+<p>The boxplot’s <strong>whiskers</strong> that are drawn from the first and third quartiles (i.e. the 25<sup>th</sup> and 75<sup>th</sup> percentiles) out to the most extreme points in the data that do not meet the standard of ``candidate outliers.’’ An outlier is simply a point that is far away from the center of the data - which may be due to any number of reasons, and generally indicates a need for further investigation.</p>
+<p>Most software, including R, uses a standard proposed by Tukey which describes a ``candidate outlier’’ as any point above the <strong><em>upper fence</em></strong> or below the <strong><em>lower fence</em></strong>. The definitions of the fences are based on the inter-quartile range (IQR).</p>
+<p>If IQR = 75th percentile - 25th percentile, then the upper fence is 75th percentile + 1.5 IQR, and the lower fence is 25th percentile - 1.5 IQR.</p>
+<p>So for these <code>energy</code> data,</p>
+<ul>
+<li>the upper fence is located at 2306 + 1.5(938.5) = 3713.75</li>
+<li>the lower fence is located at 1367 - 1.5(938.5) = -40.75</li>
+</ul>
+<p>In this case, we see no points identified as outliers in the low part of the distribution, but quite a few identified that way on the high side. This tends to identify about 5% of the data as a candidate outlier, <em>if</em> the data follow a Normal distribution.</p>
+<ul>
+<li>This plot is indicating clearly that there is some asymmetry (skew) in the data, specifically right skew.</li>
+<li>The standard R uses is to indicate as outliers any points that are more than 1.5 inter-quartile ranges away from the edges of the box.</li>
+</ul>
+<p>The horizontal orientation I’ve chosen here clarifies the relationship of direction of skew to the plot. A plot like this, with multiple outliers on the right side is indicative of a long right tail in the distribution, and hence, positive or right skew - with the mean being larger than the median. Other indications of skew include having one side of the box being substantially wider than the other, or one side of the whiskers being substantially longer than the other. More on skew later.</p>
+</div>
+</div>
+<div id="a-simple-comparison-boxplot" class="section level2" number="9.9">
+<h2>
+<span class="header-section-number">9.9</span> A Simple Comparison Boxplot<a class="anchor" aria-label="anchor" href="#a-simple-comparison-boxplot"><i class="fas fa-link"></i></a>
+</h2>
+<p>Boxplots are most often used for comparison. We can build boxplots using <code>ggplot2</code>, as well, and we’ll discuss that in detail later. For now, here’s a boxplot built to compare the <code>energy</code> results by the subject’s race/ethnicity.</p>
+<div class="sourceCode" id="cb283"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">race_eth</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">energy</span>, fill<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">race_eth</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Energy consumed (kcal)"</span>, x <span class="op">=</span> <span class="st">"Race/Ethnicity"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="09_nnyfs_foundations_files/figure-html/c9_nnyfs_en_box2-1.png" width="672"></div>
+<p>Let’s look at the comparison of observed <code>energy</code> levels across the five categories in our <code>phys_health</code> variable, now making use of the <code>viridis</code> color scheme.</p>
+<div class="sourceCode" id="cb284"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">phys_health</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">energy</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">phys_health</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_fill_viridis_d</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Energy by Self-Reported Physical Health, in nnyfs data"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="09_nnyfs_foundations_files/figure-html/c9_nnyfs_en_box3-1.png" width="672"></div>
+<p>As a graph, that’s not bad, but what if we want to improve it further?</p>
+<p>Let’s turn the boxes in the horizontal direction, and get rid of the perhaps unnecessary <code>phys_health</code> labels.</p>
+<div class="sourceCode" id="cb285"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">phys_health</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">energy</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">phys_health</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_fill_viridis_d</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Energy Consumed by Self-Reported Physical Health"</span>, 
+         subtitle <span class="op">=</span> <span class="st">"NHANES National Youth Fitness Survey, unweighted"</span>, 
+         x <span class="op">=</span> <span class="st">""</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="09_nnyfs_foundations_files/figure-html/c9_nnyfs_en_box4-1.png" width="672"></div>
+</div>
+<div id="using-describe-in-the-psych-library" class="section level2" number="9.10">
+<h2>
+<span class="header-section-number">9.10</span> Using <code>describe</code> in the <code>psych</code> library<a class="anchor" aria-label="anchor" href="#using-describe-in-the-psych-library"><i class="fas fa-link"></i></a>
+</h2>
+<p>For additional numerical summaries, one option would be to consider using the <code>describe</code> function from the <code>psych</code> library.</p>
+<div class="sourceCode" id="cb286"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="va">nnyfs</span><span class="op">$</span><span class="va">energy</span><span class="op">)</span></code></pre></div>
+<pre><code>   vars    n    mean     sd median trimmed    mad min  max
+X1    1 1518 1877.16 722.35 1794.5  1827.1 678.29 257 5265
+   range skew kurtosis    se
+X1  5008  0.8     1.13 18.54</code></pre>
+<p>This package provides, in order, the following…</p>
+<ul>
+<li>
+<code>n</code> = the sample size</li>
+<li>
+<code>mean</code> = the sample mean</li>
+<li>
+<code>sd</code> = the sample standard deviation</li>
+<li>
+<code>median</code> = the median, or 50th percentile</li>
+<li>
+<code>trimmed</code> = mean of the middle 80% of the data</li>
+<li>
+<code>mad</code> = median absolute deviation</li>
+<li>
+<code>min</code> = minimum value in the sample</li>
+<li>
+<code>max</code> = maximum value in the sample</li>
+<li>
+<code>range</code> = max - min</li>
+<li>
+<code>skew</code> = skewness measure, described below (indicates degree of asymmetry)</li>
+<li>
+<code>kurtosis</code> = kurtosis measure, described below (indicates heaviness of tails, degree of outlier-proneness)</li>
+<li>
+<code>se</code> = standard error of the sample mean = sd / square root of sample size, useful in inference</li>
+</ul>
+<div id="the-trimmed-mean" class="section level3" number="9.10.1">
+<h3>
+<span class="header-section-number">9.10.1</span> The Trimmed Mean<a class="anchor" aria-label="anchor" href="#the-trimmed-mean"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <strong>trimmed mean</strong> trim value in R indicates proportion of observations to be trimmed from each end of the outcome distribution before the mean is calculated. The <code>trimmed</code> value provided by the <code><a href="https://rdrr.io/pkg/psych/man/describe.html">psych::describe</a></code> package describes what this particular package calls a 20% trimmed mean (bottom and top 10% of <code>energy</code> values are removed before taking the mean - it’s the mean of the middle 80% of the data.) I might call that a 10% trimmed mean in some settings, but that’s just me.</p>
+<div class="sourceCode" id="cb288"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">mean</a></span><span class="op">(</span><span class="va">nnyfs</span><span class="op">$</span><span class="va">energy</span>, trim<span class="op">=</span><span class="fl">.1</span><span class="op">)</span> </code></pre></div>
+<pre><code>[1] 1827.1</code></pre>
+</div>
+<div id="the-median-absolute-deviation" class="section level3" number="9.10.2">
+<h3>
+<span class="header-section-number">9.10.2</span> The Median Absolute Deviation<a class="anchor" aria-label="anchor" href="#the-median-absolute-deviation"><i class="fas fa-link"></i></a>
+</h3>
+<p>An alternative to the IQR that is fancier, and a bit more robust, is the <strong>median absolute deviation</strong>, which, in large sample sizes, for data that follow a Normal distribution, will be (in expectation) equal to the standard deviation. The MAD is the median of the absolute deviations from the median, multiplied by a constant (1.4826) to yield asymptotically normal consistency.</p>
+<div class="sourceCode" id="cb290"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/mad.html">mad</a></span><span class="op">(</span><span class="va">nnyfs</span><span class="op">$</span><span class="va">energy</span><span class="op">)</span></code></pre></div>
+<pre><code>[1] 678.2895</code></pre>
+</div>
+</div>
+<div id="assessing-skew" class="section level2" number="9.11">
+<h2>
+<span class="header-section-number">9.11</span> Assessing Skew<a class="anchor" aria-label="anchor" href="#assessing-skew"><i class="fas fa-link"></i></a>
+</h2>
+<p>A relatively common idea is to assess <strong>skewness</strong>, several measures of which are available. Many models assume a Normal distribution, where, among other things, the data are symmetric around the mean.</p>
+<p>Skewness measures asymmetry in the distribution, where left skew (mean &lt; median) is indicated by negative skewness values, while right skew (mean &gt; median) is indicated by positive values. The skew value will be near zero for data that follow a symmetric distribution.</p>
+<div id="non-parametric-skewness" class="section level3" number="9.11.1">
+<h3>
+<span class="header-section-number">9.11.1</span> Non-parametric Skewness<a class="anchor" aria-label="anchor" href="#non-parametric-skewness"><i class="fas fa-link"></i></a>
+</h3>
+<p>A simpler measure of skew, sometimes called the <strong>nonparametric skew</strong> and closely related to Pearson’s notion of median skewness, falls between -1 and +1 for any distribution. It is just the difference between the mean and the median, divided by the standard deviation.</p>
+<ul>
+<li>Values greater than +0.2 are sometimes taken to indicate fairly substantial right skew, while values below -0.2 indicate fairly substantial left skew.</li>
+</ul>
+<div class="sourceCode" id="cb292"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">mean</a></span><span class="op">(</span><span class="va">nnyfs</span><span class="op">$</span><span class="va">energy</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">median</a></span><span class="op">(</span><span class="va">nnyfs</span><span class="op">$</span><span class="va">energy</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">sd</a></span><span class="op">(</span><span class="va">nnyfs</span><span class="op">$</span><span class="va">energy</span><span class="op">)</span></code></pre></div>
+<pre><code>[1] 0.114427</code></pre>
+<p><a href="https://en.wikipedia.org/wiki/Skewness">The Wikipedia page on skewness</a>, from which some of this material is derived, provides definitions for several other skewness measures.</p>
+</div>
+</div>
+<div id="assessing-kurtosis-heavy-tailedness" class="section level2" number="9.12">
+<h2>
+<span class="header-section-number">9.12</span> Assessing Kurtosis (Heavy-Tailedness)<a class="anchor" aria-label="anchor" href="#assessing-kurtosis-heavy-tailedness"><i class="fas fa-link"></i></a>
+</h2>
+<p>Another measure of a distribution’s shape that can be found in the <code>psych</code> library is the <strong>kurtosis</strong>. Kurtosis is an indicator of whether the distribution is heavy-tailed or light-tailed as compared to a Normal distribution. Positive kurtosis means more of the variance is due to outliers - unusual points far away from the mean relative to what we might expect from a Normally distributed data set with the same standard deviation.</p>
+<ul>
+<li>A Normal distribution will have a kurtosis value near 0, a distribution with similar tail behavior to what we would expect from a Normal is said to be <em>mesokurtic</em>
+</li>
+<li>Higher kurtosis values (meaningfully higher than 0) indicate that, as compared to a Normal distribution, the observed variance is more the result of extreme outliers (i.e. heavy tails) as opposed to being the result of more modest sized deviations from the mean. These heavy-tailed, or outlier prone, distributions are sometimes called <em>leptokurtic</em>.</li>
+<li>Kurtosis values meaningfully lower than 0 indicate light-tailed data, with fewer outliers than we’d expect in a Normal distribution. Such distributions are sometimes referred to as <em>platykurtic</em>, and include distributions without outliers, like the Uniform distribution.</li>
+</ul>
+<p>Here’s a table:</p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="37%">
+<col width="26%">
+<col width="36%">
+</colgroup>
+<thead><tr class="header">
+<th align="center">Fewer outliers than a Normal</th>
+<th align="center">Approximately Normal</th>
+<th align="center">More outliers than a Normal</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="center">Light-tailed</td>
+<td align="center">“Normalish”</td>
+<td align="center">Heavy-tailed</td>
+</tr>
+<tr class="even">
+<td align="center">
+<em>platykurtic</em> (kurtosis &lt; 0)</td>
+<td align="center">
+<em>mesokurtic</em> (kurtosis = 0)</td>
+<td align="center">
+<em>leptokurtic</em> (kurtosis &gt; 0)</td>
+</tr>
+</tbody>
+</table></div>
+<div class="sourceCode" id="cb294"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/skew.html">kurtosi</a></span><span class="op">(</span><span class="va">nnyfs</span><span class="op">$</span><span class="va">energy</span><span class="op">)</span></code></pre></div>
+<pre><code>[1] 1.130539</code></pre>
+<p>Note that the <code>kurtosi()</code> function is strangely named, and is part of the <code>psych</code> package.</p>
+<div id="the-standard-error-of-the-sample-mean" class="section level3" number="9.12.1">
+<h3>
+<span class="header-section-number">9.12.1</span> The Standard Error of the Sample Mean<a class="anchor" aria-label="anchor" href="#the-standard-error-of-the-sample-mean"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <strong>standard error</strong> of the sample mean, which is the standard deviation divided by the square root of the sample size:</p>
+<div class="sourceCode" id="cb296"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">sd</a></span><span class="op">(</span><span class="va">nnyfs</span><span class="op">$</span><span class="va">energy</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">nnyfs</span><span class="op">$</span><span class="va">energy</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>[1] 18.54018</code></pre>
+</div>
+</div>
+<div id="the-describe-function-in-the-hmisc-package" class="section level2" number="9.13">
+<h2>
+<span class="header-section-number">9.13</span> The <code>describe</code> function in the <code>Hmisc</code> package<a class="anchor" aria-label="anchor" href="#the-describe-function-in-the-hmisc-package"><i class="fas fa-link"></i></a>
+</h2>
+<p>The <code>Hmisc</code> package has lots of useful functions. It’s named for its main developer, Frank Harrell. The <code>describe</code> function in <code>Hmisc</code> knows enough to separate numerical from categorical variables, and give you separate (and detailed) summaries for each.</p>
+<ul>
+<li>For a categorical variable, it provides counts of total observations (n), the number of missing values, and the number of unique categories, along with counts and percentages falling in each category.</li>
+<li>For a numerical variable, it provides:</li>
+<li>counts of total observations (n), the number of missing values, and the number of unique values</li>
+<li>an Info value for the data, which indicates how continuous the variable is (a score of 1 is generally indicative of a completely continuous variable with no ties, while scores near 0 indicate lots of ties, and very few unique values)</li>
+<li>the sample Mean</li>
+<li>Gini’s mean difference, which is a robust measure of spread, with larger values indicating greater dispersion in the data. It is defined as the mean absolute difference between any pairs of observations.</li>
+<li>many sample percentiles (quantiles) of the data, specifically (5, 10, 25, 50, 75, 90, 95, 99)</li>
+<li>either a complete table of all observed values, with counts and percentages (if there are a modest number of unique values), or</li>
+<li>a table of the five smallest and five largest values in the data set, which is useful for range checking</li>
+</ul>
+<div class="sourceCode" id="cb298"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nnyfs</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">waist</span>, <span class="va">energy</span>, <span class="va">bmi</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">Hmisc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/describe.html">describe</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>. 
+
+ 3  Variables      1518  Observations
+------------------------------------------------------------
+waist 
+       n  missing distinct     Info     Mean      Gmd 
+    1512        6      510        1    67.71     16.6 
+     .05      .10      .25      .50      .75      .90 
+   49.40    51.40    55.60    64.80    76.60    88.70 
+     .95 
+   96.84 
+
+lowest :  42.5  43.4  44.1  44.4  44.5
+highest: 125.8 126.0 127.0 132.3 144.7
+------------------------------------------------------------
+energy 
+       n  missing distinct     Info     Mean      Gmd 
+    1518        0     1137        1     1877    796.1 
+     .05      .10      .25      .50      .75      .90 
+     849     1047     1368     1794     2306     2795 
+     .95 
+    3195 
+
+lowest :  257  260  326  349  392, highest: 4382 4529 5085 5215 5265
+------------------------------------------------------------
+bmi 
+       n  missing distinct     Info     Mean      Gmd 
+    1514        4      225        1    19.63    5.269 
+     .05      .10      .25      .50      .75      .90 
+   14.30    14.90    15.90    18.10    21.90    26.27 
+     .95 
+   30.20 
+
+lowest : 11.9 12.6 12.7 12.9 13.0, highest: 42.8 43.0 46.9 48.2 48.3
+------------------------------------------------------------</code></pre>
+<p>More on the <code>Info</code> value in Hmisc::describe is <a href="https://cran.r-project.org/web/packages/Hmisc/Hmisc.pdf#page=67">available here</a></p>
+</div>
+<div id="what-summaries-to-report" class="section level2" number="9.14">
+<h2>
+<span class="header-section-number">9.14</span> What Summaries to Report<a class="anchor" aria-label="anchor" href="#what-summaries-to-report"><i class="fas fa-link"></i></a>
+</h2>
+<p>It is usually helpful to focus on the shape, center and spread of a distribution. Bock, Velleman and DeVeaux provide some useful advice:</p>
+<ul>
+<li>If the data are skewed, report the median and IQR (or the three middle quantiles). You may want to include the mean and standard deviation, but you should point out why the mean and median differ. The fact that the mean and median do not agree is a sign that the distribution may be skewed. A histogram will help you make that point.</li>
+<li>If the data are symmetric, report the mean and standard deviation, and possibly the median and IQR as well.</li>
+<li>If there are clear outliers and you are reporting the mean and standard deviation, report them with the outliers present and with the outliers removed. The differences may be revealing. The median and IQR are not likely to be seriously affected by outliers.</li>
+</ul>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="miss.html"><span class="header-section-number">8</span> Missing Data and Single Imputation</a></div>
+<div class="next"><a href="references.html">References</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#NYFS-Study"><span class="header-section-number">9</span> National Youth Fitness Survey</a></li>
+<li>
+<a class="nav-link" href="#the-variables-included-in-nnyfs"><span class="header-section-number">9.1</span> The Variables included in nnyfs</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#from-the-nnyfs-demographic-component"><span class="header-section-number">9.1.1</span> From the NNYFS Demographic Component</a></li>
+<li><a class="nav-link" href="#from-the-nnyfs-dietary-component"><span class="header-section-number">9.1.2</span> From the NNYFS Dietary Component</a></li>
+<li><a class="nav-link" href="#from-the-nnyfs-examination-component"><span class="header-section-number">9.1.3</span> From the NNYFS Examination Component</a></li>
+<li><a class="nav-link" href="#from-the-nnyfs-questionnaire-component"><span class="header-section-number">9.1.4</span> From the NNYFS Questionnaire Component</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#looking-over-a-few-variables"><span class="header-section-number">9.2</span> Looking over A Few Variables</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#seqn"><span class="header-section-number">9.2.1</span> SEQN</a></li>
+<li><a class="nav-link" href="#sex"><span class="header-section-number">9.2.2</span> sex</a></li>
+<li><a class="nav-link" href="#age_child"><span class="header-section-number">9.2.3</span> age_child</a></li>
+<li><a class="nav-link" href="#race_eth"><span class="header-section-number">9.2.4</span> race_eth</a></li>
+<li><a class="nav-link" href="#income_pov"><span class="header-section-number">9.2.5</span> income_pov</a></li>
+<li><a class="nav-link" href="#bmi"><span class="header-section-number">9.2.6</span> bmi</a></li>
+<li><a class="nav-link" href="#bmi_cat"><span class="header-section-number">9.2.7</span> bmi_cat</a></li>
+<li><a class="nav-link" href="#waist"><span class="header-section-number">9.2.8</span> waist</a></li>
+<li><a class="nav-link" href="#triceps_skinfold"><span class="header-section-number">9.2.9</span> triceps_skinfold</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#additional-numeric-summaries"><span class="header-section-number">9.3</span> Additional Numeric Summaries</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#the-five-number-summary-quantiles-and-iqr"><span class="header-section-number">9.3.1</span> The Five Number Summary, Quantiles and IQR</a></li></ul>
+</li>
+<li><a class="nav-link" href="#additional-summaries-from-favstats"><span class="header-section-number">9.4</span> Additional Summaries from favstats</a></li>
+<li>
+<a class="nav-link" href="#the-histogram"><span class="header-section-number">9.5</span> The Histogram</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#freedman-diaconis-rule-to-select-bin-width"><span class="header-section-number">9.5.1</span> Freedman-Diaconis Rule to select bin width</a></li>
+<li><a class="nav-link" href="#a-note-on-colors"><span class="header-section-number">9.5.2</span> A Note on Colors</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#the-frequency-polygon"><span class="header-section-number">9.6</span> The Frequency Polygon</a></li>
+<li><a class="nav-link" href="#plotting-the-probability-density-function"><span class="header-section-number">9.7</span> Plotting the Probability Density Function</a></li>
+<li>
+<a class="nav-link" href="#the-boxplot"><span class="header-section-number">9.8</span> The Boxplot</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#drawing-a-boxplot-for-one-variable-in-ggplot2"><span class="header-section-number">9.8.1</span> Drawing a Boxplot for One Variable in ggplot2</a></li>
+<li><a class="nav-link" href="#about-the-boxplot"><span class="header-section-number">9.8.2</span> About the Boxplot</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#a-simple-comparison-boxplot"><span class="header-section-number">9.9</span> A Simple Comparison Boxplot</a></li>
+<li>
+<a class="nav-link" href="#using-describe-in-the-psych-library"><span class="header-section-number">9.10</span> Using describe in the psych library</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#the-trimmed-mean"><span class="header-section-number">9.10.1</span> The Trimmed Mean</a></li>
+<li><a class="nav-link" href="#the-median-absolute-deviation"><span class="header-section-number">9.10.2</span> The Median Absolute Deviation</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#assessing-skew"><span class="header-section-number">9.11</span> Assessing Skew</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#non-parametric-skewness"><span class="header-section-number">9.11.1</span> Non-parametric Skewness</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#assessing-kurtosis-heavy-tailedness"><span class="header-section-number">9.12</span> Assessing Kurtosis (Heavy-Tailedness)</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#the-standard-error-of-the-sample-mean"><span class="header-section-number">9.12.1</span> The Standard Error of the Sample Mean</a></li></ul>
+</li>
+<li><a class="nav-link" href="#the-describe-function-in-the-hmisc-package"><span class="header-section-number">9.13</span> The describe function in the Hmisc package</a></li>
+<li><a class="nav-link" href="#what-summaries-to-report"><span class="header-section-number">9.14</span> What Summaries to Report</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/THOMASELOVE/431-notes/blob/master/09_nnyfs_foundations.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/THOMASELOVE/431-notes/edit/master/09_nnyfs_foundations.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</strong>" was written by Thomas E. Love. It was last built on 2021-08-21.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

@@ -93,7 +93,7 @@ nh_750 %>%
     summarise(mean(Pulse, na.rm=TRUE), median(Pulse, na.rm=TRUE))
 ```
 
-While we eventually discuss the importance of **imputation** when dealing with missing data, this doesn't apply to providing descriptive summaries of actual, observed values.
+In Chapter \@ref(miss), we will discuss various assumptions we can make about missing data, and the importance of **imputation** when dealing with it in modeling or making inferences. For now, we will limit our descriptive summaries to observed values, in what are called complete case or available case analyses.
 
 ### The Mode of a Quantitative Variable
 
@@ -259,7 +259,7 @@ When we have a unimodal distribution that is symmetric, we will often be interes
 - A leptokurtic distribution is a thinner, more slender distribution, with heavier tails than we'd expect from a Normal distribution. One example is the t distribution.
 - A platykurtic distribution is a broader, flatter distribution, with thinner tails than we'd expect from a Normal distribution. One example is a uniform distribution.
 
-```{r c6_sims_kurtosis}
+```{r c6_sims_kurtosis, warning = FALSE}
 set.seed(431)
 sims_kurt <- tibble(meso = rnorm(n = 300, mean = 0, sd = 1),
                     lepto = rt(n = 300, df = 4),
@@ -276,7 +276,8 @@ p1 <- ggplot(sims_kurt, aes(x = meso)) +
 
 p1a <- ggplot(sims_kurt, aes(x = meso, y = "")) +
   geom_violin() +
-  geom_boxplot(fill = "royalblue", outlier.color = "royalblue", width = 0.3)
+  geom_boxplot(fill = "royalblue", outlier.color = "royalblue", width = 0.3) +
+  labs(y = "", x = "Normal (mesokurtic)")
 
 p2 <- ggplot(sims_kurt, aes(x = lepto)) +
   geom_histogram(aes(y = stat(density)), 
@@ -330,9 +331,10 @@ We could, of course, duplicate these results with several `summarise()` pieces..
 ```{r c6_nh750_fav2}
 nh_750 %>%
     filter(complete.cases(SBP)) %>%
-    summarise(min = min(SBP), Q1 = quantile(SBP, 0.25), median = median(SBP), 
-              Q3 = quantile(SBP, 0.75), max = max(SBP),  
-              mean = mean(SBP), sd = sd(SBP), n = n(), missing = sum(is.na(SBP)))
+    summarise(min = min(SBP), Q1 = quantile(SBP, 0.25), 
+              median = median(SBP), Q3 = quantile(SBP, 0.75), 
+              max = max(SBP),  mean = mean(SBP), 
+              sd = sd(SBP), n = n(), miss = sum(is.na(SBP)))
 ```
 
 The somewhat unusual structure of `favstats` (complete with an easy to forget `~`) is actually helpful. It allows you to look at some interesting grouping approaches, like this:
@@ -347,9 +349,10 @@ Of course, we could accomplish the same comparison with `dplyr` commands, too, b
 nh_750 %>%
     filter(complete.cases(SBP, Education)) %>%
     group_by(Education) %>%
-    summarise(min = min(SBP), Q1 = quantile(SBP, 0.25), median = median(SBP), 
-              Q3 = quantile(SBP, 0.75), max = max(SBP),  
-              mean = mean(SBP), sd = sd(SBP), n = n(), missing = sum(is.na(SBP)))
+    summarise(min = min(SBP), Q1 = quantile(SBP, 0.25), 
+              median = median(SBP), Q3 = quantile(SBP, 0.75), 
+              max = max(SBP), mean = mean(SBP), 
+              sd = sd(SBP), n = n(), miss = sum(is.na(SBP)))
 ```
 
 ### `describe` in the `psych` package
@@ -374,7 +377,8 @@ The additional statistics presented here are:
 ### The `Hmisc` package's version of `describe`
 
 ```{r c6_Hmisc-describe-nh_750}
-Hmisc::describe(nh_750 %>% select(Age, BMI, SBP, DBP, Pulse))
+Hmisc::describe(nh_750 %>% 
+                  select(Age, BMI, SBP, DBP, Pulse))
 ```
 
 The `Hmisc` package's version of `describe` for a distribution of data presents three new ideas, in addition to a more comprehensive list of quartiles (the 5^th^, 10^th^, 25^th^, 50^th^, 75^th^, 90^th^ and 95^th^ are shown) and the lowest and highest few observations. These are:
@@ -386,8 +390,6 @@ The `Hmisc` package's version of `describe` for a distribution of data presents 
 ### Other options
 
 The package [`summarytools` has a function called `dfSummary`](https://cran.r-project.org/web/packages/summarytools/vignettes/Introduction.html) which I like and Dominic Comtois has also published [Recommendations for Using summarytools with R Markdown](https://cran.r-project.org/web/packages/summarytools/vignettes/Recommendations-rmarkdown.html). Note that this isn't really for Word documents.
-
-The [`naniar` package](http://naniar.njtierney.com/) is helpful for wrangling and visualizing missing values, and checking imputations.
 
 [`DataExplorer`](https://boxuancui.github.io/DataExplorer/) can be used for more automated exploratory data analyses (and some people also like [`skimr`](https://github.com/ropensci/skimr)) and [`visdat`](http://visdat.njtierney.com/), as well.
 

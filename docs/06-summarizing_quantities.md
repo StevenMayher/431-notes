@@ -215,7 +215,7 @@ nh_750 %>%
 1                        73.5                            72
 ```
 
-While we eventually discuss the importance of **imputation** when dealing with missing data, this doesn't apply to providing descriptive summaries of actual, observed values.
+In Chapter \@ref(miss), we will discuss various assumptions we can make about missing data, and the importance of **imputation** when dealing with it in modeling or making inferences. For now, we will limit our descriptive summaries to observed values, in what are called complete case or available case analyses.
 
 ### The Mode of a Quantitative Variable
 
@@ -474,7 +474,8 @@ p1 <- ggplot(sims_kurt, aes(x = meso)) +
 
 p1a <- ggplot(sims_kurt, aes(x = meso, y = "")) +
   geom_violin() +
-  geom_boxplot(fill = "royalblue", outlier.color = "royalblue", width = 0.3)
+  geom_boxplot(fill = "royalblue", outlier.color = "royalblue", width = 0.3) +
+  labs(y = "", x = "Normal (mesokurtic)")
 
 p2 <- ggplot(sims_kurt, aes(x = lepto)) +
   geom_histogram(aes(y = stat(density)), 
@@ -511,11 +512,6 @@ p3a <- ggplot(sims_kurt, aes(x = platy, y = "")) +
   plot_layout(heights = c(3, 1))
 ```
 
-```
-Warning: Removed 2 rows containing missing values
-(geom_bar).
-```
-
 <img src="06-summarizing_quantities_files/figure-html/c6_sims_kurtosis-1.png" width="672" />
 
 Graphical tools are in most cases the best way to identify issues related to kurtosis. 
@@ -542,16 +538,17 @@ We could, of course, duplicate these results with several `summarise()` pieces..
 ```r
 nh_750 %>%
     filter(complete.cases(SBP)) %>%
-    summarise(min = min(SBP), Q1 = quantile(SBP, 0.25), median = median(SBP), 
-              Q3 = quantile(SBP, 0.75), max = max(SBP),  
-              mean = mean(SBP), sd = sd(SBP), n = n(), missing = sum(is.na(SBP)))
+    summarise(min = min(SBP), Q1 = quantile(SBP, 0.25), 
+              median = median(SBP), Q3 = quantile(SBP, 0.75), 
+              max = max(SBP),  mean = mean(SBP), 
+              sd = sd(SBP), n = n(), miss = sum(is.na(SBP)))
 ```
 
 ```
 # A tibble: 1 x 9
-    min    Q1 median    Q3   max  mean    sd     n missing
-  <int> <dbl>  <int> <dbl> <int> <dbl> <dbl> <int>   <int>
-1    83   108    118   127   209  119.  15.1   717       0
+    min    Q1 median    Q3   max  mean    sd     n  miss
+  <int> <dbl>  <int> <dbl> <int> <dbl> <dbl> <int> <int>
+1    83   108    118   127   209  119.  15.1   717     0
 ```
 
 The somewhat unusual structure of `favstats` (complete with an easy to forget `~`) is actually helpful. It allows you to look at some interesting grouping approaches, like this:
@@ -583,9 +580,10 @@ Of course, we could accomplish the same comparison with `dplyr` commands, too, b
 nh_750 %>%
     filter(complete.cases(SBP, Education)) %>%
     group_by(Education) %>%
-    summarise(min = min(SBP), Q1 = quantile(SBP, 0.25), median = median(SBP), 
-              Q3 = quantile(SBP, 0.75), max = max(SBP),  
-              mean = mean(SBP), sd = sd(SBP), n = n(), missing = sum(is.na(SBP)))
+    summarise(min = min(SBP), Q1 = quantile(SBP, 0.25), 
+              median = median(SBP), Q3 = quantile(SBP, 0.75), 
+              max = max(SBP), mean = mean(SBP), 
+              sd = sd(SBP), n = n(), miss = sum(is.na(SBP)))
 ```
 
 ```
@@ -597,7 +595,7 @@ nh_750 %>%
 3 High Sch~    84  112.   120.  129    209  121.  16.5   136
 4 Some Col~    85  108    117   126    186  119.  14.3   232
 5 College ~    83  107    117   125    171  117.  14.4   227
-# ... with 1 more variable: missing <int>
+# ... with 1 more variable: miss <int>
 ```
 
 ### `describe` in the `psych` package
@@ -639,7 +637,8 @@ The additional statistics presented here are:
 
 
 ```r
-Hmisc::describe(nh_750 %>% select(Age, BMI, SBP, DBP, Pulse))
+Hmisc::describe(nh_750 %>% 
+                  select(Age, BMI, SBP, DBP, Pulse))
 ```
 
 ```
@@ -708,8 +707,6 @@ The `Hmisc` package's version of `describe` for a distribution of data presents 
 ### Other options
 
 The package [`summarytools` has a function called `dfSummary`](https://cran.r-project.org/web/packages/summarytools/vignettes/Introduction.html) which I like and Dominic Comtois has also published [Recommendations for Using summarytools with R Markdown](https://cran.r-project.org/web/packages/summarytools/vignettes/Recommendations-rmarkdown.html). Note that this isn't really for Word documents.
-
-The [`naniar` package](http://naniar.njtierney.com/) is helpful for wrangling and visualizing missing values, and checking imputations.
 
 [`DataExplorer`](https://boxuancui.github.io/DataExplorer/) can be used for more automated exploratory data analyses (and some people also like [`skimr`](https://github.com/ropensci/skimr)) and [`visdat`](http://visdat.njtierney.com/), as well.
 

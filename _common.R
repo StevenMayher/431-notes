@@ -19,6 +19,7 @@ library(rms)
 library(mosaic)
 library(Epi)
 library(naniar)
+library(simputation)
 library(broom) 
 library(tidyverse) 
 

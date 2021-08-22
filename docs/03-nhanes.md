@@ -271,5 +271,45 @@ ggplot(data = nh_1cc, aes(x = Age, y = Height, color = Sex)) +
 
 It seems like the more complex relationship between Height and Age isn't well described by the straight line model.
 
+## Combining Plots with `patchwork`
+
+The `patchwork` package in R allows us to use some simple commands to put two plots together. 
+
+Suppose we create plots called `p1` and `p2`, as follows.
+
+
+```r
+p1 <- ggplot(data = nh_1cc, aes(x = Age, y = Height)) +
+    geom_point() + 
+    labs(title = "Height and Age")
+
+p2 <- ggplot(data = nh_1cc, aes(x = Sex, y = Height)) +
+    geom_point() +
+    labs(title = "Height, by Sex")
+```
+
+Now, suppose we want to put them together in a single figure. Thanks to `patchwork`, we can simply type in the following.
+
+
+```r
+p1 / p2
+```
+
+<img src="03-nhanes_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+
+or we can place the images next to each other, and add an annotation, like this:
+
+
+```r
+p1 + p2 +
+    plot_annotation(title = "Our Combined Plots")
+```
+
+<img src="03-nhanes_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+
+The `patchwork` [package website](https://patchwork.data-imaginist.com/) provides lots of great examples and guides to make it very easy to combine separate ggplots into the same graphic. While there are other packages (`gridExtra` and `cowplot` are very nice, for instance) to do this task, I think `patchwork` is the most user-friendly, so that's the focus of these notes.
+
+## Coming Up
+
 Next, we'll select a new sample of NHANES respondents a bit more carefully, introduce some new ways of thinking about data and variables, then we'll study those subjects in greater detail.
 

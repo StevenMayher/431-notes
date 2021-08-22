@@ -49,6 +49,8 @@
 <li><a class="" href="visualizing-nhanes-data.html"><span class="header-section-number">5</span> Visualizing NHANES Data</a></li>
 <li><a class="" href="summarizing_quantities.html"><span class="header-section-number">6</span> Summarizing Quantities</a></li>
 <li><a class="" href="summarizing-categories.html"><span class="header-section-number">7</span> Summarizing Categories</a></li>
+<li><a class="" href="miss.html"><span class="header-section-number">8</span> Missing Data and Single Imputation</a></li>
+<li><a class="" href="NYFS-Study.html"><span class="header-section-number">9</span> National Youth Fitness Survey</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -124,6 +126,7 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ProjectMOSAIC/mosaic">mosaic</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://BendixCarstensen.com/Epi/">Epi</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/njtierney/naniar">naniar</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/markvanderloo/simputation">simputation</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span> <span class="co"># note: tidymodels includes the broom package</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span> <span class="co"># note: tidyverse includes the dplyr and ggplot2 packages</span>
 
@@ -140,9 +143,10 @@
 <div id="additional-r-packages-installed-for-this-book" class="section level2 unnumbered">
 <h2>Additional R Packages installed for this book<a class="anchor" aria-label="anchor" href="#additional-r-packages-installed-for-this-book"><i class="fas fa-link"></i></a>
 </h2>
-<p>Some packages need to be installed on the user’s system, but do not need to be loaded by R in order to run the code presented in this set of notes until later. These additional packages include the following.</p>
+<p>Some packages need to be installed on the user’s system, but do not need to be loaded by R in order to run the code presented in these notes except in very specific settings. These additional packages include the following.</p>
 <pre><code>boot
 car
+equatiomatic
 GGally
 gt
 psych

@@ -84,6 +84,7 @@ library(rms)
 library(mosaic)
 library(Epi)
 library(naniar)
+library(simputation)
 library(broom) # note: tidymodels includes the broom package
 library(tidyverse) # note: tidyverse includes the dplyr and ggplot2 packages
 
@@ -103,11 +104,13 @@ source("data/Love-boost.R")
 
 ## Additional R Packages installed for this book {-}
 
-Some packages need to be installed on the user's system, but do not need to be loaded by R in order to run the code presented in this set of notes until later. These additional packages include the following.
+Some packages need to be installed on the user's system, but do not need to be loaded by R in order to run the code presented in these notes except in very specific settings. These additional packages include the following.
+
 
 ```
 boot
 car
+equatiomatic
 GGally
 gt
 psych

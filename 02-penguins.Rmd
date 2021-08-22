@@ -2,7 +2,7 @@
 
 # The Palmer Penguins
 
-The data in the `palmerpenguins` package in R include size measurements, clutch observations, and blood isotope ratios for adult foraging Adélie, Chinstrap, and Gentoo penguins observed on islands in the Palmer Archipelago near Palmer Station, Antarctica. The data were collected and made available by Dr. Kristen Gorman and the Palmer Station Long Term Ecological Research (LTER) Program.  
+The data in the `palmerpenguins` package in R include size measurements, clutch observations, and blood isotope ratios for adult foraging Adelie, Chinstrap, and Gentoo penguins observed on islands in the Palmer Archipelago near Palmer Station, Antarctica^[Two fun facts: (1) Male Gentoo and Adelie penguins "propose" to females by giving them a pebble. (2) The Adelie penguin was named for his wife by Jules Dumont d'Urville, who also rediscovered the Venus de Milo.]. The data were collected and made available by Dr. Kristen Gorman and the Palmer Station Long Term Ecological Research (LTER) Program.  
 
 For more on the `palmerpenguins` package, visit https://allisonhorst.github.io/palmerpenguins/.
 
