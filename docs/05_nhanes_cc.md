@@ -1,4 +1,4 @@
-# Visualizing NHANES Complete Cases
+# Visualizing NHANES Data
 
 ## Loading in the "Complete Cases" Sample
 
@@ -63,6 +63,34 @@ ggplot(data = nh_500cc, aes(x = Height)) +
 
 <img src="05_nhanes_cc_files/figure-html/nh_500cc_fig3-1.png" width="672" />
 
+### Using a frequency polygon
+
+A frequency polygon essentially smooths out the top of the histogram, and can also be used to show the distribution of `Height`.
+
+
+```r
+ggplot(data = nh_500cc, aes(x = Height)) +
+    geom_freqpoly(bins = 20) +
+    labs(title = "Height of NHANES subjects ages 21-64",
+         x = "Height in cm.")
+```
+
+<img src="05_nhanes_cc_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+
+### Using a dotplot
+
+A dotplot can also be used to show the distribution of a variable like `Height`, and produces a somewhat more granular histogram, depending on the settings for `binwidth` and `dotsize`.
+
+
+```r
+ggplot(data = nh_500cc, aes(x = Height)) +
+    geom_dotplot(dotsize = 0.75, binwidth = 1) +
+    scale_y_continuous(NULL, breaks = NULL) + # hide y axis
+    labs(title = "Height of NHANES subjects ages 21-64",
+         x = "Height in cm.")
+```
+
+<img src="05_nhanes_cc_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 ## Height and Sex
 
@@ -105,9 +133,53 @@ ggplot(data = nh_500cc, aes(x = Sex, y = Height, fill = Sex)) +
 
 <img src="05_nhanes_cc_files/figure-html/nh_500cc_fig6-1.png" width="672" />
 
-Or perhaps we'd like to see a pair of histograms?
+The boxplot shows some summary statistics based on percentiles. The boxes in the middle of the line show the data values that include the middle half of the data once its been sorted. The 25th percentile (value that exceeds 1/4 of the data) is indicated by the bottom of the box, while the top of the box is located at the 75th percentile. The solid line inside the box indicates the median (also called the 50th percentile) of the Heights for that Sex.
+
+### Adding a violin plot
+
+A boxplot is often supplemented with a *violin plot* to better show the shape of the distribution.
+
+
+```r
+ggplot(data = nh_500cc, aes(x = Sex, y = Height, fill = Sex)) +
+    geom_violin() +
+    geom_boxplot(width = 0.3) +
+    labs(title = "Boxplot of Height by Sex for NHANES subjects ages 21-64",
+         y = "Height in cm.")
+```
+
+<img src="05_nhanes_cc_files/figure-html/nh_500cc_fig62-1.png" width="672" />
+
+This usually works better if the boxes are given a different fill than the violins, as shown in the following figure.
+
+
+```r
+ggplot(data = nh_500cc, aes(x = Sex, y = Height)) +
+    geom_violin(aes(fill = Sex)) +
+    geom_boxplot(width = 0.3) +
+    labs(title = "Boxplot of Height by Sex for NHANES subjects ages 21-64",
+         y = "Height in cm.")
+```
+
+<img src="05_nhanes_cc_files/figure-html/nh_500cc_fig64-1.png" width="672" />
+
+We can also flip the boxplots on their side, using `coord_flip()`.
+
+
+```r
+ggplot(data = nh_500cc, aes(x = Sex, y = Height)) +
+    geom_violin() +
+    geom_boxplot(aes(fill = Sex), width = 0.3) +
+    labs(title = "Boxplot of Height by Sex for NHANES subjects ages 21-64",
+         y = "Height in cm.") +
+    coord_flip()
+```
+
+<img src="05_nhanes_cc_files/figure-html/nh_500cc_fig66-1.png" width="672" />
 
 ### Histograms of Height by Sex
+
+Or perhaps we'd like to see a pair of histograms?
 
 
 ```r

@@ -1,4 +1,4 @@
-# Data Structures and Types of Variables 
+# Data Structures, Variable Types & Sampling NHANES
 
 ## Data require structure and context
 

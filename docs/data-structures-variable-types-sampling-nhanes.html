@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 4 Data Structures, Variable Types &amp; Sampling NHANES | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</title>
+<meta name="author" content="Thomas E. Love">
+<meta name="description" content="4.1 Data require structure and context Descriptive statistics are concerned with the presentation, organization and summary of data, as suggested in Geoffrey R. Norman and David L. Streiner.12...">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="Chapter 4 Data Structures, Variable Types &amp; Sampling NHANES | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta property="og:type" content="book">
+<meta property="og:url" content="your book url like https://thomaselove.github.io/431-book/data-structures-variable-types-sampling-nhanes.html">
+<meta property="og:description" content="4.1 Data require structure and context Descriptive statistics are concerned with the presentation, organization and summary of data, as suggested in Geoffrey R. Norman and David L. Streiner.12...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 4 Data Structures, Variable Types &amp; Sampling NHANES | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta name="twitter:description" content="4.1 Data require structure and context Descriptive statistics are concerned with the presentation, organization and summary of data, as suggested in Geoffrey R. Norman and David L. Streiner.12...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Working with These Notes</a></li>
+<li><a class="" href="data-science.html"><span class="header-section-number">1</span> Data Science</a></li>
+<li class="book-part">Part A. Exploring Data</li>
+<li><a class="" href="the-palmer-penguins.html"><span class="header-section-number">2</span> The Palmer Penguins</a></li>
+<li><a class="" href="nhanes1.html"><span class="header-section-number">3</span> NHANES: A First Look</a></li>
+<li><a class="active" href="data-structures-variable-types-sampling-nhanes.html"><span class="header-section-number">4</span> Data Structures, Variable Types &amp; Sampling NHANES</a></li>
+<li><a class="" href="visualizing-nhanes-data.html"><span class="header-section-number">5</span> Visualizing NHANES Data</a></li>
+<li><a class="" href="summarizing_quantities.html"><span class="header-section-number">6</span> Summarizing Quantities</a></li>
+<li><a class="" href="summarizing-categories.html"><span class="header-section-number">7</span> Summarizing Categories</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/THOMASELOVE/431-notes">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="data-structures-variable-types-sampling-nhanes" class="section level1" number="4">
+<h1>
+<span class="header-section-number">4</span> Data Structures, Variable Types &amp; Sampling NHANES<a class="anchor" aria-label="anchor" href="#data-structures-variable-types-sampling-nhanes"><i class="fas fa-link"></i></a>
+</h1>
+<div id="data-require-structure-and-context" class="section level2" number="4.1">
+<h2>
+<span class="header-section-number">4.1</span> Data require structure and context<a class="anchor" aria-label="anchor" href="#data-require-structure-and-context"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>Descriptive statistics</strong> are concerned with the presentation, organization and summary of data, as suggested in <span class="citation"><a href="references.html#ref-Norman-Streiner" role="doc-biblioref">Geoffrey R. Norman and David L. Streiner</a>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;a href="references.html#ref-Norman-Streiner" role="doc-biblioref"&gt;&lt;em&gt;Biostatistics: The Bare Essentials&lt;/em&gt;, Fourth (People’s Medical Publishing House, 2014)&lt;/a&gt;.&lt;/p&gt;'><sup>12</sup></a></span> This includes various methods of organizing and graphing data to get an idea of what those data can tell us.</p>
+<p>As <span class="citation"><a href="references.html#ref-Vittinghoff" role="doc-biblioref">Eric Vittinghoff et al.</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;a href="references.html#ref-Vittinghoff" role="doc-biblioref"&gt;&lt;em&gt;Regression Methods in Biostatistics: Linear, Logistic, Survival, and Repeated Measures Models&lt;/em&gt;, Second (Springer-Verlag, Inc., 2012), &lt;/a&gt;&lt;a href="http://www.biostat.ucsf.edu/vgsm/" role="doc-biblioref"&gt;http://www.biostat.ucsf.edu/vgsm/&lt;/a&gt;.&lt;/p&gt;'><sup>13</sup></a></span> suggest, the nature of the measurement determines how best to describe it statistically, and the main distinction is between <strong>numerical</strong> and <strong>categorical</strong> variables. Even this is a little tricky - plenty of data can have values that look like numerical values, but are just numerals serving as labels.</p>
+<p>As <span class="citation"><a href="references.html#ref-BockVD" role="doc-biblioref">David E. Bock, Paul F. Velleman, and Richard D. De Veaux</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;a href="references.html#ref-BockVD" role="doc-biblioref"&gt;&lt;em&gt;Stats: Modelling the World&lt;/em&gt; (Boston &lt;span&gt;MA&lt;/span&gt;: Pearson Addison-Wesley, 2004)&lt;/a&gt;.&lt;/p&gt;'><sup>14</sup></a></span> point out, the truly critical notion, of course, is that data values, no matter what kind, are useless without their contexts. The Five W’s (Who, What [and in what units], When, Where, Why, and often How) are just as useful for establishing the context of data as they are in journalism. If you can’t answer Who and What, in particular, you don’t have any useful information.</p>
+<p>In general, each row of a data frame corresponds to an individual (respondent, experimental unit, record, or observation) about whom some characteristics are gathered in columns (and these characteristics may be called variables, factors or data elements.) Every column / variable should have a name that indicates <em>what</em> it is measuring, and every row / observation should have a name that indicates <em>who</em> is being measured.</p>
+</div>
+<div id="newNHANES" class="section level2" number="4.2">
+<h2>
+<span class="header-section-number">4.2</span> Sampling Adults in NHANES<a class="anchor" aria-label="anchor" href="#newNHANES"><i class="fas fa-link"></i></a>
+</h2>
+<p>In Chapter <a href="nhanes1.html#nhanes1">3</a>, we spent some time with a sample from the National Health and Nutrition Examination. Now, by changing the value of the <code>set.seed</code> function which determines the starting place for the random sampling, and changing some other specifications, we’ll generate a new sample describing 750 unique (distinct) adult subjects who completed the 2011-12 version of the survey when they were between the ages of 21 and 64.</p>
+<div id="creating-a-temporary-cleaner-data-frame" class="section level3" number="4.2.1">
+<h3>
+<span class="header-section-number">4.2.1</span> Creating a Temporary, Cleaner Data Frame<a class="anchor" aria-label="anchor" href="#creating-a-temporary-cleaner-data-frame"><i class="fas fa-link"></i></a>
+</h3>
+<p>I’ll start by describing the plan we will use to create a new data frame called <code>nh_temp</code> from which we will eventually build our final sample. In particular, let me lay out the steps I will use to create the <code>nh_temp</code> frame from the original <code>NHANES</code> data frame available in the R package called <code>NHANES</code>.</p>
+<ol style="list-style-type: decimal">
+<li><p>We’ll <strong>filter</strong> the original NHANES data frame to include only the responses from the 2011-12 administration of the survey. This will cut the sample in half, from 10,000 rows to 5,000.</p></li>
+<li><p>We’ll then <strong>filter</strong> again to restrict the sample to adults whose age is at least 21 and also less than 65. I’ll do this because I want to avoid problems with including both children and adults in my sample, and because I also want to focus on the population of people in the US who are usually covered by private insurance from their job, or by Medicaid insurance from the government, rather than those covered by Medicare.</p></li>
+<li><p>As we discussed previously, what is listed in the NHANES data frame as <code>Gender</code> should be more correctly referred to as <code>Sex</code>. <code>Sex</code> is a biological feature of an individual, while <code>Gender</code> is a social construct. This is an important distinction, so I’ll change the name of the variable.</p></li>
+<li><p>We’ll also rename three other variables, specifically we’ll use <code>Race</code> to describe the <code>Race3</code> variable in the original NHANES data frame, as well as <code>SBP</code> to refer to the average systolic blood pressure, which is specified as <code>BPSysAve</code>, and <code>DBP</code> to refer to the average diastolic blood pressure, which is specified as <code>BPDiaAve</code>.</p></li>
+<li><p>Having accomplished the previous four steps, we’ll then <em>select</em> the variables we want to keep in the sample. (We use <em>select</em> for choosing variables or columns in the data frame, and <em>filter</em> for selecting subjects or rows.) The sixteen variables we will select are: ID, Sex, Age, Height, Weight, Race, Education, BMI, SBP, DBP, Pulse, PhysActive, Smoke100, SleepTrouble, MaritalStatus and HealthGen.</p></li>
+<li><p>The original NHANES data frame includes some subjects (rows) multiple times in an effort to incorporate some of the sampling weights used in most NHANES analyses. For our purposes, though, we’d like to only include each subject one time. We use the <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> function to limit the data frame to completely unique subjects (so that, for example, we don’t wind up with two or more rows that have the same ID number.)</p></li>
+</ol>
+<p>Here is the code I used to complete the six steps listed above and create the <code>nh_temp</code> data frame.</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_temp</span> <span class="op">&lt;-</span> <span class="va">NHANES</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">SurveyYr</span> <span class="op">==</span> <span class="st">"2011_12"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Age</span> <span class="op">&gt;=</span> <span class="fl">21</span> <span class="op">&amp;</span> <span class="va">Age</span> <span class="op">&lt;</span> <span class="fl">65</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>Sex <span class="op">=</span> <span class="va">Gender</span>, Race <span class="op">=</span> <span class="va">Race3</span>, SBP <span class="op">=</span> <span class="va">BPSysAve</span>, DBP <span class="op">=</span> <span class="va">BPDiaAve</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ID</span>, <span class="va">Sex</span>, <span class="va">Age</span>, <span class="va">Height</span>, <span class="va">Weight</span>, <span class="va">Race</span>, <span class="va">Education</span>, <span class="va">BMI</span>, <span class="va">SBP</span>, <span class="va">DBP</span>, 
+           <span class="va">Pulse</span>, <span class="va">PhysActive</span>, <span class="va">Smoke100</span>, <span class="va">SleepTrouble</span>, 
+           <span class="va">MaritalStatus</span>, <span class="va">HealthGen</span><span class="op">)</span> <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>The resulting <code>nh_temp</code> data frame has 1700 rows and 16 columns.</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_temp</span></code></pre></div>
+<pre><code># A tibble: 1,700 x 16
+      ID Sex      Age Height Weight Race     Education   BMI
+   &lt;int&gt; &lt;fct&gt;  &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;    &lt;fct&gt;     &lt;dbl&gt;
+ 1 62172 female    43   172    98.6 Black    High Sch~  33.3
+ 2 62176 female    34   172.   68.7 White    College ~  23.3
+ 3 62180 male      35   179.   89   White    College ~  27.9
+ 4 62199 male      57   186    96.9 White    College ~  28  
+ 5 62205 male      28   171.   84.8 White    College ~  28.9
+ 6 62206 female    35   167.   81.5 White    Some Col~  29.1
+ 7 62208 male      38   169.   63.2 Hispanic Some Col~  22.2
+ 8 62209 female    62   143.   53.5 Mexican  8th Grade  26  
+ 9 62220 female    31   167.  113.  Black    College ~  40.4
+10 62222 male      32   179    80.1 White    College ~  25  
+# ... with 1,690 more rows, and 8 more variables:
+#   SBP &lt;int&gt;, DBP &lt;int&gt;, Pulse &lt;int&gt;, PhysActive &lt;fct&gt;,
+#   Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
+#   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;</code></pre>
+</div>
+<div id="sampling-nh_temp-to-obtain-our-nh_adult750-sample" class="section level3" number="4.2.2">
+<h3>
+<span class="header-section-number">4.2.2</span> Sampling <code>nh_temp</code> to obtain our <code>nh_adult750</code> sample<a class="anchor" aria-label="anchor" href="#sampling-nh_temp-to-obtain-our-nh_adult750-sample"><i class="fas fa-link"></i></a>
+</h3>
+<p>Having established the <code>nh_temp</code> sampling frame, we now select a random sample of 750 adults from the 1700 available responses.</p>
+<ul>
+<li>We will use the <code><a href="https://rdrr.io/r/base/Random.html">set.seed()</a></code> function in R to set a random numerical seed to ensure that if you redo this work, you will obtain the same sample.
+<ul>
+<li>Setting a seed is an important part of being able to replicate the work later when sampling is involved.</li>
+</ul>
+</li>
+<li>Then we will use the <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample()</a></code> function to actually draw the random sample, without replacement.
+<ul>
+<li>“Without replacement” means that once we’ve selected a particular subject, we won’t select them again.</li>
+</ul>
+</li>
+</ul>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">431002</span><span class="op">)</span> 
+<span class="co"># use set.seed to ensure that we all get the same random sample </span>
+
+<span class="va">nh_adult750</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span><span class="va">nh_temp</span>, n <span class="op">=</span> <span class="fl">750</span>, replace <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> 
+
+<span class="va">nh_adult750</span></code></pre></div>
+<pre><code># A tibble: 750 x 16
+      ID Sex      Age Height Weight Race     Education   BMI
+   &lt;int&gt; &lt;fct&gt;  &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;    &lt;fct&gt;     &lt;dbl&gt;
+ 1 68648 female    30   181.   67.1 White    College ~  20.4
+ 2 67200 male      30   180.   86.6 White    College ~  26.7
+ 3 66404 female    35   160.   71.1 White    College ~  27.8
+ 4 70535 male      40   177.   82   White    College ~  26.3
+ 5 65308 female    54   151.   60.6 Mexican  8th Grade  26.6
+ 6 67392 male      41   171.   90.7 Hispanic College ~  31.2
+ 7 63218 male      35   163.   81   Mexican  8th Grade  30.3
+ 8 65879 female    32   160.   66.4 Mexican  College ~  25.9
+ 9 63617 male      29   189.   83.3 White    College ~  23.2
+10 64720 male      29   174.   62.3 Black    College ~  20.6
+# ... with 740 more rows, and 8 more variables: SBP &lt;int&gt;,
+#   DBP &lt;int&gt;, Pulse &lt;int&gt;, PhysActive &lt;fct&gt;,
+#   Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
+#   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;</code></pre>
+<p>The <code>nh_adult750</code> data frame now includes 750 rows (observations) on 16 variables (columns). Essentially, we have 16 pieces of information on each of 750 adult NHANES subjects who were included in the 2011-12 panel.</p>
+</div>
+<div id="summarizing-the-datas-structure" class="section level3" number="4.2.3">
+<h3>
+<span class="header-section-number">4.2.3</span> Summarizing the Data’s Structure<a class="anchor" aria-label="anchor" href="#summarizing-the-datas-structure"><i class="fas fa-link"></i></a>
+</h3>
+<p>We can identify the number of rows and columns in a data frame or tibble with the <code>dim</code> function.</p>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span></code></pre></div>
+<pre><code>[1] 750  16</code></pre>
+<p>The <code>str</code> function provides a lot of information about the structure of a data frame or tibble.</p>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span></code></pre></div>
+<pre><code>tibble [750 x 16] (S3: tbl_df/tbl/data.frame)
+ $ ID           : int [1:750] 68648 67200 66404 70535 65308 67392 63218 65879 63617 64720 ...
+ $ Sex          : Factor w/ 2 levels "female","male": 1 2 1 2 1 2 2 1 2 2 ...
+ $ Age          : int [1:750] 30 30 35 40 54 41 35 32 29 29 ...
+ $ Height       : num [1:750] 181 180 160 177 151 ...
+ $ Weight       : num [1:750] 67.1 86.6 71.1 82 60.6 90.7 81 66.4 83.3 62.3 ...
+ $ Race         : Factor w/ 6 levels "Asian","Black",..: 5 5 5 5 4 3 4 4 5 2 ...
+ $ Education    : Factor w/ 5 levels "8th Grade","9 - 11th Grade",..: 5 5 5 5 1 5 1 5 5 5 ...
+ $ BMI          : num [1:750] 20.4 26.7 27.8 26.3 26.6 31.2 30.3 25.9 23.2 20.6 ...
+ $ SBP          : int [1:750] 103 113 116 130 130 124 128 104 105 127 ...
+ $ DBP          : int [1:750] 59 68 80 79 64 82 96 70 72 60 ...
+ $ Pulse        : int [1:750] 78 70 68 68 48 68 82 78 76 84 ...
+ $ PhysActive   : Factor w/ 2 levels "No","Yes": 1 2 2 1 1 2 1 2 2 2 ...
+ $ Smoke100     : Factor w/ 2 levels "No","Yes": 1 2 1 2 2 1 2 1 2 2 ...
+ $ SleepTrouble : Factor w/ 2 levels "No","Yes": 2 1 1 1 1 1 1 1 2 1 ...
+ $ MaritalStatus: Factor w/ 6 levels "Divorced","LivePartner",..: 3 4 3 3 2 3 3 3 3 2 ...
+ $ HealthGen    : Factor w/ 5 levels "Excellent","Vgood",..: 1 1 1 2 4 3 NA 1 2 4 ...</code></pre>
+<p>To see the first few observations, use <code>head</code>, and to see the last few, try <code>tail</code>…</p>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">nh_adult750</span>, <span class="fl">5</span><span class="op">)</span> <span class="co"># shows the last five observations in the data set</span></code></pre></div>
+<pre><code># A tibble: 5 x 16
+     ID Sex      Age Height Weight Race  Education      BMI
+  &lt;int&gt; &lt;fct&gt;  &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;        &lt;dbl&gt;
+1 63924 female    29   165.  113.  Black High School   41.9
+2 69825 female    43   164.   63.3 White College Grad  23.7
+3 68109 male      45   170.   78.7 Black High School   27.1
+4 64598 female    60   158    74.5 White Some College  29.8
+5 64048 female    54   161.   67.5 White Some College  26.2
+# ... with 8 more variables: SBP &lt;int&gt;, DBP &lt;int&gt;,
+#   Pulse &lt;int&gt;, PhysActive &lt;fct&gt;, Smoke100 &lt;fct&gt;,
+#   SleepTrouble &lt;fct&gt;, MaritalStatus &lt;fct&gt;,
+#   HealthGen &lt;fct&gt;</code></pre>
+</div>
+<div id="what-are-the-variables" class="section level3" number="4.2.4">
+<h3>
+<span class="header-section-number">4.2.4</span> What are the variables?<a class="anchor" aria-label="anchor" href="#what-are-the-variables"><i class="fas fa-link"></i></a>
+</h3>
+<p>We can use the <code>glimpse</code> function to get a short preview of the data.</p>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span></code></pre></div>
+<pre><code>Rows: 750
+Columns: 16
+$ ID            &lt;int&gt; 68648, 67200, 66404, 70535, 65308, 6~
+$ Sex           &lt;fct&gt; female, male, female, male, female, ~
+$ Age           &lt;int&gt; 30, 30, 35, 40, 54, 41, 35, 32, 29, ~
+$ Height        &lt;dbl&gt; 181.3, 180.2, 159.8, 176.6, 150.9, 1~
+$ Weight        &lt;dbl&gt; 67.1, 86.6, 71.1, 82.0, 60.6, 90.7, ~
+$ Race          &lt;fct&gt; White, White, White, White, Mexican,~
+$ Education     &lt;fct&gt; College Grad, College Grad, College ~
+$ BMI           &lt;dbl&gt; 20.4, 26.7, 27.8, 26.3, 26.6, 31.2, ~
+$ SBP           &lt;int&gt; 103, 113, 116, 130, 130, 124, 128, 1~
+$ DBP           &lt;int&gt; 59, 68, 80, 79, 64, 82, 96, 70, 72, ~
+$ Pulse         &lt;int&gt; 78, 70, 68, 68, 48, 68, 82, 78, 76, ~
+$ PhysActive    &lt;fct&gt; No, Yes, Yes, No, No, Yes, No, Yes, ~
+$ Smoke100      &lt;fct&gt; No, Yes, No, Yes, Yes, No, Yes, No, ~
+$ SleepTrouble  &lt;fct&gt; Yes, No, No, No, No, No, No, No, Yes~
+$ MaritalStatus &lt;fct&gt; Married, NeverMarried, Married, Marr~
+$ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgo~</code></pre>
+<p>The variables we have collected are described in the brief table below<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Descriptions are adapted from the ?NHANES help file. Remember that what NHANES lists as Gender is captured here as Sex, and similarly Race3, BPSysAve and BPDiaAve from NHANES are here listed as Race, SBP and DBP.&lt;/p&gt;"><sup>15</sup></a>.</p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="16%">
+<col width="63%">
+<col width="19%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">Variable</th>
+<th>Description</th>
+<th>Sample Values</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">ID</td>
+<td>a numerical code identifying the subject</td>
+<td>68648, 67200</td>
+</tr>
+<tr class="even">
+<td align="right">Sex</td>
+<td>sex of subject (2 levels)</td>
+<td>female, male</td>
+</tr>
+<tr class="odd">
+<td align="right">Age</td>
+<td>age (years) at screening of subject</td>
+<td>30, 35</td>
+</tr>
+<tr class="even">
+<td align="right">Height</td>
+<td>height (in cm) at screening of subject</td>
+<td>181.3, 180.2</td>
+</tr>
+<tr class="odd">
+<td align="right">Weight</td>
+<td>weight (in kg) at screeening of subject</td>
+<td>67.1, 86.6</td>
+</tr>
+<tr class="even">
+<td align="right">Race</td>
+<td>reported race of subject (6 levels)</td>
+<td>White, Black</td>
+</tr>
+<tr class="odd">
+<td align="right">Education</td>
+<td>educational level of subject (5 levels)</td>
+<td>College Grad, High School</td>
+</tr>
+<tr class="even">
+<td align="right">BMI</td>
+<td>body-mass index, in kg/m<sup>2</sup>
+</td>
+<td>20.4, 26.7</td>
+</tr>
+<tr class="odd">
+<td align="right">SBP</td>
+<td>systolic blood pressure in mm Hg</td>
+<td>103, 113</td>
+</tr>
+<tr class="even">
+<td align="right">DBP</td>
+<td>diastolic blood pressure in mm Hg</td>
+<td>59, 68</td>
+</tr>
+<tr class="odd">
+<td align="right">Pulse</td>
+<td>60 second pulse rate in beats per minute</td>
+<td>78, 70</td>
+</tr>
+<tr class="even">
+<td align="right">PhysActive</td>
+<td>Moderate or vigorous-intensity sports?</td>
+<td>Yes, No</td>
+</tr>
+<tr class="odd">
+<td align="right">Smoke100</td>
+<td>Smoked at least 100 cigarettes lifetime?</td>
+<td>Yes, No</td>
+</tr>
+<tr class="even">
+<td align="right">SleepTrouble</td>
+<td>Told a doctor they have trouble sleeping?</td>
+<td>Yes, No</td>
+</tr>
+<tr class="odd">
+<td align="right">MaritalStatus</td>
+<td>Marital Status</td>
+<td>Married, Divorced</td>
+</tr>
+<tr class="even">
+<td align="right">HealthGen</td>
+<td>Self-report general health rating (5 levels)</td>
+<td>Vgood, Fair</td>
+</tr>
+</tbody>
+</table></div>
+<p>The levels for the multi-categorical variables are:</p>
+<ul>
+<li>
+<strong>Race</strong>: Mexican, Hispanic, White, Black, Asian, or Other.</li>
+<li>
+<strong>Education</strong>: 8th Grade, 9 - 11th Grade, High School, Some College, or College Grad.</li>
+<li>
+<strong>MaritalStatus</strong>: Married, Widowed, Divorced, Separated, NeverMarried or LivePartner (living with partner).</li>
+<li>
+<strong>HealthGen</strong>: Excellent, Vgood, Good, Fair or Poor.</li>
+</ul>
+<p>Some details can be obtained using the <code>summary</code> function.</p>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span></code></pre></div>
+<pre><code>       ID            Sex           Age       
+ Min.   :62206   female:388   Min.   :21.00  
+ 1st Qu.:64277   male  :362   1st Qu.:30.00  
+ Median :66925                Median :40.00  
+ Mean   :66936                Mean   :40.82  
+ 3rd Qu.:69414                3rd Qu.:51.00  
+ Max.   :71911                Max.   :64.00  
+                                             
+     Height          Weight             Race    
+ Min.   :142.4   Min.   : 39.30   Asian   : 70  
+ 1st Qu.:161.8   1st Qu.: 67.40   Black   :128  
+ Median :168.9   Median : 80.00   Hispanic: 63  
+ Mean   :168.9   Mean   : 83.16   Mexican : 80  
+ 3rd Qu.:175.7   3rd Qu.: 95.30   White   :393  
+ Max.   :200.4   Max.   :198.70   Other   : 16  
+ NA's   :5       NA's   :5                      
+          Education        BMI             SBP       
+ 8th Grade     : 50   Min.   :16.70   Min.   : 83.0  
+ 9 - 11th Grade: 76   1st Qu.:24.20   1st Qu.:108.0  
+ High School   :143   Median :27.90   Median :118.0  
+ Some College  :241   Mean   :29.08   Mean   :118.8  
+ College Grad  :240   3rd Qu.:32.10   3rd Qu.:127.0  
+                      Max.   :80.60   Max.   :209.0  
+                      NA's   :5       NA's   :33     
+      DBP             Pulse        PhysActive Smoke100 
+ Min.   :  0.00   Min.   : 40.00   No :326    No :453  
+ 1st Qu.: 66.00   1st Qu.: 66.00   Yes:424    Yes:297  
+ Median : 73.00   Median : 72.00                       
+ Mean   : 72.69   Mean   : 73.53                       
+ 3rd Qu.: 80.00   3rd Qu.: 80.00                       
+ Max.   :108.00   Max.   :124.00                       
+ NA's   :33       NA's   :32                           
+ SleepTrouble      MaritalStatus     HealthGen  
+ No :555      Divorced    : 78   Excellent: 84  
+ Yes:195      LivePartner : 70   Vgood    :197  
+              Married     :388   Good     :252  
+              NeverMarried:179   Fair     :104  
+              Separated   : 19   Poor     : 14  
+              Widowed     : 16   NA's     : 99  
+                                                </code></pre>
+<p>Note the appearance of <code>NA's</code> (indicating missing values) in some columns, and that some variables are summarized by a list of their (categorical) values (with counts) and some (quantitative/numeric) variables are summarized with a minimum, quartiles and means.</p>
+</div>
+</div>
+<div id="quantitative-variables" class="section level2" number="4.3">
+<h2>
+<span class="header-section-number">4.3</span> Quantitative Variables<a class="anchor" aria-label="anchor" href="#quantitative-variables"><i class="fas fa-link"></i></a>
+</h2>
+<p>Variables recorded in numbers that we use as numbers are called <strong>quantitative</strong>. Familiar examples include incomes, heights, weights, ages, distances, times, and counts. All quantitative variables have measurement units, which tell you how the quantitative variable was measured. Without units (like miles per hour, angstroms, yen or degrees Celsius) the values of a quantitative variable have no meaning.</p>
+<ul>
+<li><p>It does little good to be told the price of something if you don’t know the currency being used.</p></li>
+<li><p>You might be surprised to see someone whose age is 72 listed in a database on childhood diseases until you find out that age is measured in months.</p></li>
+<li><p>Often just seeking the units can reveal a variable whose definition is challenging - just how do we measure “friendliness,” or “success,” for example.</p></li>
+<li>
+<p>Quantitative variables may also be classified by whether they are <strong>continuous</strong> or can only take on a <strong>discrete</strong> set of values. Continuous data may take on any value, within a defined range. Suppose we are measuring height. While height is really continuous, our measuring stick usually only lets us measure with a certain degree of precision. If our measurements are only trustworthy to the nearest centimeter with the ruler we have, we might describe them as discrete measures. But we could always get a more precise ruler. The measurement divisions we make in moving from a continuous concept to a discrete measurement are usually fairly arbitrary. Another way to think of this, if you enjoy music, is that, as suggested in <span class="citation"><a href="references.html#ref-Norman-Streiner" role="doc-biblioref">Norman and Streiner</a>,<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;a href="references.html#ref-Norman-Streiner" role="doc-biblioref"&gt;&lt;em&gt;Biostatistics&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;'><sup>16</sup></a></span> a piano is a <em>discrete</em> instrument, but a violin is a <em>continuous</em> one, enabling finer distinctions between notes than the piano is capable of making. Sometimes the distinction between continuous and discrete is important, but usually, it’s not.</p>
+<ul>
+<li>The <code>nh_adult750</code> data includes several quantitative variables, specifically <code>Age</code>, <code>Height</code>, BMI<code>,</code>SBP<code>,</code>DBP<code>and</code>Pulse`.</li>
+<li>We know these are quantitative because they have units: <code>Age</code> in years, <code>Height</code> in centimeters, <code>BMI</code> in kg/m<sup>2</sup>, the <code>BP</code> measurements in mm Hg, and <code>Pulse</code> in beats per minute.</li>
+<li>Depending on the context, we would likely treat most of these as <em>discrete</em> given that are measurements are fairly crude (this is certainly true for <code>Age</code>, measured in years) although BMI is probably <em>continuous</em> in most settings, even though it is a function of two other measures (<code>Height</code> and <code>Weight</code>) which are rounded off to integer numbers of centimeters and kilograms, respectively.</li>
+</ul>
+</li>
+<li>
+<p>It is also possible to separate out quantitative variables into <strong>ratio</strong> variables or <strong>interval</strong> variables. An interval variable has equal distances between values, but the zero point is arbitrary. A ratio variable has equal intervals between values, and a meaningful zero point. For example, weight is an example of a ratio variable, while IQ is an example of an interval variable. We all know what zero weight is. An intelligence score like IQ is a different matter. We say that the average IQ is 100, but that’s only by convention. We could just as easily have decided to add 400 to every IQ value and make the average 500 instead. Because IQ’s intervals are equal, the difference between and IQ of 70 and an IQ of 80 is the same as the difference between 120 and 130. However, an IQ of 100 is not twice as high as an IQ of 50. The point is that if the zero point is artificial and moveable, then the differences between numbers are meaningful but the ratios between them are not. On the other hand, most lab test values are ratio variables, as are physical characteristics like height and weight. A person who weighs 100 kg is twice as heavy as one who weighs 50 kg; even when we convert kg to pounds, this is still true. For the most part, we can treat and analyze interval or ratio variables the same way.</p>
+<ul>
+<li>Each of the quantitative variables in our <code>nh_adult750</code> data can be thought of as ratio variables.</li>
+</ul>
+</li>
+<li><p>Quantitative variables lend themselves to many of the summaries we will discuss, like means, quantiles, and our various measures of spread, like the standard deviation or inter-quartile range. They also have at least a chance to follow the Normal distribution.</p></li>
+</ul>
+<div id="a-look-at-bmi-body-mass-index" class="section level3" number="4.3.1">
+<h3>
+<span class="header-section-number">4.3.1</span> A look at BMI (Body-Mass Index)<a class="anchor" aria-label="anchor" href="#a-look-at-bmi-body-mass-index"><i class="fas fa-link"></i></a>
+</h3>
+<p>The definition of BMI (<em>body-mass index</em>) for adult subjects (which is expressed in units of kg/m<sup>2</sup>) is:</p>
+<p><span class="math display">\[
+\mbox{Body Mass Index} = \frac{\mbox{weight in kg}}{(\mbox{height in meters})^2} = 703 \times \frac{\mbox{weight in pounds}}{(\mbox{height in inches})^2}
+\]</span></p>
+<blockquote>
+<p>[BMI is essentially] … a measure of a person’s <em>thinness</em> or <em>thickness</em>… BMI was designed for use as a simple means of classifying average sedentary (physically inactive) populations, with an average body composition. For these individuals, the current value recommendations are as follow: a BMI from 18.5 up to 25 may indicate optimal weight, a BMI lower than 18.5 suggests the person is underweight, a number from 25 up to 30 may indicate the person is overweight, and a number from 30 upwards suggests the person is obese.</p>
+<p>Wikipedia, <a href="https://en.wikipedia.org/wiki/Body_mass_index" class="uri">https://en.wikipedia.org/wiki/Body_mass_index</a></p>
+</blockquote>
+</div>
+</div>
+<div id="qualitative-categorical-variables" class="section level2" number="4.4">
+<h2>
+<span class="header-section-number">4.4</span> Qualitative (Categorical) Variables<a class="anchor" aria-label="anchor" href="#qualitative-categorical-variables"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>Qualitative</strong> or categorical variables consist of names of categories. These names may be numerical, but the numbers (or names) are simply codes to identify the groups or categories into which the individuals are divided. Categorical variables with two categories, like yes or no, up or down, or, more generally, 1 and 0, are called <strong>binary</strong> variables. Those with more than two-categories are sometimes called <strong>multi-categorical</strong> variables.</p>
+<ul>
+<li>
+<p>When the categories included in a variable are merely names, and come in no particular order, we sometimes call them <strong>nominal</strong> variables. The most important summary of such a variable is usually a table of frequencies, and the mode becomes an important single summary, while the mean and median are essentially useless.</p>
+<ul>
+<li>In the nh_adult750 data, <code>Race</code> is a nominal variable with multiple unordered categories. So is <code>MaritalStatus</code>.</li>
+</ul>
+</li>
+<li>
+<p>The alternative categorical variable (where order matters) is called <strong>ordinal</strong>, and includes variables that are sometimes thought of as falling right in between quantitative and qualitative variables.</p>
+<ul>
+<li>Examples of ordinal multi-categorical variables in the <code>nh_adult750</code> data include the Education and HealthGen variables.</li>
+<li>Answers to questions like “How is your overall physical health?” with available responses Excellent, Very Good, Good, Fair or Poor, which are often coded as 1-5, certainly provide a perceived <em>order</em>, but a group of people with average health status 4 (Very Good) is not necessarily twice as healthy as a group with average health status of 2 (Fair).</li>
+</ul>
+</li>
+<li><p>Sometimes we treat the values from ordinal variables as sufficiently scaled to permit us to use quantitative approaches like means, quantiles, and standard deviations to summarize and model the results, and at other times, we’ll treat ordinal variables as if they were nominal, with tables and percentages our primary tools.</p></li>
+<li>
+<p>Note that all binary variables may be treated as ordinal, or nominal.</p>
+<ul>
+<li>Binary variables in the <code>nh_adult750</code> data include <code>Sex</code>, <code>PhysActive</code>, <code>Smoke100</code>, <code>SleepTrouble</code>. Each can be thought of as either ordinal or nominal.</li>
+</ul>
+</li>
+</ul>
+<p>Lots of variables may be treated as either quantitative or qualitative, depending on how we use them. For instance, we usually think of age as a quantitative variable, but if we simply use age to make the distinction between “child” and “adult” then we are using it to describe categorical information. Just because your variable’s values are numbers, don’t assume that the information provided is quantitative.</p>
+</div>
+<div id="counting-missing-values" class="section level2" number="4.5">
+<h2>
+<span class="header-section-number">4.5</span> Counting Missing Values<a class="anchor" aria-label="anchor" href="#counting-missing-values"><i class="fas fa-link"></i></a>
+</h2>
+<p>The <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> command counts the number of missing observations in each variable, but sometimes you want considerably more information.</p>
+<p>We can use some functions from the <code>naniar</code> package to learn useful things about the missing data in our <code>nh_adult750</code> sample.</p>
+<p>The <code>miss_var_table</code> command provides a table of the number of variables with 0, 1, 2, up to n, missing values and the percentage of the total number of variables those variables make up.</p>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/naniar/man/miss_var_table.html">miss_var_table</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span></code></pre></div>
+<pre><code># A tibble: 5 x 3
+  n_miss_in_var n_vars pct_vars
+          &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;
+1             0      9    56.2 
+2             5      3    18.8 
+3            32      1     6.25
+4            33      2    12.5 
+5            99      1     6.25</code></pre>
+<p>So, for instance, we have 9 variables with no missing data, and that constitutes 56.25% of the 16 variables in our <code>nh_adult750</code> data.</p>
+<p>The <code><a href="https://rdrr.io/pkg/naniar/man/miss_var_summary.html">miss_var_summary()</a></code> function tabultes the number, percent missings, and cumulative sum of missings of each variable in our data frame, in order of most to least missingness.</p>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/naniar/man/miss_var_summary.html">miss_var_summary</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span></code></pre></div>
+<pre><code># A tibble: 16 x 3
+   variable      n_miss pct_miss
+   &lt;chr&gt;          &lt;int&gt;    &lt;dbl&gt;
+ 1 HealthGen         99   13.2  
+ 2 SBP               33    4.4  
+ 3 DBP               33    4.4  
+ 4 Pulse             32    4.27 
+ 5 Height             5    0.667
+ 6 Weight             5    0.667
+ 7 BMI                5    0.667
+ 8 ID                 0    0    
+ 9 Sex                0    0    
+10 Age                0    0    
+11 Race               0    0    
+12 Education          0    0    
+13 PhysActive         0    0    
+14 Smoke100           0    0    
+15 SleepTrouble       0    0    
+16 MaritalStatus      0    0    </code></pre>
+<p>So, for example, the <code>r</code>miss_var_summary(nh_temp) %&gt;% slice_head(n = 1) %&gt;% select(variable)<code>variable is the one missing more of our data than anything else within the</code>nh_adult750` data frame.</p>
+<p>A graph of this information is available, as well.</p>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/naniar/man/gg_miss_var.html">gg_miss_var</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="04-data_types_files/figure-html/unnamed-chunk-10-1.png" width="672"></div>
+<p>I’ll note that there are also functions to count the number of missing observations by case (observation) rather than variable. For example, we can use <code>miss_case_table</code>.</p>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/naniar/man/miss_case_table.html">miss_case_table</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span></code></pre></div>
+<pre><code># A tibble: 6 x 3
+  n_miss_in_case n_cases pct_cases
+           &lt;int&gt;   &lt;int&gt;     &lt;dbl&gt;
+1              0     636    84.8  
+2              1      78    10.4  
+3              3      15     2    
+4              4      19     2.53 
+5              6       1     0.133
+6              7       1     0.133</code></pre>
+<p>Now we see that 636 observations, or 84.8% of all cases have no missing data.</p>
+<p>We can use <code><a href="https://rdrr.io/pkg/naniar/man/miss_case_summary.html">miss_case_summary()</a></code> to identify cases with missing data, as well.</p>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/naniar/man/miss_case_summary.html">miss_case_summary</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span></code></pre></div>
+<pre><code># A tibble: 750 x 3
+    case n_miss pct_miss
+   &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;
+ 1   342      7     43.8
+ 2   606      6     37.5
+ 3   157      4     25  
+ 4   169      4     25  
+ 5   204      4     25  
+ 6   234      4     25  
+ 7   323      4     25  
+ 8   415      4     25  
+ 9   478      4     25  
+10   483      4     25  
+# ... with 740 more rows</code></pre>
+</div>
+<div id="nh_cc" class="section level2" number="4.6">
+<h2>
+<span class="header-section-number">4.6</span> <code>nh_adults500cc</code>: A Sample of Complete Cases<a class="anchor" aria-label="anchor" href="#nh_cc"><i class="fas fa-link"></i></a>
+</h2>
+<p>If we wanted a sample of exactly 750 subjects with complete data, we would have needed to add a step in the development of our <code>nh_temp</code> sampling frame to filter for complete cases.</p>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_temp2</span> <span class="op">&lt;-</span> <span class="va">NHANES</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">SurveyYr</span> <span class="op">==</span> <span class="st">"2011_12"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Age</span> <span class="op">&gt;=</span> <span class="fl">21</span> <span class="op">&amp;</span> <span class="va">Age</span> <span class="op">&lt;</span> <span class="fl">65</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>Sex <span class="op">=</span> <span class="va">Gender</span>, Race <span class="op">=</span> <span class="va">Race3</span>, SBP <span class="op">=</span> <span class="va">BPSysAve</span>, DBP <span class="op">=</span> <span class="va">BPDiaAve</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ID</span>, <span class="va">Sex</span>, <span class="va">Age</span>, <span class="va">Height</span>, <span class="va">Weight</span>, <span class="va">Race</span>, <span class="va">Education</span>, <span class="va">BMI</span>, <span class="va">SBP</span>, <span class="va">DBP</span>, 
+           <span class="va">Pulse</span>, <span class="va">PhysActive</span>, <span class="va">Smoke100</span>, <span class="va">SleepTrouble</span>, 
+           <span class="va">MaritalStatus</span>, <span class="va">HealthGen</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>Let’s check that this new sampling frame has no missing data.</p>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/naniar/man/miss_var_table.html">miss_var_table</a></span><span class="op">(</span><span class="va">nh_temp2</span><span class="op">)</span></code></pre></div>
+<pre><code># A tibble: 1 x 3
+  n_miss_in_var n_vars pct_vars
+          &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;
+1             0     16      100</code></pre>
+<p>OK. Now, let’s create a second sample, called <code>nh_adult500cc</code>, where now, we will select 500 adults with complete data on all of the variables of interest, and using a different random seed. The <code>cc</code> here stands for complete cases.</p>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">431003</span><span class="op">)</span> 
+<span class="co"># use set.seed to ensure that we all get the same random sample </span>
+
+<span class="va">nh_adult500cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span><span class="va">nh_temp2</span>, n <span class="op">=</span> <span class="fl">500</span>, replace <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> 
+
+<span class="va">nh_adult500cc</span></code></pre></div>
+<pre><code># A tibble: 500 x 16
+      ID Sex      Age Height Weight Race     Education   BMI
+   &lt;int&gt; &lt;fct&gt;  &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;    &lt;fct&gt;     &lt;dbl&gt;
+ 1 64079 female    25   159.   86.2 Hispanic Some Col~  34.2
+ 2 64374 female    52   169    65.5 Asian    College ~  22.9
+ 3 71875 male      42   182.   94.1 Black    College ~  28.5
+ 4 66396 female    46   161.  107.  Asian    8th Grade  41.2
+ 5 64315 female    52   161.   64.5 White    9 - 11th~  24.9
+ 6 64015 male      32   168.   82.3 Mexican  Some Col~  29  
+ 7 63590 male      21   181.   98.3 Black    Some Col~  29.9
+ 8 70893 female    30   171.   65.7 White    9 - 11th~  22.5
+ 9 70828 male      26   178.  100.  White    Some Col~  31.5
+10 67930 male      59   172.   91.7 Mexican  College ~  31  
+# ... with 490 more rows, and 8 more variables: SBP &lt;int&gt;,
+#   DBP &lt;int&gt;, Pulse &lt;int&gt;, PhysActive &lt;fct&gt;,
+#   Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
+#   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;</code></pre>
+</div>
+<div id="saving-our-samples-in-.rds-files" class="section level2" number="4.7">
+<h2>
+<span class="header-section-number">4.7</span> Saving our Samples in <code>.Rds</code> files<a class="anchor" aria-label="anchor" href="#saving-our-samples-in-.rds-files"><i class="fas fa-link"></i></a>
+</h2>
+<p>We’ll save the <code>nh_adult750</code> and <code>nh_adult500cc</code> samples to use in later parts of the notes. To do this, we’ll save them as <code>.Rds</code> files, which will have some advantages for us later on.</p>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">write_rds</span><span class="op">(</span><span class="va">nh_adult750</span>, file <span class="op">=</span> <span class="st">"data/nh_adult750.Rds"</span><span class="op">)</span>
+<span class="fu">write_rds</span><span class="op">(</span><span class="va">nh_adult500cc</span>, file <span class="op">=</span> <span class="st">"data/nh_adult500cc.Rds"</span><span class="op">)</span></code></pre></div>
+<p>You will also find these <code>.Rds</code> files as part of the <a href="https://github.com/THOMASELOVE/431-data"><code>431-data</code> repository</a> for the course.</p>
+<p>Next, we’ll load, explore and learn about some of the variables in these two samples.</p>
+
+</div>
+</div>
+
+  <div class="chapter-nav">
+<div class="prev"><a href="nhanes1.html"><span class="header-section-number">3</span> NHANES: A First Look</a></div>
+<div class="next"><a href="visualizing-nhanes-data.html"><span class="header-section-number">5</span> Visualizing NHANES Data</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#data-structures-variable-types-sampling-nhanes"><span class="header-section-number">4</span> Data Structures, Variable Types &amp; Sampling NHANES</a></li>
+<li><a class="nav-link" href="#data-require-structure-and-context"><span class="header-section-number">4.1</span> Data require structure and context</a></li>
+<li>
+<a class="nav-link" href="#newNHANES"><span class="header-section-number">4.2</span> Sampling Adults in NHANES</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#creating-a-temporary-cleaner-data-frame"><span class="header-section-number">4.2.1</span> Creating a Temporary, Cleaner Data Frame</a></li>
+<li><a class="nav-link" href="#sampling-nh_temp-to-obtain-our-nh_adult750-sample"><span class="header-section-number">4.2.2</span> Sampling nh_temp to obtain our nh_adult750 sample</a></li>
+<li><a class="nav-link" href="#summarizing-the-datas-structure"><span class="header-section-number">4.2.3</span> Summarizing the Data’s Structure</a></li>
+<li><a class="nav-link" href="#what-are-the-variables"><span class="header-section-number">4.2.4</span> What are the variables?</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#quantitative-variables"><span class="header-section-number">4.3</span> Quantitative Variables</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#a-look-at-bmi-body-mass-index"><span class="header-section-number">4.3.1</span> A look at BMI (Body-Mass Index)</a></li></ul>
+</li>
+<li><a class="nav-link" href="#qualitative-categorical-variables"><span class="header-section-number">4.4</span> Qualitative (Categorical) Variables</a></li>
+<li><a class="nav-link" href="#counting-missing-values"><span class="header-section-number">4.5</span> Counting Missing Values</a></li>
+<li><a class="nav-link" href="#nh_cc"><span class="header-section-number">4.6</span> nh_adults500cc: A Sample of Complete Cases</a></li>
+<li><a class="nav-link" href="#saving-our-samples-in-.rds-files"><span class="header-section-number">4.7</span> Saving our Samples in .Rds files</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/THOMASELOVE/431-notes/blob/master/04-data_types.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/THOMASELOVE/431-notes/edit/master/04-data_types.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</strong>" was written by Thomas E. Love. It was last built on 2021-08-21.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

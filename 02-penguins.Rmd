@@ -1,6 +1,6 @@
 # (PART\*) Part A. Exploring Data {-}
 
-# Looking at the Palmer Penguins
+# The Palmer Penguins
 
 The data in the `palmerpenguins` package in R include size measurements, clutch observations, and blood isotope ratios for adult foraging Adélie, Chinstrap, and Gentoo penguins observed on islands in the Palmer Archipelago near Palmer Station, Antarctica. The data were collected and made available by Dr. Kristen Gorman and the Palmer Station Long Term Ecological Research (LTER) Program.  
 

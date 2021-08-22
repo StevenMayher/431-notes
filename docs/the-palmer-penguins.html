@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 2 The Palmer Penguins | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</title>
+<meta name="author" content="Thomas E. Love">
+<meta name="description" content="The data in the palmerpenguins package in R include size measurements, clutch observations, and blood isotope ratios for adult foraging Adélie, Chinstrap, and Gentoo penguins observed on islands...">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="Chapter 2 The Palmer Penguins | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta property="og:type" content="book">
+<meta property="og:url" content="your book url like https://thomaselove.github.io/431-book/the-palmer-penguins.html">
+<meta property="og:description" content="The data in the palmerpenguins package in R include size measurements, clutch observations, and blood isotope ratios for adult foraging Adélie, Chinstrap, and Gentoo penguins observed on islands...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 2 The Palmer Penguins | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta name="twitter:description" content="The data in the palmerpenguins package in R include size measurements, clutch observations, and blood isotope ratios for adult foraging Adélie, Chinstrap, and Gentoo penguins observed on islands...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Working with These Notes</a></li>
+<li><a class="" href="data-science.html"><span class="header-section-number">1</span> Data Science</a></li>
+<li class="book-part">Part A. Exploring Data</li>
+<li><a class="active" href="the-palmer-penguins.html"><span class="header-section-number">2</span> The Palmer Penguins</a></li>
+<li><a class="" href="nhanes1.html"><span class="header-section-number">3</span> NHANES: A First Look</a></li>
+<li><a class="" href="data-structures-variable-types-sampling-nhanes.html"><span class="header-section-number">4</span> Data Structures, Variable Types &amp; Sampling NHANES</a></li>
+<li><a class="" href="visualizing-nhanes-data.html"><span class="header-section-number">5</span> Visualizing NHANES Data</a></li>
+<li><a class="" href="summarizing_quantities.html"><span class="header-section-number">6</span> Summarizing Quantities</a></li>
+<li><a class="" href="summarizing-categories.html"><span class="header-section-number">7</span> Summarizing Categories</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/THOMASELOVE/431-notes">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="the-palmer-penguins" class="section level1" number="2">
+<h1>
+<span class="header-section-number">2</span> The Palmer Penguins<a class="anchor" aria-label="anchor" href="#the-palmer-penguins"><i class="fas fa-link"></i></a>
+</h1>
+<p>The data in the <code>palmerpenguins</code> package in R include size measurements, clutch observations, and blood isotope ratios for adult foraging Adélie, Chinstrap, and Gentoo penguins observed on islands in the Palmer Archipelago near Palmer Station, Antarctica. The data were collected and made available by Dr. Kristen Gorman and the Palmer Station Long Term Ecological Research (LTER) Program.</p>
+<p>For more on the <code>palmerpenguins</code> package, visit <a href="https://allisonhorst.github.io/palmerpenguins/" class="uri">https://allisonhorst.github.io/palmerpenguins/</a>.</p>
+<div id="package-loading-then-dealing-with-missing-data" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> Package Loading, then Dealing with Missing Data<a class="anchor" aria-label="anchor" href="#package-loading-then-dealing-with-missing-data"><i class="fas fa-link"></i></a>
+</h2>
+<p>To start, let’s load up the necessary R packages to manage the data and summarize it in a small table, and a plot. We’ve actually done this previously, but we’ll repeat the steps here, because it’s worth seeing what R is doing.</p>
+<p>In this case, we’ll load up five packages.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/">palmerpenguins</a></span><span class="op">)</span>  <span class="co"># source for the data set</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor">janitor</a></span><span class="op">)</span>         <span class="co"># some utilities for cleanup and simple tables</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>        <span class="co"># provides us with the pipe %&gt;% for code management</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>           <span class="co"># part of the tidyverse: data management tools</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>         <span class="co"># part of the tidyverse: tools for plotting data</span></code></pre></div>
+<p>It’s worth remembering that everything after the <code>#</code> on each line above is just a comment for the reader, and is ignored by R. We’ll see later that the loading of a single package (called <code>tidyverse</code>) gives us both the <code>dplyr</code> and <code>ggplot2</code> packages, as well as several other useful things.</p>
+<p>Next, let’s take the <code>penguins</code> data from the <code>palmerpenguins</code> package, and identify those observations which have complete data (so, no missing values) in four variables of interest. We’ll store that result in a new data frame (think of this as a data set) called <code>new_penguins</code> and then take a look at that result using the following code.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">new_penguins</span> <span class="op">&lt;-</span> <span class="va">penguins</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">flipper_length_mm</span>, <span class="va">body_mass_g</span>, <span class="va">species</span>, <span class="va">sex</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">new_penguins</span></code></pre></div>
+<pre><code># A tibble: 333 x 8
+   species island    bill_length_mm bill_depth_mm
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Adelie  Torgersen           39.1          18.7
+ 2 Adelie  Torgersen           39.5          17.4
+ 3 Adelie  Torgersen           40.3          18  
+ 4 Adelie  Torgersen           36.7          19.3
+ 5 Adelie  Torgersen           39.3          20.6
+ 6 Adelie  Torgersen           38.9          17.8
+ 7 Adelie  Torgersen           39.2          19.6
+ 8 Adelie  Torgersen           41.1          17.6
+ 9 Adelie  Torgersen           38.6          21.2
+10 Adelie  Torgersen           34.6          21.1
+# ... with 323 more rows, and 4 more variables:
+#   flipper_length_mm &lt;int&gt;, body_mass_g &lt;int&gt;, sex &lt;fct&gt;,
+#   year &lt;int&gt;</code></pre>
+</div>
+<div id="counting-things-and-making-tables" class="section level2" number="2.2">
+<h2>
+<span class="header-section-number">2.2</span> Counting Things and Making Tables<a class="anchor" aria-label="anchor" href="#counting-things-and-making-tables"><i class="fas fa-link"></i></a>
+</h2>
+<p>So, how many penguins are in our <code>new_penguins</code> data? When we printed out the result, we got an answer, but (as with many things in R) there are many ways to get the same result.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">new_penguins</span><span class="op">)</span></code></pre></div>
+<pre><code>[1] 333</code></pre>
+<p>How do our <code>new_penguins</code> data break down by sex and species?</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">new_penguins</span> <span class="op">%&gt;%</span> 
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">species</span><span class="op">)</span> <span class="co"># tabyl comes from the janitor package</span></code></pre></div>
+<pre><code>    sex Adelie Chinstrap Gentoo
+ female     73        34     58
+   male     73        34     61</code></pre>
+<p>Note the strange spelling of <code>tabyl</code> here. The output is reasonably clear, but could we make that table a little prettier, and while we’re at it, can we add the row and column totals to it?</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">new_penguins</span> <span class="op">%&gt;%</span> 
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">species</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"row"</span>, <span class="st">"col"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># add row, column totals</span>
+    <span class="va">kable</span>  <span class="co"># one convenient way to make the table prettier</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">sex</th>
+<th align="right">Adelie</th>
+<th align="right">Chinstrap</th>
+<th align="right">Gentoo</th>
+<th align="right">Total</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">female</td>
+<td align="right">73</td>
+<td align="right">34</td>
+<td align="right">58</td>
+<td align="right">165</td>
+</tr>
+<tr class="even">
+<td align="left">male</td>
+<td align="right">73</td>
+<td align="right">34</td>
+<td align="right">61</td>
+<td align="right">168</td>
+</tr>
+<tr class="odd">
+<td align="left">Total</td>
+<td align="right">146</td>
+<td align="right">68</td>
+<td align="right">119</td>
+<td align="right">333</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="visualizing-the-data-in-a-graph-or-a-few" class="section level2" number="2.3">
+<h2>
+<span class="header-section-number">2.3</span> Visualizing the Data in a Graph (or a few…)<a class="anchor" aria-label="anchor" href="#visualizing-the-data-in-a-graph-or-a-few"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now, let’s look at the other two variables of interest. Let’s create a graph showing the association of body mass with flipper length across the complete set of 333 penguins.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">new_penguins</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">body_mass_g</span>, y <span class="op">=</span> <span class="va">flipper_length_mm</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> </code></pre></div>
+<div class="inline-figure"><img src="02-penguins_files/figure-html/unnamed-chunk-4-1.png" width="672"></div>
+<p>Some of you may want to include a straight-line model (fit by a classical linear regression) to this plot. One way to do that in R involves the addition of a single line of code, like this:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">new_penguins</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">body_mass_g</span>, y <span class="op">=</span> <span class="va">flipper_length_mm</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span>,
+                col <span class="op">=</span> <span class="st">"red"</span>, se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="02-penguins_files/figure-html/unnamed-chunk-5-1.png" width="672"></div>
+<p>Whenever we build a graph for ourselves, these default choices may be sufficient. But I’d like to see a prettier version if I was going to show it to someone else. So, I might use a different color for each species, and I might neaten up the theme (to get rid of the default grey background) and add a title, like this.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">new_penguins</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">body_mass_g</span>, y <span class="op">=</span> <span class="va">flipper_length_mm</span>, col <span class="op">=</span> <span class="va">species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Flipper Length and Body Mass for 333 of the Palmer Penguins"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="02-penguins_files/figure-html/unnamed-chunk-6-1.png" width="672"></div>
+</div>
+<div id="six-ways-to-improve-this-graph" class="section level2" number="2.4">
+<h2>
+<span class="header-section-number">2.4</span> Six Ways To “Improve” This Graph<a class="anchor" aria-label="anchor" href="#six-ways-to-improve-this-graph"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now, let’s build a new graph. Here, I want to:</p>
+<ol style="list-style-type: decimal">
+<li>plot the relationship between body mass and flipper length in light of both Sex and Species</li>
+<li>increase the size of the points and add a little transparency so we can see if points overlap,</li>
+<li>add some smooth curves to summarize the relationships between the two quantities (body mass and flipper length) within each combination of species and sex,</li>
+<li>split the graph into two “facets” (one for each sex),</li>
+<li>improve the axis labels,</li>
+<li>improve the titles by adding a subtitle, and also adding in some code to count the penguins (rather than hard-coding in the total number.)</li>
+</ol>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">new_penguins</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">body_mass_g</span>, y <span class="op">=</span> <span class="va">flipper_length_mm</span>, 
+                         col <span class="op">=</span> <span class="va">species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"loess"</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, 
+                se <span class="op">=</span> <span class="cn">FALSE</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="op">~</span> <span class="va">sex</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Flipper Length and Body Mass, by Sex &amp; Species"</span>,
+         subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">new_penguins</span><span class="op">)</span>, <span class="st">" of the Palmer Penguins"</span><span class="op">)</span>,
+         x <span class="op">=</span> <span class="st">"Body Mass (g)"</span>, 
+         y <span class="op">=</span> <span class="st">"Flipper Length (mm)"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="02-penguins_files/figure-html/unnamed-chunk-7-1.png" width="672"></div>
+</div>
+<div id="a-little-reflection" class="section level2" number="2.5">
+<h2>
+<span class="header-section-number">2.5</span> A Little Reflection<a class="anchor" aria-label="anchor" href="#a-little-reflection"><i class="fas fa-link"></i></a>
+</h2>
+<p>What can we learn from these plots and their construction? In particular,</p>
+<ul>
+<li>What do these plots suggest about the center of the distribution of each quantity (body mass and flipper length) overall, and within each combination of Sex and Species?</li>
+<li>What does the final plot suggest about the spread of the distribution of each of those quantities in each combination of Sex and Species?</li>
+<li>What do the plots suggest about the association of body mass and flipper length across the complete set of penguins?</li>
+<li>How does the shape and nature of this body mass - flipper length relationship change based on Sex and Species?</li>
+<li>Do you think it would be helpful to plot a straight-line relationship (rather than a smooth curve) within each combination of Sex and Species in the final plot? Why or why not? (Also, what would we have to do to the code to accomplish this?)</li>
+<li>How was the R code for the plot revised to accomplish each of the six “wants” specified above?</li>
+</ul>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="data-science.html"><span class="header-section-number">1</span> Data Science</a></div>
+<div class="next"><a href="nhanes1.html"><span class="header-section-number">3</span> NHANES: A First Look</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#the-palmer-penguins"><span class="header-section-number">2</span> The Palmer Penguins</a></li>
+<li><a class="nav-link" href="#package-loading-then-dealing-with-missing-data"><span class="header-section-number">2.1</span> Package Loading, then Dealing with Missing Data</a></li>
+<li><a class="nav-link" href="#counting-things-and-making-tables"><span class="header-section-number">2.2</span> Counting Things and Making Tables</a></li>
+<li><a class="nav-link" href="#visualizing-the-data-in-a-graph-or-a-few"><span class="header-section-number">2.3</span> Visualizing the Data in a Graph (or a few…)</a></li>
+<li><a class="nav-link" href="#six-ways-to-improve-this-graph"><span class="header-section-number">2.4</span> Six Ways To “Improve” This Graph</a></li>
+<li><a class="nav-link" href="#a-little-reflection"><span class="header-section-number">2.5</span> A Little Reflection</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/THOMASELOVE/431-notes/blob/master/02-penguins.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/THOMASELOVE/431-notes/edit/master/02-penguins.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</strong>" was written by Thomas E. Love. It was last built on 2021-08-21.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

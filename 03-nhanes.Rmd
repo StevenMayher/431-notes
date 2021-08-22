@@ -1,4 +1,4 @@
-# NHANES: Initial Exploring {#nhanes1} 
+# NHANES: A First Look {#nhanes1} 
 
 Next, we'll explore some data from the US National Health and Nutrition Examination Survey, or NHANES. 
 

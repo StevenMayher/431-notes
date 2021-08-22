@@ -4,16 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 3 NHANES: Initial Exploring | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</title>
+<title>Chapter 3 NHANES: A First Look | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</title>
 <meta name="author" content="Thomas E. Love">
 <meta name="description" content="Next, we’ll explore some data from the US National Health and Nutrition Examination Survey, or NHANES. We’ll display R code as we go, but we’ll return to all of the key coding ideas involved later...">
 <meta name="generator" content="bookdown 0.23 with bs4_book()">
-<meta property="og:title" content="Chapter 3 NHANES: Initial Exploring | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta property="og:title" content="Chapter 3 NHANES: A First Look | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
 <meta property="og:type" content="book">
 <meta property="og:url" content="your book url like https://thomaselove.github.io/431-book/nhanes1.html">
 <meta property="og:description" content="Next, we’ll explore some data from the US National Health and Nutrition Examination Survey, or NHANES. We’ll display R code as we go, but we’ll return to all of the key coding ideas involved later...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 3 NHANES: Initial Exploring | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta name="twitter:title" content="Chapter 3 NHANES: A First Look | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
 <meta name="twitter:description" content="Next, we’ll explore some data from the US National Health and Nutrition Examination Survey, or NHANES. We’ll display R code as we go, but we’ll return to all of the key coding ideas involved later...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -43,12 +43,12 @@
 <li><a class="" href="index.html">Working with These Notes</a></li>
 <li><a class="" href="data-science.html"><span class="header-section-number">1</span> Data Science</a></li>
 <li class="book-part">Part A. Exploring Data</li>
-<li><a class="" href="looking-at-the-palmer-penguins.html"><span class="header-section-number">2</span> Looking at the Palmer Penguins</a></li>
-<li><a class="active" href="nhanes1.html"><span class="header-section-number">3</span> NHANES: Initial Exploring</a></li>
-<li><a class="" href="data-structures-and-types-of-variables.html"><span class="header-section-number">4</span> Data Structures and Types of Variables</a></li>
-<li><a class="" href="visualizing-nhanes-complete-cases.html"><span class="header-section-number">5</span> Visualizing NHANES Complete Cases</a></li>
-<li><a class="" href="summarizing_quantities.html"><span class="header-section-number">6</span> Summarizing Quantitative Variables</a></li>
-<li><a class="" href="summarizing-categorical-variables.html"><span class="header-section-number">7</span> Summarizing Categorical Variables</a></li>
+<li><a class="" href="the-palmer-penguins.html"><span class="header-section-number">2</span> The Palmer Penguins</a></li>
+<li><a class="active" href="nhanes1.html"><span class="header-section-number">3</span> NHANES: A First Look</a></li>
+<li><a class="" href="data-structures-variable-types-sampling-nhanes.html"><span class="header-section-number">4</span> Data Structures, Variable Types &amp; Sampling NHANES</a></li>
+<li><a class="" href="visualizing-nhanes-data.html"><span class="header-section-number">5</span> Visualizing NHANES Data</a></li>
+<li><a class="" href="summarizing_quantities.html"><span class="header-section-number">6</span> Summarizing Quantities</a></li>
+<li><a class="" href="summarizing-categories.html"><span class="header-section-number">7</span> Summarizing Categories</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -59,7 +59,7 @@
 </div>
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="nhanes1" class="section level1" number="3">
 <h1>
-<span class="header-section-number">3</span> NHANES: Initial Exploring<a class="anchor" aria-label="anchor" href="#nhanes1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3</span> NHANES: A First Look<a class="anchor" aria-label="anchor" href="#nhanes1"><i class="fas fa-link"></i></a>
 </h1>
 <p>Next, we’ll explore some data from the US National Health and Nutrition Examination Survey, or NHANES.</p>
 <p>We’ll display R code as we go, but we’ll return to all of the key coding ideas involved later in the Notes.</p>
@@ -278,12 +278,12 @@
 </div>
 
   <div class="chapter-nav">
-<div class="prev"><a href="looking-at-the-palmer-penguins.html"><span class="header-section-number">2</span> Looking at the Palmer Penguins</a></div>
-<div class="next"><a href="data-structures-and-types-of-variables.html"><span class="header-section-number">4</span> Data Structures and Types of Variables</a></div>
+<div class="prev"><a href="the-palmer-penguins.html"><span class="header-section-number">2</span> The Palmer Penguins</a></div>
+<div class="next"><a href="data-structures-variable-types-sampling-nhanes.html"><span class="header-section-number">4</span> Data Structures, Variable Types &amp; Sampling NHANES</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#nhanes1"><span class="header-section-number">3</span> NHANES: Initial Exploring</a></li>
+<li><a class="nav-link" href="#nhanes1"><span class="header-section-number">3</span> NHANES: A First Look</a></li>
 <li><a class="nav-link" href="#the-nhanes-data-a-first-sample"><span class="header-section-number">3.1</span> The NHANES data: A First Sample</a></li>
 <li><a class="nav-link" href="#a-quick-numerical-summary"><span class="header-section-number">3.2</span> A Quick Numerical Summary</a></li>
 <li><a class="nav-link" href="#plotting-age-vs.-height"><span class="header-section-number">3.3</span> Plotting Age vs. Height</a></li>

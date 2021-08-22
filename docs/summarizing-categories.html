@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 7 Summarizing Categories | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</title>
+<meta name="author" content="Thomas E. Love">
+<meta name="description" content="To demonstrate key ideas in this Chapter, we will again consider our sample of 750 adults ages 21-64 from NHANES 2011-12 which includes some missing values. We’ll load into the nh_750 data frame...">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="Chapter 7 Summarizing Categories | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta property="og:type" content="book">
+<meta property="og:url" content="your book url like https://thomaselove.github.io/431-book/summarizing-categories.html">
+<meta property="og:description" content="To demonstrate key ideas in this Chapter, we will again consider our sample of 750 adults ages 21-64 from NHANES 2011-12 which includes some missing values. We’ll load into the nh_750 data frame...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 7 Summarizing Categories | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta name="twitter:description" content="To demonstrate key ideas in this Chapter, we will again consider our sample of 750 adults ages 21-64 from NHANES 2011-12 which includes some missing values. We’ll load into the nh_750 data frame...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Working with These Notes</a></li>
+<li><a class="" href="data-science.html"><span class="header-section-number">1</span> Data Science</a></li>
+<li class="book-part">Part A. Exploring Data</li>
+<li><a class="" href="the-palmer-penguins.html"><span class="header-section-number">2</span> The Palmer Penguins</a></li>
+<li><a class="" href="nhanes1.html"><span class="header-section-number">3</span> NHANES: A First Look</a></li>
+<li><a class="" href="data-structures-variable-types-sampling-nhanes.html"><span class="header-section-number">4</span> Data Structures, Variable Types &amp; Sampling NHANES</a></li>
+<li><a class="" href="visualizing-nhanes-data.html"><span class="header-section-number">5</span> Visualizing NHANES Data</a></li>
+<li><a class="" href="summarizing_quantities.html"><span class="header-section-number">6</span> Summarizing Quantities</a></li>
+<li><a class="active" href="summarizing-categories.html"><span class="header-section-number">7</span> Summarizing Categories</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/THOMASELOVE/431-notes">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="summarizing-categories" class="section level1" number="7">
+<h1>
+<span class="header-section-number">7</span> Summarizing Categories<a class="anchor" aria-label="anchor" href="#summarizing-categories"><i class="fas fa-link"></i></a>
+</h1>
+<p>To demonstrate key ideas in this Chapter, we will again consider our sample of 750 adults ages 21-64 from NHANES 2011-12 which includes some missing values. We’ll load into the <code>nh_750</code> data frame the information from the <code>nh_adult750.Rds</code> file we created in Section <a href="data-structures-variable-types-sampling-nhanes.html#newNHANES">4.2</a>.</p>
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">&lt;-</span> <span class="fu">read_rds</span><span class="op">(</span><span class="st">"data/nh_adult750.Rds"</span><span class="op">)</span></code></pre></div>
+<p>Summarizing categorical variables numerically is mostly about building tables, and calculating percentages or proportions. We’ll save our discussion of modeling categorical data for later. Recall that in the <code>nh_750</code> data set we built in Section <a href="data-structures-variable-types-sampling-nhanes.html#newNHANES">4.2</a> we had the following categorical variables. The number of levels indicates the number of possible categories for each categorical variable.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">Variable</th>
+<th>Description</th>
+<th>Levels</th>
+<th>Type</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">Sex</td>
+<td>sex of subject</td>
+<td>2</td>
+<td>binary</td>
+</tr>
+<tr class="even">
+<td align="right">Race</td>
+<td>subject’s race</td>
+<td>6</td>
+<td>nominal</td>
+</tr>
+<tr class="odd">
+<td align="right">Education</td>
+<td>subject’s educational level</td>
+<td>5</td>
+<td>ordinal</td>
+</tr>
+<tr class="even">
+<td align="right">PhysActive</td>
+<td>Participates in sports?</td>
+<td>2</td>
+<td>binary</td>
+</tr>
+<tr class="odd">
+<td align="right">Smoke100</td>
+<td>Smoked 100+ cigarettes?</td>
+<td>2</td>
+<td>binary</td>
+</tr>
+<tr class="even">
+<td align="right">SleepTrouble</td>
+<td>Trouble sleeping?</td>
+<td>2</td>
+<td>binary</td>
+</tr>
+<tr class="odd">
+<td align="right">HealthGen</td>
+<td>Self-report health</td>
+<td>5</td>
+<td>ordinal</td>
+</tr>
+</tbody>
+</table></div>
+<div id="the-summary-function-for-categorical-data" class="section level2" number="7.1">
+<h2>
+<span class="header-section-number">7.1</span> The <code>summary</code> function for Categorical data<a class="anchor" aria-label="anchor" href="#the-summary-function-for-categorical-data"><i class="fas fa-link"></i></a>
+</h2>
+<p>When R recognizes a variable as categorical, it stores it as a <em>factor</em>. Such variables get special treatment from the <code>summary</code> function, in particular a table of available values (so long as there aren’t too many.)</p>
+<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Sex</span>, <span class="va">Race</span>, <span class="va">Education</span>, <span class="va">PhysActive</span>, <span class="va">Smoke100</span>, 
+         <span class="va">SleepTrouble</span>, <span class="va">HealthGen</span>, <span class="va">MaritalStatus</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>     Sex            Race              Education  
+ female:388   Asian   : 70   8th Grade     : 50  
+ male  :362   Black   :128   9 - 11th Grade: 76  
+              Hispanic: 63   High School   :143  
+              Mexican : 80   Some College  :241  
+              White   :393   College Grad  :240  
+              Other   : 16                       
+ PhysActive Smoke100  SleepTrouble     HealthGen  
+ No :326    No :453   No :555      Excellent: 84  
+ Yes:424    Yes:297   Yes:195      Vgood    :197  
+                                   Good     :252  
+                                   Fair     :104  
+                                   Poor     : 14  
+                                   NA's     : 99  
+      MaritalStatus
+ Divorced    : 78  
+ LivePartner : 70  
+ Married     :388  
+ NeverMarried:179  
+ Separated   : 19  
+ Widowed     : 16  </code></pre>
+</div>
+<div id="tables-to-describe-one-categorical-variable" class="section level2" number="7.2">
+<h2>
+<span class="header-section-number">7.2</span> Tables to describe One Categorical Variable<a class="anchor" aria-label="anchor" href="#tables-to-describe-one-categorical-variable"><i class="fas fa-link"></i></a>
+</h2>
+<p>Suppose we build a table (using the <code>tabyl</code> function from the <code>janitor</code> package) to describe the <code>HealthGen</code> distribution.</p>
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">HealthGen</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code> HealthGen   n percent valid_percent
+ Excellent  84   11.2%         12.9%
+     Vgood 197   26.3%         30.3%
+      Good 252   33.6%         38.7%
+      Fair 104   13.9%         16.0%
+      Poor  14    1.9%          2.2%
+      &lt;NA&gt;  99   13.2%             -</code></pre>
+<p>Note how the missing (<code>&lt;NA&gt;</code>) values are not included in the <code>valid_percent</code> calculation, but are in the <code>percent</code> calculation. Note also the use of percentage formatting.</p>
+<p>What if we want to add a total count, sometimes called the <em>marginal</em> total?</p>
+<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">HealthGen</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html">adorn_totals</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code> HealthGen   n percent valid_percent
+ Excellent  84   11.2%         12.9%
+     Vgood 197   26.3%         30.3%
+      Good 252   33.6%         38.7%
+      Fair 104   13.9%         16.0%
+      Poor  14    1.9%          2.2%
+      &lt;NA&gt;  99   13.2%             -
+     Total 750  100.0%        100.0%</code></pre>
+<p>What about marital status, which has no missing data in our sample?</p>
+<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">MaritalStatus</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html">adorn_totals</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code> MaritalStatus   n percent
+      Divorced  78   10.4%
+   LivePartner  70    9.3%
+       Married 388   51.7%
+  NeverMarried 179   23.9%
+     Separated  19    2.5%
+       Widowed  16    2.1%
+         Total 750  100.0%</code></pre>
+</div>
+<div id="the-mode-of-a-categorical-variable" class="section level2" number="7.3">
+<h2>
+<span class="header-section-number">7.3</span> The Mode of a Categorical Variable<a class="anchor" aria-label="anchor" href="#the-mode-of-a-categorical-variable"><i class="fas fa-link"></i></a>
+</h2>
+<p>A common measure applied to a categorical variable is to identify the mode, the most frequently observed value. To find the mode for variables with lots of categories (so that the <code>summary</code> may not be sufficient), we usually tabulate the data, and then sort by the counts of the numbers of observations, as we did with discrete quantitative variables.</p>
+<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">HealthGen</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
+<pre><code># A tibble: 6 x 2
+  HealthGen count
+  &lt;fct&gt;     &lt;int&gt;
+1 Good        252
+2 Vgood       197
+3 Fair        104
+4 &lt;NA&gt;         99
+5 Excellent    84
+6 Poor         14</code></pre>
+</div>
+<div id="describe-in-the-hmisc-package" class="section level2" number="7.4">
+<h2>
+<span class="header-section-number">7.4</span> <code>describe</code> in the <code>Hmisc</code> package<a class="anchor" aria-label="anchor" href="#describe-in-the-hmisc-package"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">Hmisc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/describe.html">describe</a></span><span class="op">(</span><span class="va">nh_750</span> <span class="op">%&gt;%</span> 
+                    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Sex</span>, <span class="va">Race</span>, <span class="va">Education</span>, <span class="va">PhysActive</span>, 
+                           <span class="va">Smoke100</span>, <span class="va">SleepTrouble</span>, 
+                           <span class="va">HealthGen</span>, <span class="va">MaritalStatus</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>nh_750 %&gt;% select(Sex, Race, Education, PhysActive, Smoke100, SleepTrouble, HealthGen, MaritalStatus) 
+
+ 8  Variables      750  Observations
+------------------------------------------------------------
+Sex 
+       n  missing distinct 
+     750        0        2 
+                        
+Value      female   male
+Frequency     388    362
+Proportion  0.517  0.483
+------------------------------------------------------------
+Race 
+       n  missing distinct 
+     750        0        6 
+
+lowest : Asian    Black    Hispanic Mexican  White   
+highest: Black    Hispanic Mexican  White    Other   
+                                                       
+Value         Asian    Black Hispanic  Mexican    White
+Frequency        70      128       63       80      393
+Proportion    0.093    0.171    0.084    0.107    0.524
+                   
+Value         Other
+Frequency        16
+Proportion    0.021
+------------------------------------------------------------
+Education 
+       n  missing distinct 
+     750        0        5 
+
+lowest : 8th Grade      9 - 11th Grade High School    Some College   College Grad  
+highest: 8th Grade      9 - 11th Grade High School    Some College   College Grad  
+                                                       
+Value           8th Grade 9 - 11th Grade    High School
+Frequency              50             76            143
+Proportion          0.067          0.101          0.191
+                                        
+Value        Some College   College Grad
+Frequency             241            240
+Proportion          0.321          0.320
+------------------------------------------------------------
+PhysActive 
+       n  missing distinct 
+     750        0        2 
+                      
+Value         No   Yes
+Frequency    326   424
+Proportion 0.435 0.565
+------------------------------------------------------------
+Smoke100 
+       n  missing distinct 
+     750        0        2 
+                      
+Value         No   Yes
+Frequency    453   297
+Proportion 0.604 0.396
+------------------------------------------------------------
+SleepTrouble 
+       n  missing distinct 
+     750        0        2 
+                    
+Value        No  Yes
+Frequency   555  195
+Proportion 0.74 0.26
+------------------------------------------------------------
+HealthGen 
+       n  missing distinct 
+     651       99        5 
+
+lowest : Excellent Vgood     Good      Fair      Poor     
+highest: Excellent Vgood     Good      Fair      Poor     
+                                                  
+Value      Excellent     Vgood      Good      Fair
+Frequency         84       197       252       104
+Proportion     0.129     0.303     0.387     0.160
+                    
+Value           Poor
+Frequency         14
+Proportion     0.022
+------------------------------------------------------------
+MaritalStatus 
+       n  missing distinct 
+     750        0        6 
+
+lowest : Divorced     LivePartner  Married      NeverMarried Separated   
+highest: LivePartner  Married      NeverMarried Separated    Widowed     
+                                                 
+Value          Divorced  LivePartner      Married
+Frequency            78           70          388
+Proportion        0.104        0.093        0.517
+                                                 
+Value      NeverMarried    Separated      Widowed
+Frequency           179           19           16
+Proportion        0.239        0.025        0.021
+------------------------------------------------------------</code></pre>
+</div>
+<div id="cross-tabulations" class="section level2" number="7.5">
+<h2>
+<span class="header-section-number">7.5</span> Cross-Tabulations<a class="anchor" aria-label="anchor" href="#cross-tabulations"><i class="fas fa-link"></i></a>
+</h2>
+<p>It is very common for us to want to describe the association of one categorical variable with another. For instance, is there a relationship between Education and SleepTrouble in these data?</p>
+<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Education</span>, <span class="va">SleepTrouble</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"row"</span>, <span class="st">"col"</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
+<pre><code>      Education  No Yes Total
+      8th Grade  40  10    50
+ 9 - 11th Grade  52  24    76
+    High School 102  41   143
+   Some College 173  68   241
+   College Grad 188  52   240
+          Total 555 195   750</code></pre>
+<p>Note the use of <code>adorn_totals</code> to get the marginal counts, and how we specify that we want both the row and column totals. We can add a title for the columns with…</p>
+<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Education</span>, <span class="va">SleepTrouble</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"row"</span>, <span class="st">"col"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_title.html">adorn_title</a></span><span class="op">(</span>placement <span class="op">=</span> <span class="st">"combined"</span><span class="op">)</span></code></pre></div>
+<pre><code> Education/SleepTrouble  No Yes Total
+              8th Grade  40  10    50
+         9 - 11th Grade  52  24    76
+            High School 102  41   143
+           Some College 173  68   241
+           College Grad 188  52   240
+                  Total 555 195   750</code></pre>
+<p>Often, we’ll want to show percentages in a cross-tabulation like this. To get row percentages so that we can directly see the probability of <code>SleepTrouble = Yes</code> for each level of <code>Education</code>, we can use:</p>
+<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Education</span>, <span class="va">SleepTrouble</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_title.html">adorn_title</a></span><span class="op">(</span>placement <span class="op">=</span> <span class="st">"combined"</span><span class="op">)</span></code></pre></div>
+<pre><code> Education/SleepTrouble    No   Yes
+              8th Grade 80.0% 20.0%
+         9 - 11th Grade 68.4% 31.6%
+            High School 71.3% 28.7%
+           Some College 71.8% 28.2%
+           College Grad 78.3% 21.7%
+                  Total 74.0% 26.0%</code></pre>
+<p>If we want to compare the distribution of <code>Education</code> between the two levels of <code>SleepTrouble</code> with column percentages, we can use the following…</p>
+<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Education</span>, <span class="va">SleepTrouble</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="st">"col"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"col"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_title.html">adorn_title</a></span><span class="op">(</span>placement <span class="op">=</span> <span class="st">"combined"</span><span class="op">)</span> </code></pre></div>
+<pre><code> Education/SleepTrouble    No   Yes Total
+              8th Grade  7.2%  5.1%  6.7%
+         9 - 11th Grade  9.4% 12.3% 10.1%
+            High School 18.4% 21.0% 19.1%
+           Some College 31.2% 34.9% 32.1%
+           College Grad 33.9% 26.7% 32.0%</code></pre>
+<p>If we want overall percentages in the cells of the table, so that the total across all combinations of <code>Education</code> and <code>SleepTrouble</code> is 100%, we can use:</p>
+<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Education</span>, <span class="va">SleepTrouble</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"row"</span>, <span class="st">"col"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_title.html">adorn_title</a></span><span class="op">(</span>placement <span class="op">=</span> <span class="st">"combined"</span><span class="op">)</span> </code></pre></div>
+<pre><code> Education/SleepTrouble    No   Yes  Total
+              8th Grade  5.3%  1.3%   6.7%
+         9 - 11th Grade  6.9%  3.2%  10.1%
+            High School 13.6%  5.5%  19.1%
+           Some College 23.1%  9.1%  32.1%
+           College Grad 25.1%  6.9%  32.0%
+                  Total 74.0% 26.0% 100.0%</code></pre>
+<p>Another common approach is to include both counts and percentages in a cross-tabulation. Let’s look at the breakdown of <code>HealthGen</code> by <code>MaritalStatus</code>.</p>
+<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">MaritalStatus</span>, <span class="va">HealthGen</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"row"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_ns.html">adorn_ns</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"front"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_title.html">adorn_title</a></span><span class="op">(</span>placement <span class="op">=</span> <span class="st">"combined"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">MaritalStatus/HealthGen</th>
+<th align="left">Excellent</th>
+<th align="left">Vgood</th>
+<th align="left">Good</th>
+<th align="left">Fair</th>
+<th align="left">Poor</th>
+<th align="left">NA_</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Divorced</td>
+<td align="left">7 (9.0%)</td>
+<td align="left">19 (24.4%)</td>
+<td align="left">29 (37.2%)</td>
+<td align="left">11 (14.1%)</td>
+<td align="left">3 (3.8%)</td>
+<td align="left">9 (11.5%)</td>
+</tr>
+<tr class="even">
+<td align="left">LivePartner</td>
+<td align="left">4 (5.7%)</td>
+<td align="left">19 (27.1%)</td>
+<td align="left">25 (35.7%)</td>
+<td align="left">18 (25.7%)</td>
+<td align="left">0 (0.0%)</td>
+<td align="left">4 (5.7%)</td>
+</tr>
+<tr class="odd">
+<td align="left">Married</td>
+<td align="left">46 (11.9%)</td>
+<td align="left">101 (26.0%)</td>
+<td align="left">130 (33.5%)</td>
+<td align="left">41 (10.6%)</td>
+<td align="left">6 (1.5%)</td>
+<td align="left">64 (16.5%)</td>
+</tr>
+<tr class="even">
+<td align="left">NeverMarried</td>
+<td align="left">25 (14.0%)</td>
+<td align="left">52 (29.1%)</td>
+<td align="left">56 (31.3%)</td>
+<td align="left">24 (13.4%)</td>
+<td align="left">3 (1.7%)</td>
+<td align="left">19 (10.6%)</td>
+</tr>
+<tr class="odd">
+<td align="left">Separated</td>
+<td align="left">2 (10.5%)</td>
+<td align="left">3 (15.8%)</td>
+<td align="left">4 (21.1%)</td>
+<td align="left">8 (42.1%)</td>
+<td align="left">0 (0.0%)</td>
+<td align="left">2 (10.5%)</td>
+</tr>
+<tr class="even">
+<td align="left">Widowed</td>
+<td align="left">0 (0.0%)</td>
+<td align="left">3 (18.8%)</td>
+<td align="left">8 (50.0%)</td>
+<td align="left">2 (12.5%)</td>
+<td align="left">2 (12.5%)</td>
+<td align="left">1 (6.2%)</td>
+</tr>
+<tr class="odd">
+<td align="left">Total</td>
+<td align="left">84 (11.2%)</td>
+<td align="left">197 (26.3%)</td>
+<td align="left">252 (33.6%)</td>
+<td align="left">104 (13.9%)</td>
+<td align="left">14 (1.9%)</td>
+<td align="left">99 (13.2%)</td>
+</tr>
+</tbody>
+</table></div>
+<p>What if we wanted to ignore the missing <code>HealthGen</code> values? Most often, I filter down to the complete observations.</p>
+<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">MaritalStatus</span>, <span class="va">HealthGen</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">MaritalStatus</span>, <span class="va">HealthGen</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"row"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_ns.html">adorn_ns</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"front"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_title.html">adorn_title</a></span><span class="op">(</span>placement <span class="op">=</span> <span class="st">"combined"</span><span class="op">)</span></code></pre></div>
+<pre><code> MaritalStatus/HealthGen  Excellent       Vgood        Good
+                Divorced  7 (10.1%)  19 (27.5%)  29 (42.0%)
+             LivePartner  4  (6.1%)  19 (28.8%)  25 (37.9%)
+                 Married 46 (14.2%) 101 (31.2%) 130 (40.1%)
+            NeverMarried 25 (15.6%)  52 (32.5%)  56 (35.0%)
+               Separated  2 (11.8%)   3 (17.6%)   4 (23.5%)
+                 Widowed  0  (0.0%)   3 (20.0%)   8 (53.3%)
+                   Total 84 (12.9%) 197 (30.3%) 252 (38.7%)
+        Fair       Poor
+  11 (15.9%)  3  (4.3%)
+  18 (27.3%)  0  (0.0%)
+  41 (12.7%)  6  (1.9%)
+  24 (15.0%)  3  (1.9%)
+   8 (47.1%)  0  (0.0%)
+   2 (13.3%)  2 (13.3%)
+ 104 (16.0%) 14  (2.2%)</code></pre>
+<p>For more on working with <code>tabyls</code>, see the vignette in the <code>janitor</code> package. There you’ll find a complete list of all of the <code>adorn</code> functions, for example.</p>
+<p>Here’s another approach, to look at the cross-classification of Race and HealthGen:</p>
+<div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">Race</span> <span class="op">+</span> <span class="va">HealthGen</span>, data <span class="op">=</span> <span class="va">nh_750</span><span class="op">)</span></code></pre></div>
+<pre><code>          HealthGen
+Race       Excellent Vgood Good Fair Poor
+  Asian           10    17   24    6    1
+  Black           15    28   40   24    4
+  Hispanic         4     9   24   13    2
+  Mexican          6    12   25   21    2
+  White           48   128  131   37    5
+  Other            1     3    8    3    0</code></pre>
+<div id="cross-classifying-three-categorical-variables" class="section level3" number="7.5.1">
+<h3>
+<span class="header-section-number">7.5.1</span> Cross-Classifying Three Categorical Variables<a class="anchor" aria-label="anchor" href="#cross-classifying-three-categorical-variables"><i class="fas fa-link"></i></a>
+</h3>
+<p>Suppose we are interested in <code>Smoke100</code> and its relationship to <code>PhysActive</code> and <code>SleepTrouble</code>.</p>
+<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Smoke100</span>, <span class="va">PhysActive</span>, <span class="va">SleepTrouble</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_title.html">adorn_title</a></span><span class="op">(</span>placement <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span></code></pre></div>
+<pre><code>$No
+          PhysActive    
+ Smoke100         No Yes
+       No        137 219
+      Yes         93 106
+
+$Yes
+          PhysActive    
+ Smoke100         No Yes
+       No         41  56
+      Yes         55  43</code></pre>
+<p>The result here is a tabyl of <code>Smoke100</code> (rows) by <code>PhysActive</code> (columns), split into a list by <code>SleepTrouble</code>.</p>
+<p>There are several alternative approaches for doing this, although I expect us to stick with <code>tabyl</code> for our work in 431. These alternatives include the use of the <code>xtabs</code> function:</p>
+<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">Smoke100</span> <span class="op">+</span> <span class="va">PhysActive</span> <span class="op">+</span> <span class="va">SleepTrouble</span>, data <span class="op">=</span> <span class="va">nh_750</span><span class="op">)</span></code></pre></div>
+<pre><code>, , SleepTrouble = No
+
+        PhysActive
+Smoke100  No Yes
+     No  137 219
+     Yes  93 106
+
+, , SleepTrouble = Yes
+
+        PhysActive
+Smoke100  No Yes
+     No   41  56
+     Yes  55  43</code></pre>
+<p>We can also build a <strong>flat</strong> version of this table, as follows:</p>
+<div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/ftable.html">ftable</a></span><span class="op">(</span><span class="va">Smoke100</span> <span class="op">~</span> <span class="va">PhysActive</span> <span class="op">+</span> <span class="va">SleepTrouble</span>, data <span class="op">=</span> <span class="va">nh_750</span><span class="op">)</span></code></pre></div>
+<pre><code>                        Smoke100  No Yes
+PhysActive SleepTrouble                 
+No         No                    137  93
+           Yes                    41  55
+Yes        No                    219 106
+           Yes                    56  43</code></pre>
+<p>And we can do this with <code>dplyr</code> functions and the <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> function, as well, for example…</p>
+<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nh_750</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Smoke100</span>, <span class="va">PhysActive</span>, <span class="va">SleepTrouble</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="op">)</span> </code></pre></div>
+<pre><code>, , SleepTrouble = No
+
+        PhysActive
+Smoke100  No Yes
+     No  137 219
+     Yes  93 106
+
+, , SleepTrouble = Yes
+
+        PhysActive
+Smoke100  No Yes
+     No   41  56
+     Yes  55  43</code></pre>
+</div>
+</div>
+<div id="constructing-tables-well" class="section level2" number="7.6">
+<h2>
+<span class="header-section-number">7.6</span> Constructing Tables Well<a class="anchor" aria-label="anchor" href="#constructing-tables-well"><i class="fas fa-link"></i></a>
+</h2>
+<p>The prolific Howard Wainer is responsible for many interesting books on visualization and related issues, including <span class="citation"><a href="references.html#ref-HW_GraphicDiscovery" role="doc-biblioref">Howard Wainer</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;a href="references.html#ref-HW_GraphicDiscovery" role="doc-biblioref"&gt;&lt;em&gt;Graphic Discovery: A Trout in the Milk and Other Visual Adventures&lt;/em&gt; (Princeton, NJ: Princeton University Press, 2005)&lt;/a&gt;.&lt;/p&gt;'><sup>23</sup></a></span> and <span class="citation"><a href="references.html#ref-HW_MedicalIlluminations" role="doc-biblioref">Howard Wainer</a>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;a href="references.html#ref-HW_MedicalIlluminations" role="doc-biblioref"&gt;&lt;em&gt;Medical Illuminations: Using Evidence, Visualization and Statistical Thinking to Improve Healthcare&lt;/em&gt; (New York: Oxford University Press, 2013)&lt;/a&gt;.&lt;/p&gt;'><sup>24</sup></a></span> These rules come from Chapter 10 of <span class="citation"><a href="references.html#ref-HW_VisualRevelations" role="doc-biblioref">Howard Wainer</a>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;a href="references.html#ref-HW_VisualRevelations" role="doc-biblioref"&gt;&lt;em&gt;Visual Revelations: Graphical Tales of Fate and Deception from Napoleon Bonaparte to Ross Perot&lt;/em&gt; (New York: Springer-Verlag, 1997)&lt;/a&gt;.&lt;/p&gt;'><sup>25</sup></a></span></p>
+<ol style="list-style-type: decimal">
+<li>Order the rows and columns in a way that makes sense.</li>
+<li>Round, a lot!</li>
+<li>ALL is different and important</li>
+</ol>
+<div id="alabama-first" class="section level3" number="7.6.1">
+<h3>
+<span class="header-section-number">7.6.1</span> Alabama First!<a class="anchor" aria-label="anchor" href="#alabama-first"><i class="fas fa-link"></i></a>
+</h3>
+<p>Which of these Tables is more useful to you?</p>
+<p>2013 Percent of Students in grades 9-12 who are obese</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">State</th>
+<th align="center">% Obese</th>
+<th align="center">95% CI</th>
+<th align="center">Sample Size</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Alabama</td>
+<td align="center">17.1</td>
+<td align="center">(14.6 - 19.9)</td>
+<td align="center">1,499</td>
+</tr>
+<tr class="even">
+<td align="left">Alaska</td>
+<td align="center">12.4</td>
+<td align="center">(10.5-14.6)</td>
+<td align="center">1,167</td>
+</tr>
+<tr class="odd">
+<td align="left">Arizona</td>
+<td align="center">10.7</td>
+<td align="center">(8.3-13.6)</td>
+<td align="center">1,520</td>
+</tr>
+<tr class="even">
+<td align="left">Arkansas</td>
+<td align="center">17.8</td>
+<td align="center">(15.7-20.1)</td>
+<td align="center">1,470</td>
+</tr>
+<tr class="odd">
+<td align="left">Connecticut</td>
+<td align="center">12.3</td>
+<td align="center">(10.2-14.7)</td>
+<td align="center">2,270</td>
+</tr>
+<tr class="even">
+<td align="left">Delaware</td>
+<td align="center">14.2</td>
+<td align="center">(12.9-15.6)</td>
+<td align="center">2,475</td>
+</tr>
+<tr class="odd">
+<td align="left">Florida</td>
+<td align="center">11.6</td>
+<td align="center">(10.5-12.8)</td>
+<td align="center">5,491</td>
+</tr>
+<tr class="even">
+<td align="left">…</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">Wisconsin</td>
+<td align="center">11.6</td>
+<td align="center">(9.7-13.9)</td>
+<td align="center">2,771</td>
+</tr>
+<tr class="even">
+<td align="left">Wyoming</td>
+<td align="center">10.7</td>
+<td align="center">(9.4-12.2)</td>
+<td align="center">2,910</td>
+</tr>
+</tbody>
+</table></div>
+<p>or …</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">State</th>
+<th align="center">% Obese</th>
+<th align="center">95% CI</th>
+<th align="center">Sample Size</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Kentucky</td>
+<td align="center">18.0</td>
+<td align="center">(15.7 - 20.6)</td>
+<td align="center">1,537</td>
+</tr>
+<tr class="even">
+<td align="left">Arkansas</td>
+<td align="center">17.8</td>
+<td align="center">(15.7 - 20.1)</td>
+<td align="center">1,470</td>
+</tr>
+<tr class="odd">
+<td align="left">Alabama</td>
+<td align="center">17.1</td>
+<td align="center">(14.6 - 19.9)</td>
+<td align="center">1,499</td>
+</tr>
+<tr class="even">
+<td align="left">Tennessee</td>
+<td align="center">16.9</td>
+<td align="center">(15.1 - 18.8)</td>
+<td align="center">1,831</td>
+</tr>
+<tr class="odd">
+<td align="left">Texas</td>
+<td align="center">15.7</td>
+<td align="center">(13.9 - 17.6)</td>
+<td align="center">3,039</td>
+</tr>
+<tr class="even">
+<td align="left">…</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">Massachusetts</td>
+<td align="center">10.2</td>
+<td align="center">(8.5 - 12.1)</td>
+<td align="center">2,547</td>
+</tr>
+<tr class="even">
+<td align="left">Idaho</td>
+<td align="center">9.6</td>
+<td align="center">(8.2 - 11.1)</td>
+<td align="center">1,841</td>
+</tr>
+<tr class="odd">
+<td align="left">Montana</td>
+<td align="center">9.4</td>
+<td align="center">(8.4 - 10.5)</td>
+<td align="center">4,679</td>
+</tr>
+<tr class="even">
+<td align="left">New Jersey</td>
+<td align="center">8.7</td>
+<td align="center">(6.8 - 11.2)</td>
+<td align="center">1,644</td>
+</tr>
+<tr class="odd">
+<td align="left">Utah</td>
+<td align="center">6.4</td>
+<td align="center">(4.8 - 8.5)</td>
+<td align="center">2,136</td>
+</tr>
+</tbody>
+</table></div>
+<p>It is a rare event when Alabama first is the best choice.</p>
+</div>
+<div id="order-rows-and-columns-sensibly" class="section level3" number="7.6.2">
+<h3>
+<span class="header-section-number">7.6.2</span> Order rows and columns sensibly<a class="anchor" aria-label="anchor" href="#order-rows-and-columns-sensibly"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>Alabama First!
+<ul>
+<li>Size places - put the largest first. We often look most carefully at the top.</li>
+</ul>
+</li>
+<li>Order time from the past to the future to help the viewer.</li>
+<li>If there is a clear predictor-outcome relationship, put the predictors in the rows and the outcomes in the columns.</li>
+</ul>
+</div>
+<div id="round---a-lot" class="section level3" number="7.6.3">
+<h3>
+<span class="header-section-number">7.6.3</span> Round - a lot!<a class="anchor" aria-label="anchor" href="#round---a-lot"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>Humans cannot understand more than two digits very easily.</li>
+<li>We almost never care about accuracy of more than two digits.</li>
+<li>We can almost never justify more than two digits of accuracy statistically.</li>
+<li>It’s also helpful to remember that we are almost invariably publishing progress to date, rather than a truly final answer.</li>
+</ul>
+<p>Suppose, for instance, we report a correlation coefficient of 0.25. How many observations do you think you would need to justify such a choice?</p>
+<ul>
+<li>To report 0.25 meaningfully, we want to be sure that the second digit isn’t 4 or 6.</li>
+<li>That requires a standard error less than 0.005</li>
+<li>The <em>standard error</em> of any statistic is proportional to 1 over the square root of the sample size, <em>n</em>.</li>
+</ul>
+<p>So <span class="math inline">\(\frac{1}{\sqrt{n}}\)</span> ~ 0.005, but that means <span class="math inline">\(\sqrt{n} = \frac{1}{0.005} = 200\)</span>. If <span class="math inline">\(\sqrt{n} = 200\)</span>, then <em>n</em> = (200)<sup>2</sup> = 40,000.</p>
+<p>Do we usually have 40,000 observations?</p>
+</div>
+<div id="all-is-different-and-important" class="section level3" number="7.6.4">
+<h3>
+<span class="header-section-number">7.6.4</span> ALL is different and important<a class="anchor" aria-label="anchor" href="#all-is-different-and-important"><i class="fas fa-link"></i></a>
+</h3>
+<p>Summaries of rows and columns provide a measure of what is typical or usual. Sometimes a sum is helpful, at other times, consider presenting a median or other summary. The ALL category, as <span class="citation"><a href="references.html#ref-HW_VisualRevelations" role="doc-biblioref">Wainer</a><a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a></span> suggests, should be both visually different from the individual entries and set spatially apart.</p>
+<p>On the whole, it’s <em>far</em> easier to fall into a good graph in R (at least if you have some ggplot2 skills) than to produce a good table.</p>
+</div>
+</div>
+<div id="gaining-control-over-tables-in-r-the-gt-package" class="section level2" number="7.7">
+<h2>
+<span class="header-section-number">7.7</span> Gaining Control over Tables in R: the <code>gt</code> package<a class="anchor" aria-label="anchor" href="#gaining-control-over-tables-in-r-the-gt-package"><i class="fas fa-link"></i></a>
+</h2>
+<p>With the <code>gt</code> package, anyone can make wonderful-looking tables using the R programming language. The <code>gt</code> package allows you to start with a tibble or data frame, and use it to make very detailed tables that look professional, and includes tools that enable you to include titles and subtitles, all sorts of labels, as well as footnotes and source notes.</p>
+<p>The <code>gt</code> package is described in substantial detail at <a href="https://gt.rstudio.com/" class="uri">https://gt.rstudio.com/</a>.</p>
+
+</div>
+</div>
+
+  <div class="chapter-nav">
+<div class="prev"><a href="summarizing_quantities.html"><span class="header-section-number">6</span> Summarizing Quantities</a></div>
+<div class="next"><a href="references.html">References</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#summarizing-categories"><span class="header-section-number">7</span> Summarizing Categories</a></li>
+<li><a class="nav-link" href="#the-summary-function-for-categorical-data"><span class="header-section-number">7.1</span> The summary function for Categorical data</a></li>
+<li><a class="nav-link" href="#tables-to-describe-one-categorical-variable"><span class="header-section-number">7.2</span> Tables to describe One Categorical Variable</a></li>
+<li><a class="nav-link" href="#the-mode-of-a-categorical-variable"><span class="header-section-number">7.3</span> The Mode of a Categorical Variable</a></li>
+<li><a class="nav-link" href="#describe-in-the-hmisc-package"><span class="header-section-number">7.4</span> describe in the Hmisc package</a></li>
+<li>
+<a class="nav-link" href="#cross-tabulations"><span class="header-section-number">7.5</span> Cross-Tabulations</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#cross-classifying-three-categorical-variables"><span class="header-section-number">7.5.1</span> Cross-Classifying Three Categorical Variables</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#constructing-tables-well"><span class="header-section-number">7.6</span> Constructing Tables Well</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#alabama-first"><span class="header-section-number">7.6.1</span> Alabama First!</a></li>
+<li><a class="nav-link" href="#order-rows-and-columns-sensibly"><span class="header-section-number">7.6.2</span> Order rows and columns sensibly</a></li>
+<li><a class="nav-link" href="#round---a-lot"><span class="header-section-number">7.6.3</span> Round - a lot!</a></li>
+<li><a class="nav-link" href="#all-is-different-and-important"><span class="header-section-number">7.6.4</span> ALL is different and important</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#gaining-control-over-tables-in-r-the-gt-package"><span class="header-section-number">7.7</span> Gaining Control over Tables in R: the gt package</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/THOMASELOVE/431-notes/blob/master/07-summarizing_categories.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/THOMASELOVE/431-notes/edit/master/07-summarizing_categories.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</strong>" was written by Thomas E. Love. It was last built on 2021-08-21.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

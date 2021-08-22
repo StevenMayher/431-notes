@@ -1,4 +1,4 @@
-# Summarizing Quantitative Variables {#summarizing_quantities}
+# Summarizing Quantities {#summarizing_quantities}
 
 Most numerical summaries that might be new to you are applied most appropriately to quantitative variables. The measures that will interest us relate to:
 
@@ -22,7 +22,7 @@ nh_750 %>%
   summary()
 ```
 
-This basic summary includes a set of five **quantiles**^[The quantiles (sometimes referred to as percentiles) can also be summarised with a boxplot.], plus the sample's **mean**.
+This basic summary includes a set of five **quantiles**^[The quantiles (sometimes referred to as percentiles) can also be summarized with a boxplot.], plus the sample's **mean**.
 
 - `Min.` = the **minimum** value for each variable, so, for example, the youngest subject's Age was `r min(nh_750$Age)`.
 - `1st Qu.` = the **first quartile** (25^th^ percentile) for each variable - for example, 25% of the subjects were Age `r quantile(nh_750$Age, 0.25)` or younger.
@@ -78,7 +78,7 @@ nh_750 %>%
     summarise(mean(Pulse), median(Pulse))
 ```
 
-This fails because we have some missing values in the Pulse data. We can address this by either omitting the data with missing values before we run the summarise function, or tell the mean and median summary functions to remove missing values^[We could also use `!is.na` in place of `complete.cases` to accomplish the same thing.].
+This fails because we have some missing values in the Pulse data. We can address this by either omitting the data with missing values before we run the `summarise()` function, or tell the mean and median summary functions to remove missing values^[We could also use `!is.na` in place of `complete.cases` to accomplish the same thing.].
 
 ```{r c6_nh750_s7}
 nh_750 %>%
@@ -106,7 +106,9 @@ nh_750 %>%
     arrange(desc(count)) 
 ```
 
-Note the use of three different "verbs" in our function there - for more explanation of this strategy, visit @R4DS.
+The mode is just the most common Age observed in the data.
+
+Note the use of three different "verbs" in our function there - for more explanation of this strategy, visit @R4DS. The `group_by` function here is very useful. It converts the nh_750 data frame into a new grouped tibble where operations are performed on the groups. Here, this means that it groups the data by Age before counting observations, and then sorting the groups (the Ages) by their frequencies.
 
 As an alternative, the `modeest` package's `mfv` function calculates the sample mode (or most frequent value) ^[See the documentation for the `modeest` package's `mlv` function to look at other definitions of the mode.].
 
@@ -149,7 +151,7 @@ nh_750 %>%
 
 ### The Variance and the Standard Deviation
 
-The IQR is always a reasonable summary of spread, just as the median is always a reasonable summary of the center of a distribution. Yet, most people are inclined to summarise a batch of data using two numbers: the **mean** and the **standard deviation**.  This is really only a sensible thing to do if you are willing to assume the data follow a Normal distribution: a bell-shaped, symmetric distribution without substantial outliers. 
+The IQR is always a reasonable summary of spread, just as the median is always a reasonable summary of the center of a distribution. Yet, most people are inclined to summarize a batch of data using two numbers: the **mean** and the **standard deviation**.  This is really only a sensible thing to do if you are willing to assume the data follow a Normal distribution: a bell-shaped, symmetric distribution without substantial outliers. 
 
 But **most data do not (even approximately) follow a Normal distribution**. Summarizing by the median and quartiles (25th and 75th percentiles) is much more robust, explaining R's emphasis on them.  
 
@@ -216,7 +218,7 @@ Again, most data sets do not follow a Normal distribution. We'll return to this 
 When considering the shape of a distribution, one is often interested in three key points.
 
 - The number of modes in the distribution, which I always assess through plotting the data.
-- The **skewness**, or symmetry that is present, which I typically assess by looking at a plot of the distribution of the data, but if required to, will summarise with a non-parametric measure of **skewness**.
+- The **skewness**, or symmetry that is present, which I typically assess by looking at a plot of the distribution of the data, but if required to, will summarize with a non-parametric measure of **skewness**.
 - The **kurtosis**, or heavy-tailedness (outlier-proneness) that is present, usually in comparison to a Normal distribution. Again, this is something I nearly inevitably assess graphically, but there are measures.  
 
 A Normal distribution has a single mode, is symmetric and, naturally, is neither heavy-tailed nor light-tailed as compared to a Normal distribution (we call this mesokurtic).
@@ -323,7 +325,7 @@ The `favstats` function adds the standard deviation, and counts of overall and m
 mosaic::favstats(~ SBP, data = nh_750)
 ```
 
-We could, of course, duplicate these results with a rather lengthy set of `summarise` pieces...
+We could, of course, duplicate these results with several `summarise()` pieces...
 
 ```{r c6_nh750_fav2}
 nh_750 %>%

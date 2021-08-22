@@ -1,4 +1,4 @@
-# Summarizing Categorical Variables
+# Summarizing Categories
 
 To demonstrate key ideas in this Chapter, we will again consider our sample of 750 adults ages 21-64 from NHANES 2011-12 which includes some missing values. We'll load into the `nh_750` data frame the information from the `nh_adult750.Rds` file we created in Section \@ref(newNHANES).
 
@@ -464,8 +464,9 @@ $Yes
       Yes         55  43
 ```
 
-The result here is a tabyl of `Smoke100` (rows) by `PhysActive` (columns), split into a list by `SleepTrouble`. Another approach to get the same table is:
+The result here is a tabyl of `Smoke100` (rows) by `PhysActive` (columns), split into a list by `SleepTrouble`. 
 
+There are several alternative approaches for doing this, although I expect us to stick with `tabyl` for our work in 431. These alternatives include the use of the `xtabs` function:
 
 
 ```r
@@ -505,7 +506,7 @@ Yes        No                    219 106
 ```
 
 
-And we can do this with `dplyr` functions, as well, for example...
+And we can do this with `dplyr` functions and the `table()` function, as well, for example...
 
 
 ```r

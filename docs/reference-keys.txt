@@ -4,7 +4,7 @@ data-science
 data-science-project-cycle
 data-science-and-the-431-course
 what-the-course-is-and-isnt
-looking-at-the-palmer-penguins
+the-palmer-penguins
 package-loading-then-dealing-with-missing-data
 counting-things-and-making-tables
 visualizing-the-data-in-a-graph-or-a-few
@@ -20,7 +20,7 @@ age-height-by-sex
 can-we-show-the-female-and-male-relationships-in-separate-panels
 can-we-add-a-smooth-curve-to-show-the-relationship-in-each-plot
 what-if-we-want-to-assume-straight-line-relationships
-data-structures-and-types-of-variables
+data-structures-variable-types-sampling-nhanes
 data-require-structure-and-context
 newNHANES
 creating-a-temporary-cleaner-data-frame
@@ -33,12 +33,15 @@ qualitative-categorical-variables
 counting-missing-values
 nh_cc
 saving-our-samples-in-.rds-files
-visualizing-nhanes-complete-cases
+visualizing-nhanes-data
 loading-in-the-complete-cases-sample
 distribution-of-heights
 changing-a-histograms-fill-and-color
+using-a-frequency-polygon
+using-a-dotplot
 height-and-sex
 a-boxplot-of-height-by-sex
+adding-a-violin-plot
 histograms-of-height-by-sex
 looking-at-pulse-rate
 pulse-rate-and-physical-activity
@@ -75,7 +78,7 @@ favstats-in-the-mosaic-package
 describe-in-the-psych-package
 the-hmisc-packages-version-of-describe
 other-options
-summarizing-categorical-variables
+summarizing-categories
 the-summary-function-for-categorical-data
 tables-to-describe-one-categorical-variable
 the-mode-of-a-categorical-variable
