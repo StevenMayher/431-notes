@@ -4,16 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 11 Assessing Normality | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</title>
+<title>Chapter 10 Assessing Normality | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</title>
 <meta name="author" content="Thomas E. Love">
 <meta name="description" content="Data are well approximated by a Normal distribution if the shape of the data’s distribution is a good match for a Normal distribution with mean and standard deviation equal to the sample...">
 <meta name="generator" content="bookdown 0.23 with bs4_book()">
-<meta property="og:title" content="Chapter 11 Assessing Normality | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta property="og:title" content="Chapter 10 Assessing Normality | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
 <meta property="og:type" content="book">
 <meta property="og:url" content="your book url like https://thomaselove.github.io/431-book/assessing-normality.html">
 <meta property="og:description" content="Data are well approximated by a Normal distribution if the shape of the data’s distribution is a good match for a Normal distribution with mean and standard deviation equal to the sample...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 11 Assessing Normality | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta name="twitter:title" content="Chapter 10 Assessing Normality | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
 <meta name="twitter:description" content="Data are well approximated by a Normal distribution if the shape of the data’s distribution is a good match for a Normal distribution with mean and standard deviation equal to the sample...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -51,8 +51,14 @@
 <li><a class="" href="summarizing-categories.html"><span class="header-section-number">7</span> Summarizing Categories</a></li>
 <li><a class="" href="miss.html"><span class="header-section-number">8</span> Missing Data and Single Imputation</a></li>
 <li><a class="" href="NYFS-Study.html"><span class="header-section-number">9</span> National Youth Fitness Survey</a></li>
-<li><a class="" href="straight-line-models-and-correlation.html"><span class="header-section-number">10</span> Straight Line Models and Correlation</a></li>
-<li><a class="active" href="assessing-normality.html"><span class="header-section-number">11</span> Assessing Normality</a></li>
+<li><a class="active" href="assessing-normality.html"><span class="header-section-number">10</span> Assessing Normality</a></li>
+<li><a class="" href="straight-line-models.html"><span class="header-section-number">11</span> Straight Line Models</a></li>
+<li><a class="" href="linearizing-transformations.html"><span class="header-section-number">12</span> Linearizing Transformations</a></li>
+<li><a class="" href="studying-crab-claws-crabs.html"><span class="header-section-number">13</span> Studying Crab Claws (crabs)</a></li>
+<li><a class="" href="Hydrate-Study.html"><span class="header-section-number">14</span> Dehydration Recovery</a></li>
+<li><a class="" href="WCGS-Study.html"><span class="header-section-number">15</span> The WCGS</a></li>
+<li class="book-part">Appendix</li>
+<li><a class="" href="some-r-tips.html">Some R Tips</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -61,9 +67,9 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="assessing-normality" class="section level1" number="11">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="assessing-normality" class="section level1" number="10">
 <h1>
-<span class="header-section-number">11</span> Assessing Normality<a class="anchor" aria-label="anchor" href="#assessing-normality"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10</span> Assessing Normality<a class="anchor" aria-label="anchor" href="#assessing-normality"><i class="fas fa-link"></i></a>
 </h1>
 <p>Data are well approximated by a Normal distribution if the shape of the data’s distribution is a good match for a Normal distribution with mean and standard deviation equal to the sample statistics.</p>
 <ul>
@@ -78,9 +84,9 @@
 <li>the Empirical Rule for interpretation of a standard deviation</li>
 <li>a specialized <em>normal Q-Q plot</em> (also called a normal probability plot or normal quantile-quantile plot) designed to reveal differences between a sample distribution and what we might expect from a normal distribution of a similar number of values with the same mean and standard deviation</li>
 </ul>
-<div id="empirical-rule-interpretation-of-the-standard-deviation" class="section level2" number="11.1">
+<div id="empirical-rule-interpretation-of-the-standard-deviation" class="section level2" number="10.1">
 <h2>
-<span class="header-section-number">11.1</span> Empirical Rule Interpretation of the Standard Deviation<a class="anchor" aria-label="anchor" href="#empirical-rule-interpretation-of-the-standard-deviation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.1</span> Empirical Rule Interpretation of the Standard Deviation<a class="anchor" aria-label="anchor" href="#empirical-rule-interpretation-of-the-standard-deviation"><i class="fas fa-link"></i></a>
 </h2>
 <p>For a set of measurements that follows a Normal distribution, the interval:</p>
 <ul>
@@ -90,9 +96,9 @@
 </ul>
 <p>Again, most data sets do not follow a Normal distribution. We will occasionally think about transforming or re-expressing our data to obtain results which are better approximated by a Normal distribution, in part so that a standard deviation can be more meaningful.</p>
 <p>For the energy data we have been studying, here again are some summary statistics…</p>
-<div class="sourceCode" id="cb394"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb330"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">nnyfs</span> <span class="op">&lt;-</span> <span class="fu">read_rds</span><span class="op">(</span><span class="st">"data/nnyfs.Rds"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb395"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb331"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="va">nnyfs</span><span class="op">$</span><span class="va">energy</span><span class="op">)</span></code></pre></div>
 <pre><code> min     Q1 median   Q3  max     mean       sd    n missing
  257 1367.5 1794.5 2306 5265 1877.157 722.3537 1518       0</code></pre>
@@ -104,29 +110,29 @@
 </ul>
 <p>So, based on this Empirical Rule approximation, do the energy data seem to be well approximated by a Normal distribution?</p>
 </div>
-<div id="describing-outlying-values-with-z-scores" class="section level2" number="11.2">
+<div id="describing-outlying-values-with-z-scores" class="section level2" number="10.2">
 <h2>
-<span class="header-section-number">11.2</span> Describing Outlying Values with Z Scores<a class="anchor" aria-label="anchor" href="#describing-outlying-values-with-z-scores"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.2</span> Describing Outlying Values with Z Scores<a class="anchor" aria-label="anchor" href="#describing-outlying-values-with-z-scores"><i class="fas fa-link"></i></a>
 </h2>
 <p>The maximum energy consumption value here is 5265. One way to gauge how extreme this is (or how much of an outlier it is) uses that observation’s <strong>Z score</strong>, the number of standard deviations away from the mean that the observation falls.</p>
 <p>Here, the maximum value, 5265 is 4.69 standard deviations above the mean, and thus has a Z score of 4.7.</p>
 <p>A negative Z score would indicate a point below the mean, while a positive Z score indicates, as we’ve seen, a point above the mean. The minimum body-mass index, 257 is 2.24 standard deviations <em>below</em> the mean, so it has a Z score of -2.2.</p>
 <p>Recall that the Empirical Rule suggests that if a variable follows a Normal distribution, it would have approximately 95% of its observations falling inside a Z score of (-2, 2), and 99.74% falling inside a Z score range of (-3, 3).</p>
-<div id="fences-and-z-scores" class="section level3" number="11.2.1">
+<div id="fences-and-z-scores" class="section level3" number="10.2.1">
 <h3>
-<span class="header-section-number">11.2.1</span> Fences and Z Scores<a class="anchor" aria-label="anchor" href="#fences-and-z-scores"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.2.1</span> Fences and Z Scores<a class="anchor" aria-label="anchor" href="#fences-and-z-scores"><i class="fas fa-link"></i></a>
 </h3>
 <p>Note the relationship between the fences (Tukey’s approach to identifying points which fall within the whiskers of a boxplot, as compared to candidate outliers) and the Z scores.</p>
 <p>The upper inner fence in this case falls at 3713.75, which indicates a Z score of 2.5, while the lower inner fence falls at -40.25, which indicates a Z score of -2.7. It is neither unusual nor inevitable for the inner fences to fall at Z scores near -2.0 and +2.0.</p>
 </div>
 </div>
-<div id="comparing-a-histogram-to-a-normal-distribution" class="section level2" number="11.3">
+<div id="comparing-a-histogram-to-a-normal-distribution" class="section level2" number="10.3">
 <h2>
-<span class="header-section-number">11.3</span> Comparing a Histogram to a Normal Distribution<a class="anchor" aria-label="anchor" href="#comparing-a-histogram-to-a-normal-distribution"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.3</span> Comparing a Histogram to a Normal Distribution<a class="anchor" aria-label="anchor" href="#comparing-a-histogram-to-a-normal-distribution"><i class="fas fa-link"></i></a>
 </h2>
 <p>Most of the time, when we want to understand whether our data are well approximated by a Normal distribution, we will use a graph to aid in the decision.</p>
 <p>One option is to build a histogram with a Normal density function (with the same mean and standard deviation as our data) superimposed. This is one way to help visualize deviations between our data and what might be expected from a Normal distribution.</p>
-<div class="sourceCode" id="cb397"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb333"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">energy</span>, data <span class="op">=</span> <span class="va">nnyfs</span><span class="op">)</span>
 <span class="va">bin_w</span> <span class="op">&lt;-</span> <span class="fl">50</span> <span class="co"># specify binwidth</span>
 
@@ -142,7 +148,7 @@
               color<span class="op">=</span><span class="st">"blue"</span>, fontface <span class="op">=</span> <span class="st">"italic"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"nnyfs energy values with Normal Density Superimposed"</span>, 
          x <span class="op">=</span> <span class="st">"Energy (kcal)"</span>, y <span class="op">=</span> <span class="st">"Probability Density Function"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/c11_sum2-1.png" width="672"></div>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/c11_sum2-1.png" width="672"></div>
 <p>Does it seem as though the Normal model (as shown in the blue density curve) is an effective approximation to the observed distribution shown in the bars of the histogram?</p>
 <p>We’ll return shortly to the questions:</p>
 <ul>
@@ -150,12 +156,12 @@
 </li>
 <li>If the data aren’t Normal, but we want to use a Normal model anyway, what should we do?</li>
 </ul>
-<div id="histogram-of-energy-with-normal-model-with-counts" class="section level3" number="11.3.1">
+<div id="histogram-of-energy-with-normal-model-with-counts" class="section level3" number="10.3.1">
 <h3>
-<span class="header-section-number">11.3.1</span> Histogram of <code>energy</code> with Normal model (with Counts)<a class="anchor" aria-label="anchor" href="#histogram-of-energy-with-normal-model-with-counts"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.3.1</span> Histogram of <code>energy</code> with Normal model (with Counts)<a class="anchor" aria-label="anchor" href="#histogram-of-energy-with-normal-model-with-counts"><i class="fas fa-link"></i></a>
 </h3>
 <p>But first, we’ll demonstrate an approach to building a histogram of counts (rather than a probability density) and then superimposing a Normal model.</p>
-<div class="sourceCode" id="cb398"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb334"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">energy</span>, data <span class="op">=</span> <span class="va">nnyfs</span><span class="op">)</span>
 <span class="va">bin_w</span> <span class="op">&lt;-</span> <span class="fl">50</span> <span class="co"># specify binwidth</span>
 
@@ -174,15 +180,15 @@
               color<span class="op">=</span><span class="st">"blue"</span>, fontface <span class="op">=</span> <span class="st">"italic"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Histogram of energy, with Normal Model"</span>, 
          x <span class="op">=</span> <span class="st">"Energy consumed (kcal)"</span>, y <span class="op">=</span> <span class="st">"# of subjects"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/c11_sum3-1.png" width="672"></div>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/c11_sum3-1.png" width="672"></div>
 </div>
 </div>
-<div id="does-a-normal-model-work-well-for-the-waist-circumference" class="section level2" number="11.4">
+<div id="does-a-normal-model-work-well-for-the-waist-circumference" class="section level2" number="10.4">
 <h2>
-<span class="header-section-number">11.4</span> Does a Normal model work well for the <code>waist</code> circumference?<a class="anchor" aria-label="anchor" href="#does-a-normal-model-work-well-for-the-waist-circumference"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.4</span> Does a Normal model work well for the <code>waist</code> circumference?<a class="anchor" aria-label="anchor" href="#does-a-normal-model-work-well-for-the-waist-circumference"><i class="fas fa-link"></i></a>
 </h2>
 <p>Now, suppose we instead look at the <code>waist</code> data, remembering to filter the data to the complete cases before plotting. Do these data appear to follow a Normal distribution?</p>
-<div class="sourceCode" id="cb399"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb335"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">waist</span>, data <span class="op">=</span> <span class="va">nnyfs</span><span class="op">)</span>
 <span class="va">bin_w</span> <span class="op">&lt;-</span> <span class="fl">5</span> <span class="co"># specify binwidth</span>
 
@@ -203,8 +209,8 @@
               color<span class="op">=</span><span class="st">"darkred"</span>, fontface <span class="op">=</span> <span class="st">"italic"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Histogram of waist, with Normal Model"</span>, 
          x <span class="op">=</span> <span class="st">"Waist Circumference (cm)"</span>, y <span class="op">=</span> <span class="st">"# of subjects"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/c11_sum4-1.png" width="672"></div>
-<div class="sourceCode" id="cb400"><pre class="downlit sourceCode r">
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/c11_sum4-1.png" width="672"></div>
+<div class="sourceCode" id="cb336"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">waist</span>, data <span class="op">=</span> <span class="va">nnyfs</span><span class="op">)</span></code></pre></div>
 <pre><code>  min   Q1 median   Q3   max     mean       sd    n missing
  42.5 55.6   64.8 76.6 144.7 67.70536 15.19809 1512       6</code></pre>
@@ -216,34 +222,34 @@
 </ul>
 <p>How does the Normal approximation work for waist circumference, according to the Empirical Rule?</p>
 </div>
-<div id="the-normal-q-q-plot" class="section level2" number="11.5">
+<div id="the-normal-q-q-plot" class="section level2" number="10.5">
 <h2>
-<span class="header-section-number">11.5</span> The Normal Q-Q Plot<a class="anchor" aria-label="anchor" href="#the-normal-q-q-plot"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.5</span> The Normal Q-Q Plot<a class="anchor" aria-label="anchor" href="#the-normal-q-q-plot"><i class="fas fa-link"></i></a>
 </h2>
 <p>A normal probability plot (or normal quantile-quantile plot) of the energy results from the <code>nnyfs</code> data, developed using <code>ggplot2</code> is shown below. In this case, this is a picture of 1518 energy consumption assessments. The idea of a normal Q-Q plot is that it plots the observed sample values (on the vertical axis) and then, on the horizontal, the expected or theoretical quantiles that would be observed in a standard normal distribution (a Normal distribution with mean 0 and standard deviation 1) with the same number of observations.</p>
 <p>A Normal Q-Q plot will follow a straight line when the data are (approximately) Normally distributed. When the data have a different shape, the plot will reflect that.</p>
-<div class="sourceCode" id="cb402"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb338"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">energy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Normal Q-Q plot for energy data"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/c11_sum7-1.png" width="672"></div>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/c11_sum7-1.png" width="672"></div>
 </div>
-<div id="interpreting-the-normal-q-q-plot" class="section level2" number="11.6">
+<div id="interpreting-the-normal-q-q-plot" class="section level2" number="10.6">
 <h2>
-<span class="header-section-number">11.6</span> Interpreting the Normal Q-Q Plot<a class="anchor" aria-label="anchor" href="#interpreting-the-normal-q-q-plot"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.6</span> Interpreting the Normal Q-Q Plot<a class="anchor" aria-label="anchor" href="#interpreting-the-normal-q-q-plot"><i class="fas fa-link"></i></a>
 </h2>
 <p>The purpose of a Normal Q-Q plot is to help point out distinctions from a Normal distribution. A Normal distribution is symmetric and has certain expectations regarding its tails. The Normal Q-Q plot can help us identify data as well approximated by a Normal distribution, or not, because of:</p>
 <ul>
 <li>skew (including distinguishing between right skew and left skew)</li>
 <li>behavior in the tails (which could be heavy-tailed [more outliers than expected] or light-tailed)</li>
 </ul>
-<div id="data-from-a-normal-distribution-shows-up-as-a-straight-line-in-a-normal-q-q-plot" class="section level3" number="11.6.1">
+<div id="data-from-a-normal-distribution-shows-up-as-a-straight-line-in-a-normal-q-q-plot" class="section level3" number="10.6.1">
 <h3>
-<span class="header-section-number">11.6.1</span> Data from a Normal distribution shows up as a straight line in a Normal Q-Q plot<a class="anchor" aria-label="anchor" href="#data-from-a-normal-distribution-shows-up-as-a-straight-line-in-a-normal-q-q-plot"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.6.1</span> Data from a Normal distribution shows up as a straight line in a Normal Q-Q plot<a class="anchor" aria-label="anchor" href="#data-from-a-normal-distribution-shows-up-as-a-straight-line-in-a-normal-q-q-plot"><i class="fas fa-link"></i></a>
 </h3>
 <p>We’ll demonstrate the looks that we can obtain from a Normal Q-Q plot in some simulations. First, here is an example of a Normal Q-Q plot, and its associated histogram, for a sample of 200 observations simulated from a Normal distribution.</p>
-<div class="sourceCode" id="cb403"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb339"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123431</span><span class="op">)</span> <span class="co"># so the results can be replicated</span>
                                           
 <span class="co"># simulate 200 observations from a Normal(20, 5) distribution and place them </span>
@@ -278,8 +284,8 @@
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> 
   <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"200 observations from a simulated Normal distribution"</span><span class="op">)</span> </code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/c11_sum8-1.png" width="672"></div>
-<div class="sourceCode" id="cb404"><pre class="downlit sourceCode r">
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/c11_sum8-1.png" width="672"></div>
+<div class="sourceCode" id="cb340"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># uses patchwork package to combine plots</span></code></pre></div>
 <p>These simulated data appear to be well-modeled by the Normal distribution, because the points on the Normal Q-Q plot follow the diagonal reference line. In particular,</p>
 <ul>
@@ -287,12 +293,12 @@
 <li>there is no particularly surprising behavior (curves away from the line) at either tail, so there’s no obvious problem with outliers</li>
 </ul>
 </div>
-<div id="skew-is-indicated-by-monotonic-curves-in-the-normal-q-q-plot" class="section level3" number="11.6.2">
+<div id="skew-is-indicated-by-monotonic-curves-in-the-normal-q-q-plot" class="section level3" number="10.6.2">
 <h3>
-<span class="header-section-number">11.6.2</span> Skew is indicated by monotonic curves in the Normal Q-Q plot<a class="anchor" aria-label="anchor" href="#skew-is-indicated-by-monotonic-curves-in-the-normal-q-q-plot"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.6.2</span> Skew is indicated by monotonic curves in the Normal Q-Q plot<a class="anchor" aria-label="anchor" href="#skew-is-indicated-by-monotonic-curves-in-the-normal-q-q-plot"><i class="fas fa-link"></i></a>
 </h3>
 <p>Data that come from a skewed distribution appear to curve away from a straight line in the Q-Q plot.</p>
-<div class="sourceCode" id="cb405"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb341"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123431</span><span class="op">)</span> <span class="co"># so the results can be replicated</span>
 
 <span class="co"># simulate 200 observations from a beta(5, 2) distribution into the e1 variable</span>
@@ -312,9 +318,9 @@
          title <span class="op">=</span> <span class="st">"Beta(1, 5) sample: Right Skewed"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"200 observations from simulated Beta distributions"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/c11_sum9-1.png" width="672"></div>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/c11_sum9-1.png" width="672"></div>
 <p>Note the bends away from a straight line in each sample. The non-Normality may be easier to see in a histogram.</p>
-<div class="sourceCode" id="cb406"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb342"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">e1</span>, data <span class="op">=</span> <span class="va">temp.2</span><span class="op">)</span>
 <span class="va">bin_w1</span> <span class="op">&lt;-</span> <span class="fl">0.025</span> <span class="co"># specify binwidth</span>
 
@@ -348,11 +354,11 @@
      title <span class="op">=</span> <span class="st">"Beta(1,5) sample: Right Skew"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Histograms with Normal curve superimposed"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/c11_sum10-1.png" width="672"></div>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/c11_sum10-1.png" width="672"></div>
 </div>
-<div id="direction-of-skew" class="section level3" number="11.6.3">
+<div id="direction-of-skew" class="section level3" number="10.6.3">
 <h3>
-<span class="header-section-number">11.6.3</span> Direction of Skew<a class="anchor" aria-label="anchor" href="#direction-of-skew"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.6.3</span> Direction of Skew<a class="anchor" aria-label="anchor" href="#direction-of-skew"><i class="fas fa-link"></i></a>
 </h3>
 <p>In each of these pairs of plots, we see the same basic result.</p>
 <ul>
@@ -360,15 +366,15 @@
 <li>The right plot (for data e2) shows right skew, with a longer tail on the right hand side, the mean larger than the median, and more clustered data at the left end of the distribution.</li>
 </ul>
 </div>
-<div id="outlier-proneness-is-indicated-by-s-shaped-curves-in-a-normal-q-q-plot" class="section level3" number="11.6.4">
+<div id="outlier-proneness-is-indicated-by-s-shaped-curves-in-a-normal-q-q-plot" class="section level3" number="10.6.4">
 <h3>
-<span class="header-section-number">11.6.4</span> Outlier-proneness is indicated by “s-shaped” curves in a Normal Q-Q plot<a class="anchor" aria-label="anchor" href="#outlier-proneness-is-indicated-by-s-shaped-curves-in-a-normal-q-q-plot"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.6.4</span> Outlier-proneness is indicated by “s-shaped” curves in a Normal Q-Q plot<a class="anchor" aria-label="anchor" href="#outlier-proneness-is-indicated-by-s-shaped-curves-in-a-normal-q-q-plot"><i class="fas fa-link"></i></a>
 </h3>
 <ul>
 <li>Heavy-tailed but symmetric distributions are indicated by reverse “S”-shapes, as shown on the left below.</li>
 <li>Light-tailed but symmetric distributions are indicated by “S” shapes in the plot, as shown on the right below.</li>
 </ul>
-<div class="sourceCode" id="cb407"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb343"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">4311</span><span class="op">)</span> <span class="co"># so the results can be replicated</span>
 
 <span class="co"># sample 200 observations from each of two probability distributions</span>
@@ -388,9 +394,9 @@
          title <span class="op">=</span> <span class="st">"Light-Tailed Symmetric Sample s2"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"200 observations from simulated distributions"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/c11_sum11-1.png" width="672"></div>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/c11_sum11-1.png" width="672"></div>
 <p>And, we can also visualize these simulations with histograms, although they’re less helpful for understanding tail behavior than they are for skew.</p>
-<div class="sourceCode" id="cb408"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb344"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">s1</span>, data <span class="op">=</span> <span class="va">temp.3</span><span class="op">)</span>
 <span class="va">bin_w1</span> <span class="op">&lt;-</span> <span class="fl">20</span> <span class="co"># specify binwidth</span>
 
@@ -424,9 +430,9 @@
      title <span class="op">=</span> <span class="st">"Uniform sample: Light Tails"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Histograms with Normal curve superimposed"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/c11_sum12-1.png" width="672"></div>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/c11_sum12-1.png" width="672"></div>
 <p>Instead, boxplots (here augmented with violin plots) can be more helpful when thinking about light-tailed vs. heavy-tailed distributions.</p>
-<div class="sourceCode" id="cb409"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb345"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">temp.3</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"s1"</span>, y <span class="op">=</span> <span class="va">s1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"slateblue"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"slateblue"</span>, width <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span>
@@ -444,17 +450,17 @@
          title <span class="op">=</span> <span class="st">"Light-Tailed Symmetric Sample s2"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"200 observations from simulated distributions"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/c11_sum13-1.png" width="672"></div>
-<div class="sourceCode" id="cb410"><pre class="downlit sourceCode r">
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/c11_sum13-1.png" width="672"></div>
+<div class="sourceCode" id="cb346"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">temp.1</span>, <span class="va">temp.2</span>, <span class="va">temp.3</span>, <span class="va">p1</span>, <span class="va">p2</span>, <span class="va">res</span>, <span class="va">res1</span>, <span class="va">res2</span>, <span class="va">bin_w</span>, <span class="va">bin_w1</span>, <span class="va">bin_w2</span><span class="op">)</span> <span class="co"># cleaning up</span></code></pre></div>
 </div>
 </div>
-<div id="can-a-normal-distribution-fit-the-nnyfs-energy-data-well" class="section level2" number="11.7">
+<div id="can-a-normal-distribution-fit-the-nnyfs-energy-data-well" class="section level2" number="10.7">
 <h2>
-<span class="header-section-number">11.7</span> Can a Normal Distribution Fit the <code>nnyfs</code> <code>energy</code> data Well?<a class="anchor" aria-label="anchor" href="#can-a-normal-distribution-fit-the-nnyfs-energy-data-well"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.7</span> Can a Normal Distribution Fit the <code>nnyfs</code> <code>energy</code> data Well?<a class="anchor" aria-label="anchor" href="#can-a-normal-distribution-fit-the-nnyfs-energy-data-well"><i class="fas fa-link"></i></a>
 </h2>
 <p>The <code>energy</code> data we’ve been studying shows meaningful signs of right skew.</p>
-<div class="sourceCode" id="cb411"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb347"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">energy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"coral"</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span>
@@ -481,7 +487,7 @@
 
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/c11_sum14-1.png" width="672"></div>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/c11_sum14-1.png" width="672"></div>
 <ul>
 <li>Skewness is indicated by the curve in the Normal Q-Q plot. Curving up and away from the line in both tails suggests right skew, as does the histogram.</li>
 </ul>
@@ -489,7 +495,7 @@
 <ul>
 <li>Compare these two plots - the left describes the distribution of the original energy data from the NNYFS data frame, and the right plot shows the distribution of the square root of those values.</li>
 </ul>
-<div class="sourceCode" id="cb412"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb348"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">energy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"coral"</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span>
@@ -505,14 +511,14 @@
          y <span class="op">=</span> <span class="st">"Sorted Square Root of Energy"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/c11_sum15-1.png" width="672"></div>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/c11_sum15-1.png" width="672"></div>
 <ul>
 <li>The left plot shows substantial <strong>right</strong> or <em>positive</em> skew</li>
 <li>The right plot shows there’s much less skew after the square root has been taken.</li>
 </ul>
 <p>Our conclusion is that a Normal model is a far better fit to the square root of the energy values than it is to the raw energy values.</p>
 <p>The effect of taking the square root may be clearer from the histograms below, with Normal models superimposed.</p>
-<div class="sourceCode" id="cb413"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb349"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">energy</span>, data <span class="op">=</span> <span class="va">nnyfs</span><span class="op">)</span>
 <span class="va">bin_w</span> <span class="op">&lt;-</span> <span class="fl">250</span> <span class="co"># specify binwidth</span>
 
@@ -548,8 +554,8 @@
 
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Comparing energy to sqrt(energy)"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/c11_sum16-1.png" width="672"></div>
-<div class="sourceCode" id="cb414"><pre class="downlit sourceCode r">
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/c11_sum16-1.png" width="672"></div>
+<div class="sourceCode" id="cb350"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, <span class="va">bin_w</span>, <span class="va">bin_w2</span>, <span class="va">res</span>, <span class="va">res2</span><span class="op">)</span> <span class="co"># cleanup</span></code></pre></div>
 <p>When we are confronted with a variable that is not Normally distributed but that we wish was Normally distributed, it is sometimes useful to consider whether working with a <strong>transformation</strong> of the data will yield a more helpful result, as the square root does in this instance.</p>
 <p>The rest of this Chapter provides some guidance about choosing from a class of power transformations that can reduce the impact of non-Normality in unimodal data.</p>
@@ -559,9 +565,9 @@
 <li>We’ll discuss using R to assess a range of what are called Box-Cox power transformations, via plots, mainly.</li>
 </ul>
 </div>
-<div id="the-ladder-of-power-transformations" class="section level2" number="11.8">
+<div id="the-ladder-of-power-transformations" class="section level2" number="10.8">
 <h2>
-<span class="header-section-number">11.8</span> The Ladder of Power Transformations<a class="anchor" aria-label="anchor" href="#the-ladder-of-power-transformations"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.8</span> The Ladder of Power Transformations<a class="anchor" aria-label="anchor" href="#the-ladder-of-power-transformations"><i class="fas fa-link"></i></a>
 </h2>
 <p>The key notion in re-expression of a single variable to obtain a distribution better approximated by the Normal or re-expression of an outcome in a simple regression model is that of a <strong>ladder of power transformations</strong>, which applies to any unimodal data.</p>
 <div class="inline-table"><table class="table table-sm">
@@ -610,9 +616,9 @@
 </tbody>
 </table></div>
 </div>
-<div id="using-the-ladder" class="section level2" number="11.9">
+<div id="using-the-ladder" class="section level2" number="10.9">
 <h2>
-<span class="header-section-number">11.9</span> Using the Ladder<a class="anchor" aria-label="anchor" href="#using-the-ladder"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.9</span> Using the Ladder<a class="anchor" aria-label="anchor" href="#using-the-ladder"><i class="fas fa-link"></i></a>
 </h2>
 <p>As we move further away from the <em>identity</em> function (power = 1) we change the shape more and more in the same general direction.</p>
 <ul>
@@ -627,18 +633,18 @@
 </ul>
 <p>The most common transformations are the square (power 2), the square root (power 1/2), the logarithm (power 0) and the inverse (power -1), and I usually restrict myself to those options in practical work.</p>
 </div>
-<div id="protein-consumption-in-the-nnyfs-data" class="section level2" number="11.10">
+<div id="protein-consumption-in-the-nnyfs-data" class="section level2" number="10.10">
 <h2>
-<span class="header-section-number">11.10</span> Protein Consumption in the NNYFS data<a class="anchor" aria-label="anchor" href="#protein-consumption-in-the-nnyfs-data"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.10</span> Protein Consumption in the NNYFS data<a class="anchor" aria-label="anchor" href="#protein-consumption-in-the-nnyfs-data"><i class="fas fa-link"></i></a>
 </h2>
 <p>Here are the protein consumption (in grams) results from the NNYFS data.</p>
-<div class="sourceCode" id="cb415"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb351"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">protein</span>, data <span class="op">=</span> <span class="va">nnyfs</span><span class="op">)</span></code></pre></div>
 <pre><code>  min    Q1 median     Q3    max     mean       sd    n
  4.18 45.33 61.255 82.565 241.84 66.90148 30.96319 1518
  missing
        0</code></pre>
-<div class="sourceCode" id="cb417"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb353"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Protein"</span>, y <span class="op">=</span> <span class="va">protein</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.2</span>, fill <span class="op">=</span> <span class="st">"salmon"</span>, 
@@ -655,14 +661,14 @@
          y <span class="op">=</span> <span class="st">"Protein Consumption (g)"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/unnamed-chunk-3-1.png" width="672"></div>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/unnamed-chunk-3-1.png" width="672"></div>
 <p>The key point here is that we see several signs of meaningful right skew, and we’ll want to consider a transformation that might make a Normal model more plausible.</p>
-<div id="using-patchwork-to-compose-plots" class="section level3" number="11.10.1">
+<div id="using-patchwork-to-compose-plots" class="section level3" number="10.10.1">
 <h3>
-<span class="header-section-number">11.10.1</span> Using <code>patchwork</code> to compose plots<a class="anchor" aria-label="anchor" href="#using-patchwork-to-compose-plots"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.10.1</span> Using <code>patchwork</code> to compose plots<a class="anchor" aria-label="anchor" href="#using-patchwork-to-compose-plots"><i class="fas fa-link"></i></a>
 </h3>
 <p>As we mentioned previously, I feel that the slickest approach to composing how a series of plots are placed together is available in the <code>patchwork</code> package. Here’s another example.</p>
-<div class="sourceCode" id="cb418"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb354"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">protein</span>, data <span class="op">=</span> <span class="va">nnyfs</span><span class="op">)</span>
 <span class="va">bin_w</span> <span class="op">&lt;-</span> <span class="fl">5</span> <span class="co"># specify binwidth</span>
 
@@ -698,21 +704,21 @@
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">-</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">1</span>, height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"NNYFS Protein Consumption"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/unnamed-chunk-4-1.png" width="672"></div>
-<p>For more on the <code>patchwork</code> package, check out its repository at <a href="https://github.com/thomasp85/patchwork" class="uri">https://github.com/thomasp85/patchwork</a>.</p>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/unnamed-chunk-4-1.png" width="672"></div>
+<p>Again, the <code>patchwork</code> package repository at <a href="https://patchwork.data-imaginist.com/index.html" class="uri">https://patchwork.data-imaginist.com/index.html</a> has lots of nice examples to work from.</p>
 </div>
 </div>
-<div id="can-we-transform-the-protein-data" class="section level2" number="11.11">
+<div id="can-we-transform-the-protein-data" class="section level2" number="10.11">
 <h2>
-<span class="header-section-number">11.11</span> Can we transform the <code>protein</code> data?<a class="anchor" aria-label="anchor" href="#can-we-transform-the-protein-data"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.11</span> Can we transform the <code>protein</code> data?<a class="anchor" aria-label="anchor" href="#can-we-transform-the-protein-data"><i class="fas fa-link"></i></a>
 </h2>
 <p>As we’ve seen, the <code>protein</code> data are right skewed, and all of the values are strictly positive. If we want to use the tools of the Normal distribution to describe these data, we might try taking a step “down” our ladder from power 1 (raw data) to lower powers.</p>
-<div id="the-square-root" class="section level3" number="11.11.1">
+<div id="the-square-root" class="section level3" number="10.11.1">
 <h3>
-<span class="header-section-number">11.11.1</span> The Square Root<a class="anchor" aria-label="anchor" href="#the-square-root"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.11.1</span> The Square Root<a class="anchor" aria-label="anchor" href="#the-square-root"><i class="fas fa-link"></i></a>
 </h3>
 <p>Would a square root applied to the protein data help alleviate that right skew?</p>
-<div class="sourceCode" id="cb419"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb355"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">protein</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">nnyfs</span><span class="op">)</span>
 <span class="va">bin_w</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="co"># specify binwidth</span>
 
@@ -748,15 +754,15 @@
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">-</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">1</span>, height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Square Root of NNYFS Protein Consumption"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/unnamed-chunk-5-1.png" width="672"></div>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/unnamed-chunk-5-1.png" width="672"></div>
 <p>That looks like a more symmetric distribution, certainly, although we still have some outliers on the right side of the distribution. Should we take another step down the ladder?</p>
 </div>
-<div id="the-logarithm" class="section level3" number="11.11.2">
+<div id="the-logarithm" class="section level3" number="10.11.2">
 <h3>
-<span class="header-section-number">11.11.2</span> The Logarithm<a class="anchor" aria-label="anchor" href="#the-logarithm"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.11.2</span> The Logarithm<a class="anchor" aria-label="anchor" href="#the-logarithm"><i class="fas fa-link"></i></a>
 </h3>
 <p>We might also try a logarithm of the energy circumference data. We can use either the natural logarithm (log, in R) or the base-10 logarithm (log10, in R) - either will have the same impact on skew.</p>
-<div class="sourceCode" id="cb420"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb356"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">protein</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">nnyfs</span><span class="op">)</span>
 <span class="va">bin_w</span> <span class="op">&lt;-</span> <span class="fl">0.5</span> <span class="co"># specify binwidth</span>
 
@@ -764,7 +770,6 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="va">bin_w</span>, 
                    fill <span class="op">=</span> <span class="st">"salmon"</span>, 
                    col <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">stat_function</a></span><span class="op">(</span>
         fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>, mean <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">mean</span>, 
                                 sd <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">sd</span><span class="op">)</span> <span class="op">*</span> 
@@ -777,7 +782,6 @@
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">protein</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"salmon"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Normal Q-Q plot"</span>,
          y <span class="op">=</span> <span class="st">"Log of Protein Consumption (g)"</span><span class="op">)</span>
 
@@ -785,46 +789,42 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.2</span>, fill <span class="op">=</span> <span class="st">"salmon"</span>, 
                  outlier.color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Boxplot with Violin"</span>,
          x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"Log of Protein Consumption (g)"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">-</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">1</span>, height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Logarithm of NNYFS Protein Consumption"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/unnamed-chunk-6-1.png" width="672"></div>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/unnamed-chunk-6-1.png" width="672"></div>
 <p>Now, it looks like we may have gone too far in the other direction. It looks like the square root is a sensible choice to try to improve the fit of a Normal model to the protein consumption data.</p>
 </div>
-<div id="this-course-uses-natural-logarithms-unless-otherwise-specified" class="section level3" number="11.11.3">
+<div id="this-course-uses-natural-logarithms-unless-otherwise-specified" class="section level3" number="10.11.3">
 <h3>
-<span class="header-section-number">11.11.3</span> This course uses Natural Logarithms, unless otherwise specified<a class="anchor" aria-label="anchor" href="#this-course-uses-natural-logarithms-unless-otherwise-specified"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.11.3</span> This course uses Natural Logarithms, unless otherwise specified<a class="anchor" aria-label="anchor" href="#this-course-uses-natural-logarithms-unless-otherwise-specified"><i class="fas fa-link"></i></a>
 </h3>
 <p>In this course, we will assume the use of natural logarithms unless we specify otherwise. Following R’s convention, we will use <code>log</code> for natural logarithms.</p>
 </div>
 </div>
-<div id="what-if-we-considered-all-9-available-transformations" class="section level2" number="11.12">
+<div id="what-if-we-considered-all-9-available-transformations" class="section level2" number="10.12">
 <h2>
-<span class="header-section-number">11.12</span> What if we considered all 9 available transformations?<a class="anchor" aria-label="anchor" href="#what-if-we-considered-all-9-available-transformations"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.12</span> What if we considered all 9 available transformations?<a class="anchor" aria-label="anchor" href="#what-if-we-considered-all-9-available-transformations"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb421"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb357"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">protein</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"salmon"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Cube (power 3)"</span>,
          y <span class="op">=</span> <span class="st">"Protein, Cubed"</span><span class="op">)</span>
 
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">protein</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"salmon"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Square (power 2)"</span>,
          y <span class="op">=</span> <span class="st">"Protein, Squared"</span><span class="op">)</span>
 
 <span class="va">p3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">protein</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"salmon"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Original Data"</span>,
          y <span class="op">=</span> <span class="st">"Protein (g)"</span><span class="op">)</span>
 
@@ -832,21 +832,18 @@
 <span class="va">p4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">protein</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"salmon"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"sqrt (power 0.5)"</span>,
          y <span class="op">=</span> <span class="st">"Square Root of Protein"</span><span class="op">)</span>
 
 <span class="va">p5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">protein</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"salmon"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"log (power 0)"</span>,
          y <span class="op">=</span> <span class="st">"Natural Log of Protein"</span><span class="op">)</span>
 
 <span class="va">p6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">protein</span><span class="op">^</span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"salmon"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"1/sqrt (power -0.5)"</span>,
          y <span class="op">=</span> <span class="st">"1/Square Root(Protein)"</span><span class="op">)</span>
 
@@ -854,21 +851,18 @@
 <span class="va">p7</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="va">protein</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"salmon"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Inverse (power -1)"</span>,
          y <span class="op">=</span> <span class="st">"1/Protein"</span><span class="op">)</span>
 
 <span class="va">p8</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="va">protein</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"salmon"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"1/Square (power -2)"</span>,
          y <span class="op">=</span> <span class="st">"1 /(Protein squared)"</span><span class="op">)</span>
 
 <span class="va">p9</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nnyfs</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="va">protein</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"salmon"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"1/Cube (power -3)"</span>,
          y <span class="op">=</span> <span class="st">"1/(Protein cubed)"</span><span class="op">)</span>
 
@@ -876,21 +870,21 @@
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span> <span class="op">+</span> <span class="va">p5</span> <span class="op">+</span> <span class="va">p6</span> <span class="op">+</span> <span class="va">p7</span> <span class="op">+</span> <span class="va">p8</span> <span class="op">+</span> <span class="va">p9</span> <span class="op">+</span>
     <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Transformations of NNYFS Protein Consumption"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/unnamed-chunk-7-1.png" width="672"></div>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/unnamed-chunk-7-1.png" width="672"></div>
 <p>The square root still appears to be the best choice of transformation here, even after we consider all 8 transformation of the raw data.</p>
 </div>
-<div id="a-simulated-data-set" class="section level2" number="11.13">
+<div id="a-simulated-data-set" class="section level2" number="10.13">
 <h2>
-<span class="header-section-number">11.13</span> A Simulated Data Set<a class="anchor" aria-label="anchor" href="#a-simulated-data-set"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.13</span> A Simulated Data Set<a class="anchor" aria-label="anchor" href="#a-simulated-data-set"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb422"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb358"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">431</span><span class="op">)</span>; 
 <span class="va">data2</span> <span class="op">&lt;-</span> 
     <span class="fu"><a href="https://tibble.tidyverse.org/reference/deprecated.html">data_frame</a></span><span class="op">(</span>sample2 <span class="op">=</span> <span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/Beta.html">rbeta</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">125</span>, shape1 <span class="op">=</span> <span class="fl">5</span>, shape2 <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>Warning: `data_frame()` was deprecated in tibble 1.1.0.
 Please use `tibble()` instead.</code></pre>
 <p>If we’d like to transform these data so as to better approximate a Normal distribution, where should we start? What transformation do you suggest?</p>
-<div class="sourceCode" id="cb424"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb360"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">sample2</span>, data <span class="op">=</span> <span class="va">data2</span><span class="op">)</span>
 <span class="va">bin_w</span> <span class="op">&lt;-</span> <span class="fl">4</span> <span class="co"># specify binwidth</span>
 
@@ -898,7 +892,6 @@ Please use `tibble()` instead.</code></pre>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="va">bin_w</span>, 
                    fill <span class="op">=</span> <span class="st">"royalblue"</span>, 
                    col <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">stat_function</a></span><span class="op">(</span>
         fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>, mean <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">mean</span>, 
                                 sd <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">sd</span><span class="op">)</span> <span class="op">*</span> 
@@ -911,7 +904,6 @@ Please use `tibble()` instead.</code></pre>
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">data2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">sample2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"royalblue"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Normal Q-Q plot"</span>,
          y <span class="op">=</span> <span class="st">"Simulated Data"</span><span class="op">)</span>
 
@@ -919,16 +911,15 @@ Please use `tibble()` instead.</code></pre>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.3</span>, fill <span class="op">=</span> <span class="st">"royalblue"</span>, 
                  outlier.color <span class="op">=</span> <span class="st">"royalblue"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Boxplot with Violin"</span>,
          x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"Simulated Data"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">-</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">1</span>, height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Simulated Data"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/unnamed-chunk-9-1.png" width="672"></div>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/unnamed-chunk-9-1.png" width="672"></div>
 <p>Given the left skew in the data, it looks like a step up in the ladder is warranted, perhaps by looking at the square of the data?</p>
-<div class="sourceCode" id="cb425"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb361"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">sample2</span><span class="op">^</span><span class="fl">2</span>, data <span class="op">=</span> <span class="va">data2</span><span class="op">)</span>
 <span class="va">bin_w</span> <span class="op">&lt;-</span> <span class="fl">600</span> <span class="co"># specify binwidth</span>
 
@@ -936,7 +927,6 @@ Please use `tibble()` instead.</code></pre>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="va">bin_w</span>, 
                    fill <span class="op">=</span> <span class="st">"royalblue"</span>, 
                    col <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">stat_function</a></span><span class="op">(</span>
         fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>, mean <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">mean</span>, 
                                 sd <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">sd</span><span class="op">)</span> <span class="op">*</span> 
@@ -949,7 +939,6 @@ Please use `tibble()` instead.</code></pre>
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">data2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">sample2</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"royalblue"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Normal Q-Q plot"</span>,
          y <span class="op">=</span> <span class="st">"Squared Simulated Data"</span><span class="op">)</span>
 
@@ -957,16 +946,15 @@ Please use `tibble()` instead.</code></pre>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.3</span>, fill <span class="op">=</span> <span class="st">"royalblue"</span>, 
                  outlier.color <span class="op">=</span> <span class="st">"royalblue"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Boxplot with Violin"</span>,
          x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"Squared Simulated Data"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">-</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">1</span>, height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Squared Simulated Data"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/unnamed-chunk-10-1.png" width="672"></div>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/unnamed-chunk-10-1.png" width="672"></div>
 <p>Looks like at best a modest improvement. How about cubing the data, instead?</p>
-<div class="sourceCode" id="cb426"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb362"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">sample2</span><span class="op">^</span><span class="fl">3</span>, data <span class="op">=</span> <span class="va">data2</span><span class="op">)</span>
 <span class="va">bin_w</span> <span class="op">&lt;-</span> <span class="fl">100000</span> <span class="co"># specify binwidth</span>
 
@@ -974,7 +962,6 @@ Please use `tibble()` instead.</code></pre>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="va">bin_w</span>, 
                    fill <span class="op">=</span> <span class="st">"royalblue"</span>, 
                    col <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">stat_function</a></span><span class="op">(</span>
         fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>, mean <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">mean</span>, 
                                 sd <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">sd</span><span class="op">)</span> <span class="op">*</span> 
@@ -987,7 +974,6 @@ Please use `tibble()` instead.</code></pre>
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">data2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">sample2</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"royalblue"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Normal Q-Q plot"</span>,
          y <span class="op">=</span> <span class="st">"Cubed Simulated Data"</span><span class="op">)</span>
 
@@ -995,130 +981,119 @@ Please use `tibble()` instead.</code></pre>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.3</span>, fill <span class="op">=</span> <span class="st">"royalblue"</span>, 
                  outlier.color <span class="op">=</span> <span class="st">"royalblue"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Boxplot with Violin"</span>,
          x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"Cubed Simulated Data"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">-</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">1</span>, height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Cubed Simulated Data"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/unnamed-chunk-11-1.png" width="672"></div>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/unnamed-chunk-11-1.png" width="672"></div>
 <p>The newly transformed (cube of the) data appears more symmetric, although somewhat light-tailed. Perhaps a Normal model would be more appropriate now, although the standard deviation is likely to overstate the variation we see in the data due to the light tails. Again, I wouldn’t be thrilled using a cube in practical work, as it is so hard to interpret, but it does look like a reasonable choice here.</p>
 </div>
-<div id="what-if-we-considered-all-9-available-transformations-1" class="section level2" number="11.14">
+<div id="what-if-we-considered-all-9-available-transformations-1" class="section level2" number="10.14">
 <h2>
-<span class="header-section-number">11.14</span> What if we considered all 9 available transformations?<a class="anchor" aria-label="anchor" href="#what-if-we-considered-all-9-available-transformations-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.14</span> What if we considered all 9 available transformations?<a class="anchor" aria-label="anchor" href="#what-if-we-considered-all-9-available-transformations-1"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb427"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb363"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">data2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">sample2</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"royalblue"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Cube (power 3)"</span><span class="op">)</span>
 
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">data2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">sample2</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"royalblue"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Square (power 2)"</span><span class="op">)</span>
 
 <span class="va">p3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">data2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">sample2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"royalblue"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Original Data"</span><span class="op">)</span>
 
 <span class="va">p4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">data2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">sample2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"royalblue"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"sqrt (power 0.5)"</span><span class="op">)</span>
 
 <span class="va">p5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">data2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">sample2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"royalblue"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"log (power 0)"</span><span class="op">)</span>
 
 <span class="va">p6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">data2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">sample2</span><span class="op">^</span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"royalblue"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"1/sqrt (power -0.5)"</span><span class="op">)</span>
 
 <span class="va">p7</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">data2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="va">sample2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"royalblue"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Inverse (power -1)"</span><span class="op">)</span>
 
 <span class="va">p8</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">data2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="va">sample2</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"royalblue"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"1/Square (power -2)"</span><span class="op">)</span>
 
 <span class="va">p9</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">data2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="va">sample2</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"royalblue"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"1/Cube (power -3)"</span><span class="op">)</span>
-
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span> <span class="op">+</span> <span class="va">p5</span> <span class="op">+</span> <span class="va">p6</span> <span class="op">+</span> <span class="va">p7</span> <span class="op">+</span> <span class="va">p8</span> <span class="op">+</span> <span class="va">p9</span> <span class="op">+</span>
     <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Transformations of Simulated Sample"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="11_assessingnormality_files/figure-html/unnamed-chunk-12-1.png" width="672"></div>
+<div class="inline-figure"><img src="10_assessingnormality_files/figure-html/unnamed-chunk-12-1.png" width="672"></div>
 <p>Again, either the cube or the square looks like best choice here, in terms of creating a more symmetric (albeit light-tailed) distribution.</p>
 
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="straight-line-models-and-correlation.html"><span class="header-section-number">10</span> Straight Line Models and Correlation</a></div>
-<div class="next"><a href="references.html">References</a></div>
+<div class="prev"><a href="NYFS-Study.html"><span class="header-section-number">9</span> National Youth Fitness Survey</a></div>
+<div class="next"><a href="straight-line-models.html"><span class="header-section-number">11</span> Straight Line Models</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#assessing-normality"><span class="header-section-number">11</span> Assessing Normality</a></li>
-<li><a class="nav-link" href="#empirical-rule-interpretation-of-the-standard-deviation"><span class="header-section-number">11.1</span> Empirical Rule Interpretation of the Standard Deviation</a></li>
+<li><a class="nav-link" href="#assessing-normality"><span class="header-section-number">10</span> Assessing Normality</a></li>
+<li><a class="nav-link" href="#empirical-rule-interpretation-of-the-standard-deviation"><span class="header-section-number">10.1</span> Empirical Rule Interpretation of the Standard Deviation</a></li>
 <li>
-<a class="nav-link" href="#describing-outlying-values-with-z-scores"><span class="header-section-number">11.2</span> Describing Outlying Values with Z Scores</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#fences-and-z-scores"><span class="header-section-number">11.2.1</span> Fences and Z Scores</a></li></ul>
+<a class="nav-link" href="#describing-outlying-values-with-z-scores"><span class="header-section-number">10.2</span> Describing Outlying Values with Z Scores</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#fences-and-z-scores"><span class="header-section-number">10.2.1</span> Fences and Z Scores</a></li></ul>
 </li>
 <li>
-<a class="nav-link" href="#comparing-a-histogram-to-a-normal-distribution"><span class="header-section-number">11.3</span> Comparing a Histogram to a Normal Distribution</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#histogram-of-energy-with-normal-model-with-counts"><span class="header-section-number">11.3.1</span> Histogram of energy with Normal model (with Counts)</a></li></ul>
+<a class="nav-link" href="#comparing-a-histogram-to-a-normal-distribution"><span class="header-section-number">10.3</span> Comparing a Histogram to a Normal Distribution</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#histogram-of-energy-with-normal-model-with-counts"><span class="header-section-number">10.3.1</span> Histogram of energy with Normal model (with Counts)</a></li></ul>
 </li>
-<li><a class="nav-link" href="#does-a-normal-model-work-well-for-the-waist-circumference"><span class="header-section-number">11.4</span> Does a Normal model work well for the waist circumference?</a></li>
-<li><a class="nav-link" href="#the-normal-q-q-plot"><span class="header-section-number">11.5</span> The Normal Q-Q Plot</a></li>
+<li><a class="nav-link" href="#does-a-normal-model-work-well-for-the-waist-circumference"><span class="header-section-number">10.4</span> Does a Normal model work well for the waist circumference?</a></li>
+<li><a class="nav-link" href="#the-normal-q-q-plot"><span class="header-section-number">10.5</span> The Normal Q-Q Plot</a></li>
 <li>
-<a class="nav-link" href="#interpreting-the-normal-q-q-plot"><span class="header-section-number">11.6</span> Interpreting the Normal Q-Q Plot</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#data-from-a-normal-distribution-shows-up-as-a-straight-line-in-a-normal-q-q-plot"><span class="header-section-number">11.6.1</span> Data from a Normal distribution shows up as a straight line in a Normal Q-Q plot</a></li>
-<li><a class="nav-link" href="#skew-is-indicated-by-monotonic-curves-in-the-normal-q-q-plot"><span class="header-section-number">11.6.2</span> Skew is indicated by monotonic curves in the Normal Q-Q plot</a></li>
-<li><a class="nav-link" href="#direction-of-skew"><span class="header-section-number">11.6.3</span> Direction of Skew</a></li>
-<li><a class="nav-link" href="#outlier-proneness-is-indicated-by-s-shaped-curves-in-a-normal-q-q-plot"><span class="header-section-number">11.6.4</span> Outlier-proneness is indicated by “s-shaped” curves in a Normal Q-Q plot</a></li>
+<a class="nav-link" href="#interpreting-the-normal-q-q-plot"><span class="header-section-number">10.6</span> Interpreting the Normal Q-Q Plot</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#data-from-a-normal-distribution-shows-up-as-a-straight-line-in-a-normal-q-q-plot"><span class="header-section-number">10.6.1</span> Data from a Normal distribution shows up as a straight line in a Normal Q-Q plot</a></li>
+<li><a class="nav-link" href="#skew-is-indicated-by-monotonic-curves-in-the-normal-q-q-plot"><span class="header-section-number">10.6.2</span> Skew is indicated by monotonic curves in the Normal Q-Q plot</a></li>
+<li><a class="nav-link" href="#direction-of-skew"><span class="header-section-number">10.6.3</span> Direction of Skew</a></li>
+<li><a class="nav-link" href="#outlier-proneness-is-indicated-by-s-shaped-curves-in-a-normal-q-q-plot"><span class="header-section-number">10.6.4</span> Outlier-proneness is indicated by “s-shaped” curves in a Normal Q-Q plot</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#can-a-normal-distribution-fit-the-nnyfs-energy-data-well"><span class="header-section-number">11.7</span> Can a Normal Distribution Fit the nnyfs energy data Well?</a></li>
-<li><a class="nav-link" href="#the-ladder-of-power-transformations"><span class="header-section-number">11.8</span> The Ladder of Power Transformations</a></li>
-<li><a class="nav-link" href="#using-the-ladder"><span class="header-section-number">11.9</span> Using the Ladder</a></li>
+<li><a class="nav-link" href="#can-a-normal-distribution-fit-the-nnyfs-energy-data-well"><span class="header-section-number">10.7</span> Can a Normal Distribution Fit the nnyfs energy data Well?</a></li>
+<li><a class="nav-link" href="#the-ladder-of-power-transformations"><span class="header-section-number">10.8</span> The Ladder of Power Transformations</a></li>
+<li><a class="nav-link" href="#using-the-ladder"><span class="header-section-number">10.9</span> Using the Ladder</a></li>
 <li>
-<a class="nav-link" href="#protein-consumption-in-the-nnyfs-data"><span class="header-section-number">11.10</span> Protein Consumption in the NNYFS data</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#using-patchwork-to-compose-plots"><span class="header-section-number">11.10.1</span> Using patchwork to compose plots</a></li></ul>
+<a class="nav-link" href="#protein-consumption-in-the-nnyfs-data"><span class="header-section-number">10.10</span> Protein Consumption in the NNYFS data</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#using-patchwork-to-compose-plots"><span class="header-section-number">10.10.1</span> Using patchwork to compose plots</a></li></ul>
 </li>
 <li>
-<a class="nav-link" href="#can-we-transform-the-protein-data"><span class="header-section-number">11.11</span> Can we transform the protein data?</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#the-square-root"><span class="header-section-number">11.11.1</span> The Square Root</a></li>
-<li><a class="nav-link" href="#the-logarithm"><span class="header-section-number">11.11.2</span> The Logarithm</a></li>
-<li><a class="nav-link" href="#this-course-uses-natural-logarithms-unless-otherwise-specified"><span class="header-section-number">11.11.3</span> This course uses Natural Logarithms, unless otherwise specified</a></li>
+<a class="nav-link" href="#can-we-transform-the-protein-data"><span class="header-section-number">10.11</span> Can we transform the protein data?</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#the-square-root"><span class="header-section-number">10.11.1</span> The Square Root</a></li>
+<li><a class="nav-link" href="#the-logarithm"><span class="header-section-number">10.11.2</span> The Logarithm</a></li>
+<li><a class="nav-link" href="#this-course-uses-natural-logarithms-unless-otherwise-specified"><span class="header-section-number">10.11.3</span> This course uses Natural Logarithms, unless otherwise specified</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#what-if-we-considered-all-9-available-transformations"><span class="header-section-number">11.12</span> What if we considered all 9 available transformations?</a></li>
-<li><a class="nav-link" href="#a-simulated-data-set"><span class="header-section-number">11.13</span> A Simulated Data Set</a></li>
-<li><a class="nav-link" href="#what-if-we-considered-all-9-available-transformations-1"><span class="header-section-number">11.14</span> What if we considered all 9 available transformations?</a></li>
+<li><a class="nav-link" href="#what-if-we-considered-all-9-available-transformations"><span class="header-section-number">10.12</span> What if we considered all 9 available transformations?</a></li>
+<li><a class="nav-link" href="#a-simulated-data-set"><span class="header-section-number">10.13</span> A Simulated Data Set</a></li>
+<li><a class="nav-link" href="#what-if-we-considered-all-9-available-transformations-1"><span class="header-section-number">10.14</span> What if we considered all 9 available transformations?</a></li>
 </ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/THOMASELOVE/431-notes/blob/master/11_assessingnormality.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/THOMASELOVE/431-notes/edit/master/11_assessingnormality.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/THOMASELOVE/431-notes/blob/master/10_assessingnormality.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/THOMASELOVE/431-notes/edit/master/10_assessingnormality.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -1130,7 +1105,7 @@ Please use `tibble()` instead.</code></pre>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</strong>" was written by Thomas E. Love. It was last built on 2021-08-22.</p>
+    <p>"<strong>Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</strong>" was written by Thomas E. Love. It was last built on 2021-08-23.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

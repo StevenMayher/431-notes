@@ -128,7 +128,7 @@ In `nnyfs` | In `Y_RXQ_RX` | Description
 Now, I'll take a look at the `nnyfs` data, which I've made available in a comma-separated version (`nnyfs.csv`), if you prefer, as well as in an R data set (`nnyfs.Rds`) which loads a bit faster. After loading the file, let's get a handle on its size and contents. In my R Project for these notes, the data are contained in a separate `data` subdirectory.
 
 ```{r c9_nnyfs_read}
-nnyfs <- readRDS("data/nnyfs.Rds") %>% as_tibble()
+nnyfs <- readRDS("data/nnyfs.Rds")
 
 ## size of the tibble
 dim(nnyfs)
@@ -155,7 +155,7 @@ The first variable, `SEQN` is just a (numerical) identifying code attributable t
 
 ### `sex`
 
-The second variable, `sex`, is listed as a character variable (R uses **factor** and **character** to refer to categorical, especially non-numeric information). Here, as we can see below, we have two levels,  *Female* and *Male*.
+The second variable, `sex`, is listed as a factor variable (R uses **factor** and **character** to refer to categorical, especially non-numeric information). Here, as we can see below, we have two levels,  *Female* and *Male*.
 
 ```{r c9_nnyfs_sex1}
 nnyfs %>%

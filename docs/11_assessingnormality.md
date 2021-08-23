@@ -670,7 +670,7 @@ p1 + p2 - p3 + plot_layout(ncol = 1, height = c(3, 1)) +
 
 <img src="11_assessingnormality_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
-For more on the `patchwork` package, check out its repository at https://github.com/thomasp85/patchwork.
+Again, the `patchwork` package repository at https://patchwork.data-imaginist.com/index.html has lots of nice examples to work from.
 
 ## Can we transform the `protein` data?
 
@@ -736,7 +736,6 @@ p1 <- ggplot(nnyfs, aes(x = log(protein))) +
     geom_histogram(binwidth = bin_w, 
                    fill = "salmon", 
                    col = "white") +
-    
     stat_function(
         fun = function(x) dnorm(x, mean = res$mean, 
                                 sd = res$sd) * 
@@ -749,7 +748,6 @@ p1 <- ggplot(nnyfs, aes(x = log(protein))) +
 p2 <- ggplot(nnyfs, aes(sample = log(protein))) +
     geom_qq(col = "salmon") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "Normal Q-Q plot",
          y = "Log of Protein Consumption (g)")
 
@@ -757,7 +755,6 @@ p3 <- ggplot(nnyfs, aes(x = "", y = log(protein))) +
     geom_violin() +
     geom_boxplot(width = 0.2, fill = "salmon", 
                  outlier.color = "red") +
-    
     coord_flip() +
     labs(title = "Boxplot with Violin",
          x = "", y = "Log of Protein Consumption (g)")
@@ -781,21 +778,18 @@ In this course, we will assume the use of natural logarithms unless we specify o
 p1 <- ggplot(nnyfs, aes(sample = protein^3)) +
     geom_qq(col = "salmon") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "Cube (power 3)",
          y = "Protein, Cubed")
 
 p2 <- ggplot(nnyfs, aes(sample = protein^2)) +
     geom_qq(col = "salmon") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "Square (power 2)",
          y = "Protein, Squared")
 
 p3 <- ggplot(nnyfs, aes(sample = protein)) +
     geom_qq(col = "salmon") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "Original Data",
          y = "Protein (g)")
 
@@ -803,21 +797,18 @@ p3 <- ggplot(nnyfs, aes(sample = protein)) +
 p4 <- ggplot(nnyfs, aes(sample = sqrt(protein))) +
     geom_qq(col = "salmon") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "sqrt (power 0.5)",
          y = "Square Root of Protein")
 
 p5 <- ggplot(nnyfs, aes(sample = log(protein))) +
     geom_qq(col = "salmon") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "log (power 0)",
          y = "Natural Log of Protein")
 
 p6 <- ggplot(nnyfs, aes(sample = protein^(-0.5))) +
     geom_qq(col = "salmon") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "1/sqrt (power -0.5)",
          y = "1/Square Root(Protein)")
 
@@ -825,21 +816,18 @@ p6 <- ggplot(nnyfs, aes(sample = protein^(-0.5))) +
 p7 <- ggplot(nnyfs, aes(sample = 1/protein)) +
     geom_qq(col = "salmon") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "Inverse (power -1)",
          y = "1/Protein")
 
 p8 <- ggplot(nnyfs, aes(sample = 1/(protein^2))) +
     geom_qq(col = "salmon") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "1/Square (power -2)",
          y = "1 /(Protein squared)")
 
 p9 <- ggplot(nnyfs, aes(sample = 1/(protein^3))) +
     geom_qq(col = "salmon") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "1/Cube (power -3)",
          y = "1/(Protein cubed)")
 
@@ -878,7 +866,6 @@ p1 <- ggplot(data2, aes(x = sample2)) +
     geom_histogram(binwidth = bin_w, 
                    fill = "royalblue", 
                    col = "white") +
-    
     stat_function(
         fun = function(x) dnorm(x, mean = res$mean, 
                                 sd = res$sd) * 
@@ -891,7 +878,6 @@ p1 <- ggplot(data2, aes(x = sample2)) +
 p2 <- ggplot(data2, aes(sample = sample2)) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "Normal Q-Q plot",
          y = "Simulated Data")
 
@@ -899,7 +885,6 @@ p3 <- ggplot(data2, aes(x = "", y = sample2)) +
     geom_violin() +
     geom_boxplot(width = 0.3, fill = "royalblue", 
                  outlier.color = "royalblue") +
-    
     coord_flip() +
     labs(title = "Boxplot with Violin",
          x = "", y = "Simulated Data")
@@ -921,7 +906,6 @@ p1 <- ggplot(data2, aes(x = sample2^2)) +
     geom_histogram(binwidth = bin_w, 
                    fill = "royalblue", 
                    col = "white") +
-    
     stat_function(
         fun = function(x) dnorm(x, mean = res$mean, 
                                 sd = res$sd) * 
@@ -934,7 +918,6 @@ p1 <- ggplot(data2, aes(x = sample2^2)) +
 p2 <- ggplot(data2, aes(sample = sample2^2)) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "Normal Q-Q plot",
          y = "Squared Simulated Data")
 
@@ -942,7 +925,6 @@ p3 <- ggplot(data2, aes(x = "", y = sample2^2)) +
     geom_violin() +
     geom_boxplot(width = 0.3, fill = "royalblue", 
                  outlier.color = "royalblue") +
-    
     coord_flip() +
     labs(title = "Boxplot with Violin",
          x = "", y = "Squared Simulated Data")
@@ -964,7 +946,6 @@ p1 <- ggplot(data2, aes(x = sample2^3)) +
     geom_histogram(binwidth = bin_w, 
                    fill = "royalblue", 
                    col = "white") +
-    
     stat_function(
         fun = function(x) dnorm(x, mean = res$mean, 
                                 sd = res$sd) * 
@@ -977,7 +958,6 @@ p1 <- ggplot(data2, aes(x = sample2^3)) +
 p2 <- ggplot(data2, aes(sample = sample2^3)) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "Normal Q-Q plot",
          y = "Cubed Simulated Data")
 
@@ -985,7 +965,6 @@ p3 <- ggplot(data2, aes(x = "", y = sample2^3)) +
     geom_violin() +
     geom_boxplot(width = 0.3, fill = "royalblue", 
                  outlier.color = "royalblue") +
-    
     coord_flip() +
     labs(title = "Boxplot with Violin",
          x = "", y = "Cubed Simulated Data")
@@ -1005,57 +984,47 @@ The newly transformed (cube of the) data appears more symmetric, although somewh
 p1 <- ggplot(data2, aes(sample = sample2^3)) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "Cube (power 3)")
 
 p2 <- ggplot(data2, aes(sample = sample2^2)) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "Square (power 2)")
 
 p3 <- ggplot(data2, aes(sample = sample2)) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "Original Data")
 
 p4 <- ggplot(data2, aes(sample = sqrt(sample2))) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "sqrt (power 0.5)")
 
 p5 <- ggplot(data2, aes(sample = log(sample2))) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "log (power 0)")
 
 p6 <- ggplot(data2, aes(sample = sample2^(0.5))) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "1/sqrt (power -0.5)")
 
 p7 <- ggplot(data2, aes(sample = 1/sample2)) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "Inverse (power -1)")
 
 p8 <- ggplot(data2, aes(sample = 1/(sample2^2))) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "1/Square (power -2)")
 
 p9 <- ggplot(data2, aes(sample = 1/(sample2^3))) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
-    
     labs(title = "1/Cube (power -3)")
-
 
 p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9 +
     plot_layout(nrow = 3) +
