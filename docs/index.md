@@ -1,7 +1,7 @@
 --- 
 title: "Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431"
 author: "Thomas E. Love"
-date: "2021-08-21"
+date: "2021-08-22"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -40,7 +40,7 @@ While these Notes share some of the features of a textbook, they are neither com
 
 but what we don't do is follow these notes very precisely. We assume instead that you will read the materials and try to learn from them, just as you will attend classes and try to learn from them. We welcome feedback of all kinds on this document or anything else.
 
-Everything you see here is available to you as HTML or PDF. You will also have access to the R Markdown files, which contain the code which generates everything in the document, including all of the R results. We will demonstrate the use of R Markdown (this document is generated with the additional help of an R package called `bookdown`) and RStudio (the "program" we use to interface with the R language) in class. 
+Everything you see here is available to you as HTML. You also have access to the R Markdown files, which contain the code which generates everything in the document, including all of the R results. We will demonstrate the use of R Markdown (this document is generated with the additional help of an R package called `bookdown`) and RStudio (the "program" we use to interface with the R language) in class. 
 
 All data and R code related to these notes are also available to you.
 
@@ -112,6 +112,7 @@ boot
 car
 equatiomatic
 GGally
+ggridges
 gt
 psych
 modelsummary

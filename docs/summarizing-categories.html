@@ -51,6 +51,8 @@
 <li><a class="active" href="summarizing-categories.html"><span class="header-section-number">7</span> Summarizing Categories</a></li>
 <li><a class="" href="miss.html"><span class="header-section-number">8</span> Missing Data and Single Imputation</a></li>
 <li><a class="" href="NYFS-Study.html"><span class="header-section-number">9</span> National Youth Fitness Survey</a></li>
+<li><a class="" href="straight-line-models-and-correlation.html"><span class="header-section-number">10</span> Straight Line Models and Correlation</a></li>
+<li><a class="" href="assessing-normality.html"><span class="header-section-number">11</span> Assessing Normality</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -775,12 +777,12 @@ Smoke100  No Yes
 <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html">gt</a></span><span class="op">(</span><span class="va">temp_tbl</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://gt.rstudio.com/reference/tab_header.html">tab_header</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/md.html">md</a></span><span class="op">(</span><span class="st">"**Cross-Tabulation from nh_750**"</span><span class="op">)</span>,
              subtitle <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/md.html">md</a></span><span class="op">(</span><span class="st">"Physical Activity vs. Overall Health"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="fwnyizmcts" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="lrmfgkfiha" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#fwnyizmcts .gt_table {
+#lrmfgkfiha .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -805,7 +807,7 @@ Smoke100  No Yes
   border-left-color: #D3D3D3;
 }
 
-#fwnyizmcts .gt_heading {
+#lrmfgkfiha .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -817,7 +819,7 @@ Smoke100  No Yes
   border-right-color: #D3D3D3;
 }
 
-#fwnyizmcts .gt_title {
+#lrmfgkfiha .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -827,7 +829,7 @@ Smoke100  No Yes
   border-bottom-width: 0;
 }
 
-#fwnyizmcts .gt_subtitle {
+#lrmfgkfiha .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -837,13 +839,13 @@ Smoke100  No Yes
   border-top-width: 0;
 }
 
-#fwnyizmcts .gt_bottom_border {
+#lrmfgkfiha .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fwnyizmcts .gt_col_headings {
+#lrmfgkfiha .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -858,7 +860,7 @@ Smoke100  No Yes
   border-right-color: #D3D3D3;
 }
 
-#fwnyizmcts .gt_col_heading {
+#lrmfgkfiha .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -878,7 +880,7 @@ Smoke100  No Yes
   overflow-x: hidden;
 }
 
-#fwnyizmcts .gt_column_spanner_outer {
+#lrmfgkfiha .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -890,15 +892,15 @@ Smoke100  No Yes
   padding-right: 4px;
 }
 
-#fwnyizmcts .gt_column_spanner_outer:first-child {
+#lrmfgkfiha .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fwnyizmcts .gt_column_spanner_outer:last-child {
+#lrmfgkfiha .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fwnyizmcts .gt_column_spanner {
+#lrmfgkfiha .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -910,7 +912,7 @@ Smoke100  No Yes
   width: 100%;
 }
 
-#fwnyizmcts .gt_group_heading {
+#lrmfgkfiha .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -932,7 +934,7 @@ Smoke100  No Yes
   vertical-align: middle;
 }
 
-#fwnyizmcts .gt_empty_group_heading {
+#lrmfgkfiha .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -947,15 +949,15 @@ Smoke100  No Yes
   vertical-align: middle;
 }
 
-#fwnyizmcts .gt_from_md > :first-child {
+#lrmfgkfiha .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fwnyizmcts .gt_from_md > :last-child {
+#lrmfgkfiha .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fwnyizmcts .gt_row {
+#lrmfgkfiha .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -974,7 +976,7 @@ Smoke100  No Yes
   overflow-x: hidden;
 }
 
-#fwnyizmcts .gt_stub {
+#lrmfgkfiha .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -986,7 +988,7 @@ Smoke100  No Yes
   padding-left: 12px;
 }
 
-#fwnyizmcts .gt_summary_row {
+#lrmfgkfiha .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -996,7 +998,7 @@ Smoke100  No Yes
   padding-right: 5px;
 }
 
-#fwnyizmcts .gt_first_summary_row {
+#lrmfgkfiha .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1006,7 +1008,7 @@ Smoke100  No Yes
   border-top-color: #D3D3D3;
 }
 
-#fwnyizmcts .gt_grand_summary_row {
+#lrmfgkfiha .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1016,7 +1018,7 @@ Smoke100  No Yes
   padding-right: 5px;
 }
 
-#fwnyizmcts .gt_first_grand_summary_row {
+#lrmfgkfiha .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1026,11 +1028,11 @@ Smoke100  No Yes
   border-top-color: #D3D3D3;
 }
 
-#fwnyizmcts .gt_striped {
+#lrmfgkfiha .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fwnyizmcts .gt_table_body {
+#lrmfgkfiha .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1039,7 +1041,7 @@ Smoke100  No Yes
   border-bottom-color: #D3D3D3;
 }
 
-#fwnyizmcts .gt_footnotes {
+#lrmfgkfiha .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1053,13 +1055,13 @@ Smoke100  No Yes
   border-right-color: #D3D3D3;
 }
 
-#fwnyizmcts .gt_footnote {
+#lrmfgkfiha .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#fwnyizmcts .gt_sourcenotes {
+#lrmfgkfiha .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1073,41 +1075,41 @@ Smoke100  No Yes
   border-right-color: #D3D3D3;
 }
 
-#fwnyizmcts .gt_sourcenote {
+#lrmfgkfiha .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#fwnyizmcts .gt_left {
+#lrmfgkfiha .gt_left {
   text-align: left;
 }
 
-#fwnyizmcts .gt_center {
+#lrmfgkfiha .gt_center {
   text-align: center;
 }
 
-#fwnyizmcts .gt_right {
+#lrmfgkfiha .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fwnyizmcts .gt_font_normal {
+#lrmfgkfiha .gt_font_normal {
   font-weight: normal;
 }
 
-#fwnyizmcts .gt_font_bold {
+#lrmfgkfiha .gt_font_bold {
   font-weight: bold;
 }
 
-#fwnyizmcts .gt_font_italic {
+#lrmfgkfiha .gt_font_italic {
   font-style: italic;
 }
 
-#fwnyizmcts .gt_super {
+#lrmfgkfiha .gt_super {
   font-size: 65%;
 }
 
-#fwnyizmcts .gt_footnote_marks {
+#lrmfgkfiha .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -1192,7 +1194,7 @@ Smoke100  No Yes
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</strong>" was written by Thomas E. Love. It was last built on 2021-08-21.</p>
+    <p>"<strong>Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</strong>" was written by Thomas E. Love. It was last built on 2021-08-22.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -1057,6 +1057,478 @@ lowest : 11.9 12.6 12.7 12.9 13.0, highest: 42.8 43.0 46.9 48.2 48.3
 
 More on the `Info` value in Hmisc::describe is [available here](https://cran.r-project.org/web/packages/Hmisc/Hmisc.pdf#page=67)
 
+## Summarizing data within subgroups
+
+Suppose we want to understand how the subjects whose diet involved consuming much more than usual yesterday compare to those who consumer their usual amount, or to those who consumed much less than usual, in terms of the energy they consumed, as well as the protein. We might start by looking at the medians and means.
+
+
+```r
+nnyfs %>%
+    group_by(diet_yesterday) %>%
+    select(diet_yesterday, energy, protein) %>%
+    summarise_all(list(median = median, mean = mean))
+```
+
+```
+# A tibble: 4 x 5
+  diet_yesterday    energy_median protein_median energy_mean
+  <chr>                     <dbl>          <dbl>       <dbl>
+1 1_Much more than~          2098           69.4       2150.
+2 2_Usual                    1794           61.3       1858.
+3 3_Much less than~          1643           53.9       1779.
+4 <NA>                       4348          155.        4348 
+# ... with 1 more variable: protein_mean <dbl>
+```
+
+Perhaps we should restrict ourselves to the people who were not missing the `diet_yesterday` category, and look now at their `sugar` and `water` consumption.
+
+
+```r
+nnyfs %>%
+    filter(complete.cases(diet_yesterday)) %>%
+    group_by(diet_yesterday) %>%
+    select(diet_yesterday, energy, protein, sugar, water) %>%
+    summarise_all(list(median))
+```
+
+```
+# A tibble: 3 x 5
+  diet_yesterday         energy protein sugar water
+  <chr>                   <dbl>   <dbl> <dbl> <dbl>
+1 1_Much more than usual   2098    69.4  137.  500 
+2 2_Usual                  1794    61.3  114.  385.
+3 3_Much less than usual   1643    53.9  115.  311.
+```
+
+It looks like the children in the "Much more than usual" category consumed more energy, protein, sugar and water than the children in the other two categories. Let's draw a picture of this.
+
+
+```r
+temp_dat <- nnyfs %>%
+    filter(complete.cases(diet_yesterday)) %>%
+    mutate(diet_yesterday = fct_recode(diet_yesterday,
+        "Much more" = "1_Much more than usual",
+        "Usual diet" = "2_Usual",
+        "Much less" = "3_Much less than usual"))
+
+p1 <- ggplot(temp_dat, aes(x = diet_yesterday, y = energy)) +
+    geom_violin() +
+    geom_boxplot(aes(fill = diet_yesterday), width = 0.2) +
+    theme_light() + 
+    scale_fill_viridis_d() +
+    guides(fill = "none") +
+    labs(title = "Energy Comparison")
+
+p2 <- ggplot(temp_dat, aes(x = diet_yesterday, y = protein)) +
+    geom_violin() +
+    geom_boxplot(aes(fill = diet_yesterday), width = 0.2) +
+    theme_light() + 
+    scale_fill_viridis_d() +
+    guides(fill = "none") +
+    labs(title = "Protein Comparison")
+
+p3 <- ggplot(temp_dat, aes(x = diet_yesterday, y = sugar)) +
+    geom_violin() +
+    geom_boxplot(aes(fill = diet_yesterday), width = 0.2) +
+    theme_light() + 
+    scale_fill_viridis_d() +
+    guides(fill = "none") +
+    labs(title = "Sugar Comparison")
+
+p4 <- ggplot(temp_dat, aes(x = diet_yesterday, y = water)) +
+    geom_violin() +
+    geom_boxplot(aes(fill = diet_yesterday), width = 0.2) +
+    theme_light() + 
+    scale_fill_viridis_d() +
+    guides(fill = "none") +
+    labs(title = "Water Comparison")
+
+p1 + p2 + p3 + p4
+```
+
+<img src="09_nnyfs_foundations_files/figure-html/c9_subgr_3-1.png" width="672" />
+
+We can see that there is considerable overlap in these distributions, regardless of what we're measuring.
+
+## Another Example
+
+Suppose now that we ask a different question. Do kids in larger categories of BMI have larger waist circumferences?
+
+
+```r
+nnyfs %>%
+    group_by(bmi_cat) %>%
+    summarise(mean = mean(waist), sd = sd(waist), 
+              median = median(waist), 
+              skew_1 = round((mean(waist) - median(waist)) / 
+                                 sd(waist),2))
+```
+
+```
+# A tibble: 5 x 5
+  bmi_cat        mean    sd median skew_1
+  <chr>         <dbl> <dbl>  <dbl>  <dbl>
+1 1_Underweight  55.2  7.58   54.5   0.09
+2 2_Normal       NA   NA      NA    NA   
+3 3_Overweight   72.3 11.9    74    -0.14
+4 4_Obese        NA   NA      NA    NA   
+5 <NA>           NA   NA      NA    NA   
+```
+
+Oops. Looks like we need to filter for cases with complete data on both BMI category and waist circumference in order to get meaningful results. We should add a count, too.
+
+
+```r
+nnyfs %>%
+    filter(complete.cases(bmi_cat, waist)) %>%
+    group_by(bmi_cat) %>%
+    summarise(count = n(), mean = mean(waist), 
+              sd = sd(waist), median = median(waist), 
+       skew_1 = 
+         round((mean(waist) - median(waist)) / sd(waist),2))
+```
+
+```
+# A tibble: 4 x 6
+  bmi_cat       count  mean    sd median skew_1
+  <chr>         <int> <dbl> <dbl>  <dbl>  <dbl>
+1 1_Underweight    41  55.2  7.58   54.5   0.09
+2 2_Normal        917  61.2  9.35   59.5   0.19
+3 3_Overweight    258  72.3 11.9    74    -0.14
+4 4_Obese         294  85.6 17.1    86.8  -0.07
+```
+
+Or, we could use something like `favstats` from the `mosaic` package, which automatically accounts for missing data, and omits it when calculating summary statistics within each group.
+
+
+```r
+mosaic::favstats(waist ~ bmi_cat, data = nnyfs) %>%
+    kable(digits = 1)
+```
+
+
+
+|bmi_cat       |  min|   Q1| median|   Q3|   max| mean|   sd|   n| missing|
+|:-------------|----:|----:|------:|----:|-----:|----:|----:|---:|-------:|
+|1_Underweight | 42.5| 49.3|   54.5| 62.4|  68.5| 55.2|  7.6|  41|       0|
+|2_Normal      | 44.1| 53.9|   59.5| 68.4|  89.2| 61.2|  9.4| 917|       3|
+|3_Overweight  | 49.3| 62.3|   74.0| 81.2| 105.3| 72.3| 11.9| 258|       0|
+|4_Obese       | 52.1| 72.7|   86.8| 96.8| 144.7| 85.6| 17.1| 294|       1|
+
+While patients in the heavier groups generally had higher waist circumferences, the standard deviations suggest there may be some meaningful overlap. Let's draw the picture, in this case a comparison boxplot accompanying a violin plot.
+
+
+```r
+nnyfs %>%
+    filter(complete.cases(bmi_cat, waist)) %>%
+    ggplot(., aes(x = bmi_cat, y = waist)) +
+    geom_violin() +
+    geom_boxplot(aes(fill = bmi_cat), width = 0.2) +
+    theme_light() + 
+    scale_fill_viridis_d() +
+    guides(fill = "none") +
+    labs(title = "Waist Circumference by BMI Category")
+```
+
+<img src="09_nnyfs_foundations_files/figure-html/c9_subgr_7-1.png" width="672" />
+
+The data transformation with dplyr cheat sheet found under the Help menu in RStudio is a great resource. And, of course, for more details, visit @R4DS.
+
+## Boxplots to Relate an Outcome to a Categorical Predictor
+
+Boxplots are much more useful when comparing samples of data. For instance, consider this comparison boxplot describing the triceps skinfold results across the four levels of BMI category.
+
+
+```r
+ggplot(nnyfs, aes(x = bmi_cat, y = triceps_skinfold,
+                  fill = bmi_cat)) +
+    geom_boxplot() +
+    scale_fill_viridis_d() +
+    theme_light()
+```
+
+```
+Warning: Removed 21 rows containing non-finite values
+(stat_boxplot).
+```
+
+<img src="09_nnyfs_foundations_files/figure-html/c9_subgr_8-1.png" width="672" />
+
+Again, we probably want to omit those missing values (both in `bmi_cat` and `triceps_skinfold`) and also eliminate the repetitive legend (guides) on the right.
+
+
+```r
+nnyfs %>% 
+    filter(complete.cases(bmi_cat, triceps_skinfold)) %>%
+    ggplot(., aes(x = bmi_cat, y = triceps_skinfold,
+                  fill = bmi_cat)) +
+    geom_boxplot() +
+    scale_fill_viridis_d() +
+    guides(fill = "none") +
+    theme_light() +
+    labs(x = "BMI Category", y = "Triceps Skinfold in mm",
+         title = "Triceps Skinfold increases with BMI category",
+         subtitle = "NNYFS children")
+```
+
+<img src="09_nnyfs_foundations_files/figure-html/c9_subgr_9-1.png" width="672" />
+
+As always, the boxplot shows the five-number summary (minimum, 25th percentile, median, 75th percentile and maximum) in addition to highlighting candidate outliers. 
+
+### Augmenting the Boxplot with the Sample Mean
+
+Often, we want to augment such a plot, perhaps by adding a little diamond to show the **sample mean** within each category, so as to highlight skew (in terms of whether the mean is meaningfully different from the median.)
+
+
+```r
+nnyfs %>% 
+    filter(complete.cases(bmi_cat, triceps_skinfold)) %>%
+    ggplot(., aes(x = bmi_cat, y = triceps_skinfold,
+                  fill = bmi_cat)) +
+    geom_boxplot() +
+    stat_summary(fun="mean", geom="point", 
+                 shape=23, size=3, fill="white") +
+    scale_fill_viridis_d() +
+    guides(fill = "none") +
+    theme_light() +
+    labs(x = "BMI Category", y = "Triceps Skinfold in mm",
+         title = "Triceps Skinfold increases with BMI category",
+         subtitle = "NNYFS children")
+```
+
+<img src="09_nnyfs_foundations_files/figure-html/c9_subgr_10-1.png" width="672" />
+
+## Building a Violin Plot
+
+There are a number of other plots which compare distributions of data sets. An interesting one is called a **violin plot**. A violin plot is a kernel density estimate, mirrored to form a symmetrical shape. 
+
+
+```r
+nnyfs %>%
+    filter(complete.cases(triceps_skinfold, bmi_cat)) %>%
+    ggplot(., aes(x=bmi_cat, y=triceps_skinfold, 
+                  fill = bmi_cat)) + 
+    geom_violin(trim=FALSE) +
+    scale_fill_viridis_d() +
+    guides(fill = "none") +
+    labs(title = "Triceps Skinfold by BMI Category")
+```
+
+<img src="09_nnyfs_foundations_files/figure-html/c9_subgr_11-1.png" width="672" />
+
+Traditionally, these plots are shown with overlaid boxplots and a white dot at the median, like this example, now looking at waist circumference again.
+
+
+```r
+nnyfs %>%
+    filter(complete.cases(waist, bmi_cat)) %>%
+    ggplot(., aes(x = bmi_cat, y = waist, 
+                  fill = bmi_cat)) + 
+    geom_violin(trim=FALSE) +
+    geom_boxplot(width=.1, outlier.colour=NA, 
+                 color = c(rep("white",2), rep("black",2))) +
+    stat_summary(fun=median, geom="point", 
+                 fill="white", shape=21, size=3) + 
+    scale_fill_viridis_d() +
+    guides(fill = "none") +
+    labs(title = "Waist Circumference by BMI Category")
+```
+
+<img src="09_nnyfs_foundations_files/figure-html/c9_subgr_12-1.png" width="672" />
+
+
+### Adding Notches to a Boxplot
+
+**Notches** are used in boxplots to help visually assess whether the medians of the distributions across the various groups actually differ to a statistically detectable extent. Think of them as confidence regions around the medians. If the notches do not overlap, as in this situation, this provides some evidence that the medians in the populations represented by these samples may be different.
+
+
+```r
+nnyfs %>% 
+    filter(complete.cases(bmi_cat, triceps_skinfold)) %>%
+    ggplot(., aes(x = bmi_cat, y = triceps_skinfold)) +
+    geom_violin() +
+    geom_boxplot(aes(fill = bmi_cat), width = 0.3, notch = TRUE) +
+    scale_fill_viridis_d() +
+    guides(fill = "none") +
+    theme_light() +
+    labs(x = "BMI Category", y = "Triceps Skinfold in mm",
+         title = "Triceps Skinfold increases with BMI category",
+         subtitle = "NNYFS children")
+```
+
+<img src="09_nnyfs_foundations_files/figure-html/c9_subgr_13-1.png" width="672" />
+
+There is no overlap between the notches for each of the four categories, so we might reasonably conclude that the true median triceps skinfold values across the four categories are statistically significantly different. 
+
+For an example where the notches do overlap, consider the comparison of plank times by BMI category. 
+
+
+```r
+nnyfs %>% 
+    filter(complete.cases(bmi_cat, plank_time)) %>%
+    ggplot(., aes(x=bmi_cat, y=plank_time)) +
+    geom_violin(aes(fill = bmi_cat)) +
+    geom_boxplot(width = 0.3, notch=TRUE) +
+    scale_fill_viridis_d() +
+    guides(fill = "none") + 
+    theme_light() +
+    labs(title = "Plank Times by BMI category", 
+         x = "", y = "Plank Time (in seconds)")
+```
+
+<img src="09_nnyfs_foundations_files/figure-html/c9_subgr_14-1.png" width="672" />
+
+The overlap in the notches (for instance between Underweight and Normal) suggests that the median plank times in the population of interest don't necessarily differ in a meaningful way by BMI category, other than perhaps the Obese group which may have a shorter time.
+
+These data are somewhat right skewed. Would a logarithmic transformation in the plot help us see the patterns more clearly?
+
+
+```r
+nnyfs %>% 
+    filter(complete.cases(bmi_cat, plank_time)) %>%
+    ggplot(., aes(x=bmi_cat, y = log(plank_time))) +
+    geom_violin() +
+    geom_boxplot(aes(fill = bmi_cat), width = 0.3, notch=TRUE) +
+    scale_fill_viridis_d() +
+    guides(fill = "none") + 
+    theme_light() +
+    labs(title = "log(Plank Times) by BMI category", 
+         x = "", y = "Natural Log of Plank Time")
+```
+
+<img src="09_nnyfs_foundations_files/figure-html/c9_subgr_15-1.png" width="672" />
+
+## Using Multiple Histograms to Make Comparisons
+
+We can make an array of histograms to describe multiple groups of data, using `ggplot2` and the notion of **faceting** our plot.
+
+
+```r
+nnyfs %>% 
+    filter(complete.cases(triceps_skinfold, bmi_cat)) %>%
+    ggplot(., aes(x=triceps_skinfold, fill = bmi_cat)) +
+    geom_histogram(binwidth = 2, color = "black") + 
+    facet_wrap(~ bmi_cat) +
+    scale_fill_viridis_d() +
+    guides(fill = "none") +
+    labs(title = "Triceps Skinfold by BMI Category")
+```
+
+<img src="09_nnyfs_foundations_files/figure-html/c9_subgr_16-1.png" width="672" />
+
+## Using Multiple Density Plots to Make Comparisons
+
+Or, we can make a series of density plots to describe multiple groups of data.
+
+
+```r
+nnyfs %>% 
+    filter(complete.cases(triceps_skinfold, bmi_cat)) %>%
+    ggplot(., aes(x=triceps_skinfold, fill = bmi_cat)) +
+    geom_density(color = "black") + 
+    facet_wrap(~ bmi_cat) +
+    scale_fill_viridis_d() +
+    guides(fill = "none") +
+    labs(title = "Triceps Skinfold by BMI Category")
+```
+
+<img src="09_nnyfs_foundations_files/figure-html/c9_subgr_17-1.png" width="672" />
+
+Or, we can plot all of the densities on top of each other with semi-transparent fills.
+
+
+```r
+nnyfs %>% 
+    filter(complete.cases(triceps_skinfold, bmi_cat)) %>%
+    ggplot(., aes(x=triceps_skinfold, fill = bmi_cat)) +
+    geom_density(alpha=0.3) + 
+    scale_fill_viridis_d() + 
+    labs(title = "Triceps Skinfold by BMI Category")
+```
+
+<img src="09_nnyfs_foundations_files/figure-html/c9_subgr_18-1.png" width="672" />
+
+This really works better when we are comparing only two groups, like females to males.
+
+
+```r
+nnyfs %>% 
+    filter(complete.cases(triceps_skinfold, sex)) %>%
+    ggplot(., aes(x=triceps_skinfold, fill = sex)) +
+    geom_density(alpha=0.5) + 
+    labs(title = "Triceps Skinfold by Sex")
+```
+
+<img src="09_nnyfs_foundations_files/figure-html/c9_subgr_19-1.png" width="672" />
+
+
+## A Ridgeline Plot
+
+Some people don't like violin plots - for example, see https://simplystatistics.org/2017/07/13/the-joy-of-no-more-violin-plots/. An alternative plot is available as part of the `ggridges` package. This shows the distribution of several groups simultaneously, especially when you have lots of subgroup categories, and is called a **ridgeline plot**.
+
+
+```r
+nnyfs %>% 
+    filter(complete.cases(waist, bmi_cat)) %>%
+    ggplot(., aes(x = waist, y = bmi_cat, height = ..density..)) +
+    ggridges::geom_density_ridges(scale = 0.85) + 
+    theme_light() +
+    labs(title = "Ridgeline Plot of Waist Circumference by BMI category (nnyfs)",
+         x = "Waist Circumference", y = "BMI Category")
+```
+
+```
+Picking joint bandwidth of 3.47
+```
+
+<img src="09_nnyfs_foundations_files/figure-html/c9_subgr_20-1.png" width="672" />
+
+And here's a ridgeline plot for the triceps skinfolds. We'll start by sorting the subgroups by the median value of our outcome (triceps skinfold) in this case, though it turns out not to matter. We'll also add some color.
+
+
+```r
+nnyfs %>%
+    filter(complete.cases(bmi_cat, triceps_skinfold)) %>%
+    mutate(bmi_cat = fct_reorder(bmi_cat,
+                                 triceps_skinfold, 
+                                 .fun = median)) %>%
+    ggplot(., aes(x = triceps_skinfold, y = bmi_cat, 
+                  fill = bmi_cat, height = ..density..)) +
+    ggridges::geom_density_ridges(scale = 0.85) + 
+    scale_fill_viridis_d(option = "magma") +
+    guides(fill = "none") +
+    labs(title = "Ridgeline Plot of Triceps Skinfold by BMI Category (nnyfs)",
+         x = "Triceps Skinfold", y = "BMI Category") +
+    theme_light()
+```
+
+```
+Picking joint bandwidth of 1.37
+```
+
+<img src="09_nnyfs_foundations_files/figure-html/c9_subgr_21-1.png" width="672" />
+
+For one last example, we'll look at age by BMI category, so that sorting the BMI subgroups by the median matters, and we'll try an alternate color scheme, and a theme specially designed for the ridgeline plot.
+
+
+```r
+nnyfs %>%
+    filter(complete.cases(bmi_cat, age_child)) %>%
+    mutate(bmi_cat = reorder(bmi_cat, age_child, median)) %>%
+    ggplot(aes(x = age_child, y = bmi_cat, fill = bmi_cat, height = ..density..)) +
+    ggridges::geom_density_ridges(scale = 0.85) + 
+    scale_fill_brewer(palette = "YlOrRd") +
+    guides(fill = "none") +
+    labs(title = "Ridgeline Plot of Age at Exam by BMI category (nnyfs)",
+         x = "Age of Child at Exam", y = "BMI Category") +
+    ggridges::theme_ridges()
+```
+
+```
+Picking joint bandwidth of 1.15
+```
+
+<img src="09_nnyfs_foundations_files/figure-html/c9_subgr_22-1.png" width="672" />
 
 ## What Summaries to Report
 

@@ -51,6 +51,8 @@
 <li><a class="" href="summarizing-categories.html"><span class="header-section-number">7</span> Summarizing Categories</a></li>
 <li><a class="" href="miss.html"><span class="header-section-number">8</span> Missing Data and Single Imputation</a></li>
 <li><a class="" href="NYFS-Study.html"><span class="header-section-number">9</span> National Youth Fitness Survey</a></li>
+<li><a class="" href="straight-line-models-and-correlation.html"><span class="header-section-number">10</span> Straight Line Models and Correlation</a></li>
+<li><a class="" href="assessing-normality.html"><span class="header-section-number">11</span> Assessing Normality</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -87,7 +89,7 @@
 <li>refer to issues not mentioned in this document,</li>
 </ul>
 <p>but what we don’t do is follow these notes very precisely. We assume instead that you will read the materials and try to learn from them, just as you will attend classes and try to learn from them. We welcome feedback of all kinds on this document or anything else.</p>
-<p>Everything you see here is available to you as HTML or PDF. You will also have access to the R Markdown files, which contain the code which generates everything in the document, including all of the R results. We will demonstrate the use of R Markdown (this document is generated with the additional help of an R package called <code>bookdown</code>) and RStudio (the “program” we use to interface with the R language) in class.</p>
+<p>Everything you see here is available to you as HTML. You also have access to the R Markdown files, which contain the code which generates everything in the document, including all of the R results. We will demonstrate the use of R Markdown (this document is generated with the additional help of an R package called <code>bookdown</code>) and RStudio (the “program” we use to interface with the R language) in class.</p>
 <p>All data and R code related to these notes are also available to you.</p>
 </div>
 <div id="setting-up-r" class="section level2 unnumbered">
@@ -148,6 +150,7 @@
 car
 equatiomatic
 GGally
+ggridges
 gt
 psych
 modelsummary
@@ -186,7 +189,7 @@ visdat</code></pre>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</strong>" was written by Thomas E. Love. It was last built on 2021-08-21.</p>
+    <p>"<strong>Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</strong>" was written by Thomas E. Love. It was last built on 2021-08-22.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
