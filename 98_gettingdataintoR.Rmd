@@ -6,7 +6,7 @@
 
 To use data from an R package, for instance, the `bechdel` data from the `fivethirtyeight` package, you can simply load the relevant package with `library` and then the data frame will be available
 
-```{r}
+```{r, message = FALSE}
 library(fivethirtyeight)
 
 bechdel

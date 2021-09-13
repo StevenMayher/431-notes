@@ -853,6 +853,8 @@ data2 <-
 ```
 Warning: `data_frame()` was deprecated in tibble 1.1.0.
 Please use `tibble()` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_warnings()` to see where this warning was generated.
 ```
 
 If we'd like to transform these data so as to better approximate a Normal distribution, where should we start? What transformation do you suggest?

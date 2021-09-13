@@ -9,19 +9,7 @@ To use data from an R package, for instance, the `bechdel` data from the `fiveth
 
 ```r
 library(fivethirtyeight)
-```
 
-```
-Some larger datasets need to be installed separately,
-like senators and house_district_forecast. To install
-these, we recommend you install the
-fivethirtyeightdata package by running:
-install.packages('fivethirtyeightdata', repos =
-'https://fivethirtyeightdata.github.io/drat/', type =
-'source')
-```
-
-```r
 bechdel
 ```
 

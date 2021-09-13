@@ -449,7 +449,7 @@ nh_500cc %>%
 
 ### Bar Chart for Categorical Data
 
-Usually, a **bar chart** is the best choice for a graphing a variable made up of categories.
+Usually, a **bar chart** is the best choice for graphing a variable made up of categories.
 
 
 ```r
