@@ -1,14 +1,14 @@
 --- 
 title: "Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431"
 author: "Thomas E. Love"
-date: "2021-09-13"
+date: "2021-10-11"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
-url: your book url like https://thomaselove.github.io/431-book
+url: https://thomaselove.github.io/431-notes/
 biblio-style: apalike
 link-citations: yes
-github-repo: thomaselove/431-book
+github-repo: thomaselove/431-notes
 description: "This book provides examples of some fundamental approaches to doing biostatistical and data science in research."
 csl: chicago-fullnote-bibliography.csl
 ---

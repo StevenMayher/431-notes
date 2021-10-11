@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 20 Two Examples Comparing Means | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</title>
+<meta name="author" content="Thomas E. Love">
+<meta name="description" content="20.1 A Study of Battery Life Should you buy generic rather than brand-name batteries? Bock, Velleman, and De Veaux48 descibe a designed experiment to test battery life. A (male) student obtained...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 20 Two Examples Comparing Means | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://thomaselove.github.io/431-notes/two-examples-comparing-means.html">
+<meta property="og:description" content="20.1 A Study of Battery Life Should you buy generic rather than brand-name batteries? Bock, Velleman, and De Veaux48 descibe a designed experiment to test battery life. A (male) student obtained...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 20 Two Examples Comparing Means | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta name="twitter:description" content="20.1 A Study of Battery Life Should you buy generic rather than brand-name batteries? Bock, Velleman, and De Veaux48 descibe a designed experiment to test battery life. A (male) student obtained...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Working with These Notes</a></li>
+<li><a class="" href="data-science.html"><span class="header-section-number">1</span> Data Science</a></li>
+<li class="book-part">Part A. Exploring Data</li>
+<li><a class="" href="the-palmer-penguins.html"><span class="header-section-number">2</span> The Palmer Penguins</a></li>
+<li><a class="" href="nhanes1.html"><span class="header-section-number">3</span> NHANES: A First Look</a></li>
+<li><a class="" href="data-structures-variable-types-sampling-nhanes.html"><span class="header-section-number">4</span> Data Structures, Variable Types &amp; Sampling NHANES</a></li>
+<li><a class="" href="visualizing-nhanes-data.html"><span class="header-section-number">5</span> Visualizing NHANES Data</a></li>
+<li><a class="" href="summarizing_quantities.html"><span class="header-section-number">6</span> Summarizing Quantities</a></li>
+<li><a class="" href="summarizing-categories.html"><span class="header-section-number">7</span> Summarizing Categories</a></li>
+<li><a class="" href="miss.html"><span class="header-section-number">8</span> Missing Data and Single Imputation</a></li>
+<li><a class="" href="NYFS-Study.html"><span class="header-section-number">9</span> National Youth Fitness Survey</a></li>
+<li><a class="" href="assessing-normality.html"><span class="header-section-number">10</span> Assessing Normality</a></li>
+<li><a class="" href="straight-line-models.html"><span class="header-section-number">11</span> Straight Line Models</a></li>
+<li><a class="" href="linearizing-transformations.html"><span class="header-section-number">12</span> Linearizing Transformations</a></li>
+<li><a class="" href="studying-crab-claws-crabs.html"><span class="header-section-number">13</span> Studying Crab Claws (crabs)</a></li>
+<li><a class="" href="Hydrate-Study.html"><span class="header-section-number">14</span> Dehydration Recovery</a></li>
+<li><a class="" href="WCGS-Study.html"><span class="header-section-number">15</span> The WCGS</a></li>
+<li class="book-part">Part B. Comparing Summaries</li>
+<li><a class="" href="confidence-intervals-for-a-mean.html"><span class="header-section-number">16</span> Confidence Intervals for a Mean</a></li>
+<li><a class="" href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html"><span class="header-section-number">17</span> The Ibuprofen in Sepsis Randomized Clinical Trial</a></li>
+<li><a class="" href="comparing-means-with-paired-samples.html"><span class="header-section-number">18</span> Comparing Means with Paired Samples</a></li>
+<li><a class="" href="hypothesis-testing-what-is-it-good-for.html"><span class="header-section-number">19</span> Hypothesis Testing: What is it good for?</a></li>
+<li><a class="active" href="two-examples-comparing-means.html"><span class="header-section-number">20</span> Two Examples Comparing Means</a></li>
+<li><a class="" href="estimating-a-population-proportion.html"><span class="header-section-number">21</span> Estimating a Population Proportion</a></li>
+<li><a class="" href="comparing-proportions-with-two-independent-samples.html"><span class="header-section-number">22</span> Comparing Proportions with Two Independent Samples</a></li>
+<li><a class="" href="power-and-proportions.html"><span class="header-section-number">23</span> Power and Proportions</a></li>
+<li><a class="" href="larger-contingency-tables.html"><span class="header-section-number">24</span> Larger Contingency Tables</a></li>
+<li><a class="" href="analysis-of-variance.html"><span class="header-section-number">25</span> Analysis of Variance</a></li>
+<li class="book-part">Appendix</li>
+<li><a class="" href="some-r-tips.html">Some R Tips</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/THOMASELOVE/431-notes">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="two-examples-comparing-means" class="section level1" number="20">
+<h1>
+<span class="header-section-number">20</span> Two Examples Comparing Means<a class="anchor" aria-label="anchor" href="#two-examples-comparing-means"><i class="fas fa-link"></i></a>
+</h1>
+<div id="a-study-of-battery-life" class="section level2" number="20.1">
+<h2>
+<span class="header-section-number">20.1</span> A Study of Battery Life<a class="anchor" aria-label="anchor" href="#a-study-of-battery-life"><i class="fas fa-link"></i></a>
+</h2>
+<p>Should you buy generic rather than brand-name batteries? <span class="citation"><a href="references.html#ref-BockVD" role="doc-biblioref">Bock, Velleman, and De Veaux</a><a href="#fn48" class="footnote-ref" id="fnref48"><sup>48</sup></a></span> descibe a designed experiment to test battery life. A (male) student obtained six pairs of AA alkaline batteries from two major battery manufacturers; a well-known brand name and a generic brand, so that battery brand was the factor of interest.</p>
+<p>To estimate the difference in mean lifetimes across the two manufacturers, the student kept a battery-powered CD player with the same CD running continuously, with the volume control fixed at 5, and measured the time until no more music was heard through the headphones. (He ran an initial trial to find out approximately how long that would take, so he didn’t have to spend the first 3 hours of each run listening to the same CD.) The outcome was the time in minutes until the sound stopped. To account for changes in the CD player’s performance over time, he randomized the run order by choosing pairs of batteries (the CD-player required two batteries to run) at random.</p>
+<p>Here are the results for the 6 brand name and 6 generic tests, in minutes, found in the <code>battery.csv</code> data file, where <code>run</code> indicates the order in which the tests were run…</p>
+<div class="sourceCode" id="cb770"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">battery</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">"data/battery.csv"</span>,
+                    show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+
+<span class="va">battery</span></code></pre></div>
+<pre><code># A tibble: 12 x 4
+     run  test type        time
+   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;
+ 1     1     1 brand name  191.
+ 2     2     2 brand name  206.
+ 3     6     3 brand name  199.
+ 4     8     4 brand name  172.
+ 5     9     5 brand name  184 
+ 6    12     6 brand name  170.
+ 7     3     1 generic     194 
+ 8     4     2 generic     204.
+ 9     5     3 generic     204.
+10     7     4 generic     206.
+11    10     5 generic     222.
+12    11     6 generic     209.</code></pre>
+<div id="question-1.-what-is-the-outcome-under-study" class="section level3" number="20.1.1">
+<h3>
+<span class="header-section-number">20.1.1</span> Question 1. What is the outcome under study?<a class="anchor" aria-label="anchor" href="#question-1.-what-is-the-outcome-under-study"><i class="fas fa-link"></i></a>
+</h3>
+<p>We are studying battery lifetimes (time until the sound stopped) in minutes.</p>
+</div>
+<div id="question-2.-what-are-the-treatmentexposure-groups" class="section level3" number="20.1.2">
+<h3>
+<span class="header-section-number">20.1.2</span> Question 2. What are the treatment/exposure groups?<a class="anchor" aria-label="anchor" href="#question-2.-what-are-the-treatmentexposure-groups"><i class="fas fa-link"></i></a>
+</h3>
+<p>We are comparing the two brands of batteries: the well-known vs. the generic.</p>
+</div>
+<div id="question-3.-are-the-data-collected-using-paired-or-independent-samples" class="section level3" number="20.1.3">
+<h3>
+<span class="header-section-number">20.1.3</span> Question 3. Are the data collected using paired or independent samples?<a class="anchor" aria-label="anchor" href="#question-3.-are-the-data-collected-using-paired-or-independent-samples"><i class="fas fa-link"></i></a>
+</h3>
+<p>Of course, if we had different numbers of samples in the two groups, then we’d know without further thought that independent samples were required. Since we have 6 observations in the brand name group, and also have 6 observations in the generic group, i.e. a balanced design, we need to pause now to decide whether paired or independent samples testing is appropriate in this setting.</p>
+<p>Two samples are paired if each data point in one sample is naturally linked to a specific data point in the other sample. So, do we have paired or independent samples?</p>
+<ul>
+<li>Despite the way I’ve set up the data table, there is no particular reason to pair, say, run #1 (a brand name run) with any particular experimental run in the generic group. So the samples are independent. This is not a matched-pairs design.</li>
+<li>In each trial, the student either used two of the well-known batteries, or two of the generic batteries.</li>
+<li>Any of the tests/confidence intervals for the independent samples methods suggests a statistically significant (at the 5% level) difference between the generic and brand name batteries.</li>
+</ul>
+</div>
+<div id="question-4.-are-the-data-a-random-sample-from-the-population-of-interest" class="section level3" number="20.1.4">
+<h3>
+<span class="header-section-number">20.1.4</span> Question 4. Are the data a random sample from the population of interest?<a class="anchor" aria-label="anchor" href="#question-4.-are-the-data-a-random-sample-from-the-population-of-interest"><i class="fas fa-link"></i></a>
+</h3>
+<p>Probably not. The data are likely to come from a convenient sample of batteries. I don’t know how this might bias the study, though. It seems unlikely that there would be a particular bias unless, for example, the well-known batteries were substantially older or younger than the generic.</p>
+</div>
+<div id="question-5.-what-significance-level-will-we-use" class="section level3" number="20.1.5">
+<h3>
+<span class="header-section-number">20.1.5</span> Question 5. What significance level will we use?<a class="anchor" aria-label="anchor" href="#question-5.-what-significance-level-will-we-use"><i class="fas fa-link"></i></a>
+</h3>
+<p>We have no reason not to use a 95% confidence level.</p>
+</div>
+<div id="question-6.-are-we-using-a-one-sided-or-two-sided-comparison" class="section level3" number="20.1.6">
+<h3>
+<span class="header-section-number">20.1.6</span> Question 6. Are we using a one-sided or two-sided comparison?<a class="anchor" aria-label="anchor" href="#question-6.-are-we-using-a-one-sided-or-two-sided-comparison"><i class="fas fa-link"></i></a>
+</h3>
+<p>We could argue for a one-sided comparison, but I’ll be safe and use the two-sided version.</p>
+</div>
+<div id="question-9.-what-does-the-distribution-of-outcomes-in-each-group-tell-us" class="section level3" number="20.1.7">
+<h3>
+<span class="header-section-number">20.1.7</span> Question 9. What does the distribution of outcomes in each group tell us?<a class="anchor" aria-label="anchor" href="#question-9.-what-does-the-distribution-of-outcomes-in-each-group-tell-us"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb772"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">battery</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">type</span>, y <span class="op">=</span> <span class="va">time</span>, fill <span class="op">=</span> <span class="va">type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">type</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.75</span>, width <span class="op">=</span> <span class="fl">0.125</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"none"</span>, col <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Battery Running Time, by Manufacturer"</span>,
+       y <span class="op">=</span> <span class="st">"Running Time (minutes)"</span>, x <span class="op">=</span> <span class="st">"Manufacturer"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="20_Two_Means_Examples_files/figure-html/battery1-fig-1.png" width="672"></div>
+<p>We can generate histograms, too, but that’s an issue, because we have so few observations.</p>
+<div class="sourceCode" id="cb773"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">battery</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">time</span>, fill <span class="op">=</span> <span class="va">type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">6</span>, col <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">type</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Battery Running Time, by Manufacturer"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="20_Two_Means_Examples_files/figure-html/histogram-battery-fig-1.png" width="672"></div>
+<div class="sourceCode" id="cb774"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">favstats</a></span><span class="op">(</span><span class="va">time</span> <span class="op">~</span> <span class="va">type</span>, data <span class="op">=</span> <span class="va">battery</span><span class="op">)</span></code></pre></div>
+<pre><code>        type   min    Q1 median      Q3   max     mean
+1 brand name 169.5 175.3 187.35 197.075 205.5 186.8833
+2    generic 194.0 203.5 205.00 208.675 222.5 206.5667
+         sd n missing
+1 14.374341 6       0
+2  9.366251 6       0</code></pre>
+<p>It sure looks like the generic batteries lasted longer. And they also look like they were more consistent. The sample means are 206.6 for the generic group, 186.9 minutes for brand name, so the point estimate of the difference is 19.7 minutes.</p>
+<p>The question is: can we be confident that the difference we observe here is more than just random fluctuation, at a 5% significance level?</p>
+</div>
+<div id="inferential-results-for-the-battery-study" class="section level3" number="20.1.8">
+<h3>
+<span class="header-section-number">20.1.8</span> Inferential Results for the Battery Study<a class="anchor" aria-label="anchor" href="#inferential-results-for-the-battery-study"><i class="fas fa-link"></i></a>
+</h3>
+<p>In the table below, I have summarized the two-sided testing results for most of the ways in which we have looked at a two sample comparison so far, with 95% confidence intervals. If the samples really are paired, then we must choose from the paired samples comparisons described in the table. If the samples really are independent, then we must choose from the independent samples comparisons.</p>
+</div>
+<div id="paired-samples-approaches" class="section level3" number="20.1.9">
+<h3>
+<span class="header-section-number">20.1.9</span> Paired Samples Approaches<a class="anchor" aria-label="anchor" href="#paired-samples-approaches"><i class="fas fa-link"></i></a>
+</h3>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">Method</th>
+<th align="right">
+<em>p</em> Value</th>
+<th align="center">95% CI for Generic - Brand Name</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">Paired t</td>
+<td align="right">0.058</td>
+<td align="center">-1.0, 40.4</td>
+</tr>
+<tr class="even">
+<td align="right">Wilcoxon signed rank</td>
+<td align="right">0.063</td>
+<td align="center">-2.0, 39.9</td>
+</tr>
+<tr class="odd">
+<td align="right">Bootstrap via <code>smean.cl.boot</code>
+</td>
+<td align="right">–</td>
+<td align="center">6.7, 33.0</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="independent-samples-approaches" class="section level3" number="20.1.10">
+<h3>
+<span class="header-section-number">20.1.10</span> Independent Samples Approaches<a class="anchor" aria-label="anchor" href="#independent-samples-approaches"><i class="fas fa-link"></i></a>
+</h3>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">Method</th>
+<th align="right">
+<em>p</em> Value</th>
+<th align="center">95% CI for Generic - Brand Name</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">Pooled t</td>
+<td align="right">0.018</td>
+<td align="center">4.1, 35.3</td>
+</tr>
+<tr class="even">
+<td align="right">Welch’s t</td>
+<td align="right">0.021</td>
+<td align="center">3.7, 35.6</td>
+</tr>
+<tr class="odd">
+<td align="right">Wilcoxon Mann Whitney rank sum</td>
+<td align="right">0.030</td>
+<td align="center">3.3, 37.0</td>
+</tr>
+<tr class="even">
+<td align="right">Bootstrap via <code>bootdif</code>
+</td>
+<td align="right">–</td>
+<td align="center">7.7, 32.2</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div id="the-breakfast-study-does-oat-bran-cereal-lower-serum-ldl-cholesterol" class="section level2" number="20.2">
+<h2>
+<span class="header-section-number">20.2</span> The Breakfast Study: Does Oat Bran Cereal Lower Serum LDL Cholesterol?<a class="anchor" aria-label="anchor" href="#the-breakfast-study-does-oat-bran-cereal-lower-serum-ldl-cholesterol"><i class="fas fa-link"></i></a>
+</h2>
+<p><span class="citation"><a href="references.html#ref-Norman-Streiner" role="doc-biblioref">Norman and Streiner</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;a href="references.html#ref-Norman-Streiner" role="doc-biblioref"&gt;&lt;em&gt;Biostatistics&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;'><sup>49</sup></a></span> describe a crossover study that was conducted to investigate whether oat bran cereal helps to lower serum cholesterol levels in hypercholesterolemic males. Fourteen such individuals were randomly placed on a diet that included either oat bran or corn flakes; after two weeks, their low-density lipoprotein (LDL) cholesterol levels, in mmol/l were recorded. Each subject was then switched to the alternative diet. After a second two-week period, the LDL cholesterol level of each subject was again recorded.</p>
+<div class="sourceCode" id="cb776"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">breakfast</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">"data/breakfast.csv"</span>,
+                    show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+
+<span class="va">breakfast</span></code></pre></div>
+<pre><code># A tibble: 14 x 3
+   subject cornflakes oatbran
+     &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;
+ 1       1       4.61    3.84
+ 2       2       6.42    5.57
+ 3       3       5.4     5.85
+ 4       4       4.54    4.8 
+ 5       5       3.98    3.68
+ 6       6       3.82    2.96
+ 7       7       5.01    4.41
+ 8       8       4.34    3.72
+ 9       9       3.8     3.49
+10      10       4.56    3.84
+11      11       5.35    5.26
+12      12       3.89    3.73
+13      13       2.25    1.84
+14      14       4.24    4.14</code></pre>
+<div id="question-1.-what-is-the-outcome-under-study-1" class="section level3" number="20.2.1">
+<h3>
+<span class="header-section-number">20.2.1</span> Question 1. What is the outcome under study?<a class="anchor" aria-label="anchor" href="#question-1.-what-is-the-outcome-under-study-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>We are studying levels of LDL cholesterol, in mmol/l. Note that if we wanted to convert to a more familiar scale, specifically mg/dl, we would multiply the mmol/l by 18, as it turns out.</p>
+</div>
+<div id="question-2.-what-are-the-treatmentexposure-groups-1" class="section level3" number="20.2.2">
+<h3>
+<span class="header-section-number">20.2.2</span> Question 2. What are the treatment/exposure groups?<a class="anchor" aria-label="anchor" href="#question-2.-what-are-the-treatmentexposure-groups-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>We are comparing subjects after two weeks of eating corn flakes to the same subjects after two weeks of eating oat bran.</p>
+</div>
+<div id="question-3.-are-the-data-collected-using-paired-or-independent-samples-1" class="section level3" number="20.2.3">
+<h3>
+<span class="header-section-number">20.2.3</span> Question 3. Are the data collected using paired or independent samples?<a class="anchor" aria-label="anchor" href="#question-3.-are-the-data-collected-using-paired-or-independent-samples-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>These are matched pairs, paired by subject. Each subject produced an oat bran result and a corn flakes result.</p>
+</div>
+<div id="question-4.-are-the-data-a-random-sample-from-the-population-of-interest-1" class="section level3" number="20.2.4">
+<h3>
+<span class="header-section-number">20.2.4</span> Question 4. Are the data a random sample from the population of interest?<a class="anchor" aria-label="anchor" href="#question-4.-are-the-data-a-random-sample-from-the-population-of-interest-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Probably not. The data are likely to come from a convenient sample of 14 individuals but they were randomly assigned to cornflakes first or to oat bran first, then crossed over.</p>
+</div>
+<div id="question-5.-what-significance-level-will-we-use-1" class="section level3" number="20.2.5">
+<h3>
+<span class="header-section-number">20.2.5</span> Question 5. What significance level will we use?<a class="anchor" aria-label="anchor" href="#question-5.-what-significance-level-will-we-use-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>We have no reason not to use our usual 95% confidence level, so <code>alpha</code> = 0.05</p>
+</div>
+<div id="question-6.-are-we-using-a-one-sided-or-two-sided-comparison-1" class="section level3" number="20.2.6">
+<h3>
+<span class="header-section-number">20.2.6</span> Question 6. Are we using a one-sided or two-sided comparison?<a class="anchor" aria-label="anchor" href="#question-6.-are-we-using-a-one-sided-or-two-sided-comparison-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>We could argue for a one-sided comparison, but I’ll be safe and use the two-sided version.</p>
+</div>
+<div id="question-7.-did-pairing-help-reduce-nuisance-variation" class="section level3" number="20.2.7">
+<h3>
+<span class="header-section-number">20.2.7</span> Question 7. Did pairing help reduce nuisance variation?<a class="anchor" aria-label="anchor" href="#question-7.-did-pairing-help-reduce-nuisance-variation"><i class="fas fa-link"></i></a>
+</h3>
+<p>After we drop the <code>breakfast.csv</code> file into the <code>breakfast</code> data frame, we look at the correlation of cornflakes and oatbran results across our 14 subjects.</p>
+<div class="sourceCode" id="cb778"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">breakfast</span> <span class="op">%$%</span> <span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/aggregating.html">cor</a></span><span class="op">(</span><span class="va">cornflakes</span>, <span class="va">oatbran</span><span class="op">)</span></code></pre></div>
+<pre><code>[1] 0.9233247</code></pre>
+<p>The sample Pearson correlation coefficient is very strong and positive at 0.92, so the paired samples approach will use these data far more effectively than the (incorrect) independent samples approach.</p>
+</div>
+<div id="question-8.-what-does-the-distribution-of-paired-differences-tell-us" class="section level3" number="20.2.8">
+<h3>
+<span class="header-section-number">20.2.8</span> Question 8. What does the distribution of paired differences tell us?<a class="anchor" aria-label="anchor" href="#question-8.-what-does-the-distribution-of-paired-differences-tell-us"><i class="fas fa-link"></i></a>
+</h3>
+<p>We summarize the distribution of the paired differences (cornflakes - oatbran) below.</p>
+<div class="inline-figure"><img src="20_Two_Means_Examples_files/figure-html/unnamed-chunk-3-1.png" width="672"></div>
+<p>The Normal distribution doesn’t look too ridiculous in this case for the paired (cornflakes-oatbran) differences. Suppose we assume Normality and run the paired t test.</p>
+<div class="sourceCode" id="cb780"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/mosaic/man/ttest.html">t.test</a></span><span class="op">(</span><span class="va">breakfast</span><span class="op">$</span><span class="va">cornflakes</span> <span class="op">-</span> <span class="va">breakfast</span><span class="op">$</span><span class="va">oatbran</span><span class="op">)</span></code></pre></div>
+<pre><code>
+    One Sample t-test
+
+data:  breakfast$cornflakes - breakfast$oatbran
+t = 3.3444, df = 13, p-value = 0.005278
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 0.1284606 0.5972537
+sample estimates:
+mean of x 
+0.3628571 </code></pre>
+<p>Based on this sample of 14 subjects in the crossover study, we observe a 95% confidence interval for the difference between the LDL cholesterol levels after eating corn flakes and eating oat bran that is entirely positive, suggesting that LDL levels were detectably higher (according to this t test procedure) after eating corn flakes than after eating oat bran.</p>
+</div>
+</div>
+<div id="power-sample-size-and-the-breakfast-study" class="section level2" number="20.3">
+<h2>
+<span class="header-section-number">20.3</span> Power, Sample Size and the Breakfast Study<a class="anchor" aria-label="anchor" href="#power-sample-size-and-the-breakfast-study"><i class="fas fa-link"></i></a>
+</h2>
+<p>As a preview of what’s next to come, let’s investigate these promising results a bit further. Suppose that in a new study, you wish to be able to detect a difference in LDL cholesterol between two exposures: subjects who eat cornflakes (as in the original study) and subjects who continue to eat cornflakes but also take a supplemental dosage of what you believe to be the crucial ingredient in oatbran.</p>
+<p>Suppose you believe that the effect of taking the new supplement will be about half the size of the effect you observed in the original breakfast study on hypercholesterolemic males, but that males generally may be more likely to take your supplement regularly than switch from cornflakes to a less appetizing breakfast choice, making your supplement attractive.</p>
+<p>What sample size will be required to yield 90% power to detect an effect half the size of the effect we observed in the breakfast study, in a new paired samples study using a two-tailed 5% significance level? What if we only required 80% power?</p>
+<div id="the-setup" class="section level3" number="20.3.1">
+<h3>
+<span class="header-section-number">20.3.1</span> The Setup<a class="anchor" aria-label="anchor" href="#the-setup"><i class="fas fa-link"></i></a>
+</h3>
+<p>We want to know <em>n</em>, the minimum required sample size for the new study, and we have:</p>
+<ul>
+<li>A specified effect size of half of what we saw in the breakfast study, where the sample mean difference between cornflakes and oatbran was 0.36 mmol/l, so our effect size is assumed to be <code>delta</code> = 0.18 mmol/l.</li>
+<li>An assumed standard deviation equal to the standard deviation of the differences in the pilot breakfast study, which turns out to have been s = 0.41 mmol/l.</li>
+<li>We also have a pre-specified <code>alpha</code> = 0.05 using a two-tailed test.</li>
+<li>We also want the power to be at least 90% for our new study.</li>
+</ul>
+</div>
+<div id="the-r-calculations" class="section level3" number="20.3.2">
+<h3>
+<span class="header-section-number">20.3.2</span> The R Calculations<a class="anchor" aria-label="anchor" href="#the-r-calculations"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Question 1.</strong> What sample size will be required to yield 90% power to detect an effect half the size of the effect we observed in the breakfast study, in a new paired samples study using a two-tailed 5% significance level?</p>
+<div class="sourceCode" id="cb782"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">0.18</span>, sd <span class="op">=</span> <span class="fl">0.41</span>, sig.level <span class="op">=</span> <span class="fl">0.05</span>, 
+             power <span class="op">=</span> <span class="fl">0.9</span>, type<span class="op">=</span><span class="st">"paired"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     Paired t test power calculation 
+
+              n = 56.47119
+          delta = 0.18
+             sd = 0.41
+      sig.level = 0.05
+          power = 0.9
+    alternative = two.sided
+
+NOTE: n is number of *pairs*, sd is std.dev. of *differences* within pairs</code></pre>
+<p>And so our new study will require at least <strong>57 subjects</strong> (each measured in two circumstances, so 114 total measurements) in order to achieve at least 90% power to detect the difference of 0.18 mmol/l while meeting these specifications.</p>
+<p><strong>Question 2.</strong> What if we were willing to accept only 80% power?</p>
+<div class="sourceCode" id="cb784"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">0.18</span>, sd <span class="op">=</span> <span class="fl">0.41</span>, sig.level <span class="op">=</span> <span class="fl">0.05</span>, 
+             power <span class="op">=</span> <span class="fl">0.8</span>, type<span class="op">=</span><span class="st">"paired"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     Paired t test power calculation 
+
+              n = 42.68269
+          delta = 0.18
+             sd = 0.41
+      sig.level = 0.05
+          power = 0.8
+    alternative = two.sided
+
+NOTE: n is number of *pairs*, sd is std.dev. of *differences* within pairs</code></pre>
+<p>It turns out that this would require at least <strong>43 subjects</strong>.</p>
+</div>
+<div id="independent-samples-instead-of-paired-samples" class="section level3" number="20.3.3">
+<h3>
+<span class="header-section-number">20.3.3</span> Independent samples, instead of paired samples?<a class="anchor" aria-label="anchor" href="#independent-samples-instead-of-paired-samples"><i class="fas fa-link"></i></a>
+</h3>
+<p>What would happen if, instead of doing a paired samples study, we did one using independent samples? Assuming we used a balanced design, and assigned the same number of different people at random to either the oatbran supplement or regular cornflakes alone, we could do such a study, but it would require many more people to obtain similar power to the paired samples study.</p>
+<div class="sourceCode" id="cb786"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">0.18</span>, sd <span class="op">=</span> <span class="fl">0.41</span>, sig.level <span class="op">=</span> <span class="fl">0.05</span>, 
+             power <span class="op">=</span> <span class="fl">0.9</span>, type<span class="op">=</span><span class="st">"two.sample"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     Two-sample t test power calculation 
+
+              n = 110
+          delta = 0.18
+             sd = 0.41
+      sig.level = 0.05
+          power = 0.9
+    alternative = two.sided
+
+NOTE: n is number in *each* group</code></pre>
+<p>In all, <strong>220 people</strong> would be required in the independent samples study (110 in each exposure group), as compared to only <strong>57 people</strong> (each measured twice) in the paired study.</p>
+
+</div>
+</div>
+</div>
+
+  <div class="chapter-nav">
+<div class="prev"><a href="hypothesis-testing-what-is-it-good-for.html"><span class="header-section-number">19</span> Hypothesis Testing: What is it good for?</a></div>
+<div class="next"><a href="estimating-a-population-proportion.html"><span class="header-section-number">21</span> Estimating a Population Proportion</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#two-examples-comparing-means"><span class="header-section-number">20</span> Two Examples Comparing Means</a></li>
+<li>
+<a class="nav-link" href="#a-study-of-battery-life"><span class="header-section-number">20.1</span> A Study of Battery Life</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#question-1.-what-is-the-outcome-under-study"><span class="header-section-number">20.1.1</span> Question 1. What is the outcome under study?</a></li>
+<li><a class="nav-link" href="#question-2.-what-are-the-treatmentexposure-groups"><span class="header-section-number">20.1.2</span> Question 2. What are the treatment/exposure groups?</a></li>
+<li><a class="nav-link" href="#question-3.-are-the-data-collected-using-paired-or-independent-samples"><span class="header-section-number">20.1.3</span> Question 3. Are the data collected using paired or independent samples?</a></li>
+<li><a class="nav-link" href="#question-4.-are-the-data-a-random-sample-from-the-population-of-interest"><span class="header-section-number">20.1.4</span> Question 4. Are the data a random sample from the population of interest?</a></li>
+<li><a class="nav-link" href="#question-5.-what-significance-level-will-we-use"><span class="header-section-number">20.1.5</span> Question 5. What significance level will we use?</a></li>
+<li><a class="nav-link" href="#question-6.-are-we-using-a-one-sided-or-two-sided-comparison"><span class="header-section-number">20.1.6</span> Question 6. Are we using a one-sided or two-sided comparison?</a></li>
+<li><a class="nav-link" href="#question-9.-what-does-the-distribution-of-outcomes-in-each-group-tell-us"><span class="header-section-number">20.1.7</span> Question 9. What does the distribution of outcomes in each group tell us?</a></li>
+<li><a class="nav-link" href="#inferential-results-for-the-battery-study"><span class="header-section-number">20.1.8</span> Inferential Results for the Battery Study</a></li>
+<li><a class="nav-link" href="#paired-samples-approaches"><span class="header-section-number">20.1.9</span> Paired Samples Approaches</a></li>
+<li><a class="nav-link" href="#independent-samples-approaches"><span class="header-section-number">20.1.10</span> Independent Samples Approaches</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#the-breakfast-study-does-oat-bran-cereal-lower-serum-ldl-cholesterol"><span class="header-section-number">20.2</span> The Breakfast Study: Does Oat Bran Cereal Lower Serum LDL Cholesterol?</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#question-1.-what-is-the-outcome-under-study-1"><span class="header-section-number">20.2.1</span> Question 1. What is the outcome under study?</a></li>
+<li><a class="nav-link" href="#question-2.-what-are-the-treatmentexposure-groups-1"><span class="header-section-number">20.2.2</span> Question 2. What are the treatment/exposure groups?</a></li>
+<li><a class="nav-link" href="#question-3.-are-the-data-collected-using-paired-or-independent-samples-1"><span class="header-section-number">20.2.3</span> Question 3. Are the data collected using paired or independent samples?</a></li>
+<li><a class="nav-link" href="#question-4.-are-the-data-a-random-sample-from-the-population-of-interest-1"><span class="header-section-number">20.2.4</span> Question 4. Are the data a random sample from the population of interest?</a></li>
+<li><a class="nav-link" href="#question-5.-what-significance-level-will-we-use-1"><span class="header-section-number">20.2.5</span> Question 5. What significance level will we use?</a></li>
+<li><a class="nav-link" href="#question-6.-are-we-using-a-one-sided-or-two-sided-comparison-1"><span class="header-section-number">20.2.6</span> Question 6. Are we using a one-sided or two-sided comparison?</a></li>
+<li><a class="nav-link" href="#question-7.-did-pairing-help-reduce-nuisance-variation"><span class="header-section-number">20.2.7</span> Question 7. Did pairing help reduce nuisance variation?</a></li>
+<li><a class="nav-link" href="#question-8.-what-does-the-distribution-of-paired-differences-tell-us"><span class="header-section-number">20.2.8</span> Question 8. What does the distribution of paired differences tell us?</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#power-sample-size-and-the-breakfast-study"><span class="header-section-number">20.3</span> Power, Sample Size and the Breakfast Study</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#the-setup"><span class="header-section-number">20.3.1</span> The Setup</a></li>
+<li><a class="nav-link" href="#the-r-calculations"><span class="header-section-number">20.3.2</span> The R Calculations</a></li>
+<li><a class="nav-link" href="#independent-samples-instead-of-paired-samples"><span class="header-section-number">20.3.3</span> Independent samples, instead of paired samples?</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/THOMASELOVE/431-notes/blob/master/20_Two_Means_Examples.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/THOMASELOVE/431-notes/edit/master/20_Two_Means_Examples.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</strong>" was written by Thomas E. Love. It was last built on 2021-10-11.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

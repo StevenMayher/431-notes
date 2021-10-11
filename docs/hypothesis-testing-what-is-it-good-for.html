@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 19 Hypothesis Testing: What is it good for? | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</title>
+<meta name="author" content="Thomas E. Love">
+<meta name="description" content="Hypothesis testing uses sample data to attempt to reject the hypothesis that nothing interesting is happening – that is, to reject the notion that chance alone can explain the sample results. We...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 19 Hypothesis Testing: What is it good for? | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://thomaselove.github.io/431-notes/hypothesis-testing-what-is-it-good-for.html">
+<meta property="og:description" content="Hypothesis testing uses sample data to attempt to reject the hypothesis that nothing interesting is happening – that is, to reject the notion that chance alone can explain the sample results. We...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 19 Hypothesis Testing: What is it good for? | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta name="twitter:description" content="Hypothesis testing uses sample data to attempt to reject the hypothesis that nothing interesting is happening – that is, to reject the notion that chance alone can explain the sample results. We...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Working with These Notes</a></li>
+<li><a class="" href="data-science.html"><span class="header-section-number">1</span> Data Science</a></li>
+<li class="book-part">Part A. Exploring Data</li>
+<li><a class="" href="the-palmer-penguins.html"><span class="header-section-number">2</span> The Palmer Penguins</a></li>
+<li><a class="" href="nhanes1.html"><span class="header-section-number">3</span> NHANES: A First Look</a></li>
+<li><a class="" href="data-structures-variable-types-sampling-nhanes.html"><span class="header-section-number">4</span> Data Structures, Variable Types &amp; Sampling NHANES</a></li>
+<li><a class="" href="visualizing-nhanes-data.html"><span class="header-section-number">5</span> Visualizing NHANES Data</a></li>
+<li><a class="" href="summarizing_quantities.html"><span class="header-section-number">6</span> Summarizing Quantities</a></li>
+<li><a class="" href="summarizing-categories.html"><span class="header-section-number">7</span> Summarizing Categories</a></li>
+<li><a class="" href="miss.html"><span class="header-section-number">8</span> Missing Data and Single Imputation</a></li>
+<li><a class="" href="NYFS-Study.html"><span class="header-section-number">9</span> National Youth Fitness Survey</a></li>
+<li><a class="" href="assessing-normality.html"><span class="header-section-number">10</span> Assessing Normality</a></li>
+<li><a class="" href="straight-line-models.html"><span class="header-section-number">11</span> Straight Line Models</a></li>
+<li><a class="" href="linearizing-transformations.html"><span class="header-section-number">12</span> Linearizing Transformations</a></li>
+<li><a class="" href="studying-crab-claws-crabs.html"><span class="header-section-number">13</span> Studying Crab Claws (crabs)</a></li>
+<li><a class="" href="Hydrate-Study.html"><span class="header-section-number">14</span> Dehydration Recovery</a></li>
+<li><a class="" href="WCGS-Study.html"><span class="header-section-number">15</span> The WCGS</a></li>
+<li class="book-part">Part B. Comparing Summaries</li>
+<li><a class="" href="confidence-intervals-for-a-mean.html"><span class="header-section-number">16</span> Confidence Intervals for a Mean</a></li>
+<li><a class="" href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html"><span class="header-section-number">17</span> The Ibuprofen in Sepsis Randomized Clinical Trial</a></li>
+<li><a class="" href="comparing-means-with-paired-samples.html"><span class="header-section-number">18</span> Comparing Means with Paired Samples</a></li>
+<li><a class="active" href="hypothesis-testing-what-is-it-good-for.html"><span class="header-section-number">19</span> Hypothesis Testing: What is it good for?</a></li>
+<li><a class="" href="two-examples-comparing-means.html"><span class="header-section-number">20</span> Two Examples Comparing Means</a></li>
+<li><a class="" href="estimating-a-population-proportion.html"><span class="header-section-number">21</span> Estimating a Population Proportion</a></li>
+<li><a class="" href="comparing-proportions-with-two-independent-samples.html"><span class="header-section-number">22</span> Comparing Proportions with Two Independent Samples</a></li>
+<li><a class="" href="power-and-proportions.html"><span class="header-section-number">23</span> Power and Proportions</a></li>
+<li><a class="" href="larger-contingency-tables.html"><span class="header-section-number">24</span> Larger Contingency Tables</a></li>
+<li><a class="" href="analysis-of-variance.html"><span class="header-section-number">25</span> Analysis of Variance</a></li>
+<li class="book-part">Appendix</li>
+<li><a class="" href="some-r-tips.html">Some R Tips</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/THOMASELOVE/431-notes">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="hypothesis-testing-what-is-it-good-for" class="section level1" number="19">
+<h1>
+<span class="header-section-number">19</span> Hypothesis Testing: What is it good for?<a class="anchor" aria-label="anchor" href="#hypothesis-testing-what-is-it-good-for"><i class="fas fa-link"></i></a>
+</h1>
+<p>Hypothesis testing uses sample data to attempt to reject the hypothesis that nothing interesting is happening – that is, to reject the notion that chance alone can explain the sample results. We can, in many settings, use confidence intervals to summarize the results, as well, and confidence intervals and hypothesis tests are closely connected.</p>
+<p>In particular, it’s worth stressing that:</p>
+<ul>
+<li><p><strong>A significant effect is not necessarily the same thing as an interesting effect.</strong> For example, results calculated from large samples are nearly always “significant” even when the effects are quite small in magnitude. Before doing a test, always ask if the effect is large enough to be of any practical interest. If not, why do the test?</p></li>
+<li><p><strong>A non-significant effect is not necessarily the same thing as no difference.</strong> A large effect of real practical interest may still produce a non-significant result simply because the sample is too small.</p></li>
+<li><p><strong>There are assumptions behind all statistical inferences.</strong> Checking assumptions is crucial to validating the inference made by any test or confidence interval.</p></li>
+</ul>
+<div id="five-steps-in-any-hypothesis-test" class="section level2" number="19.1">
+<h2>
+<span class="header-section-number">19.1</span> Five Steps in any Hypothesis Test<a class="anchor" aria-label="anchor" href="#five-steps-in-any-hypothesis-test"><i class="fas fa-link"></i></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li>Specify the null hypothesis, <span class="math inline">\(H_0\)</span> (which usually indicates that there is no difference or no association between the results in various groups of subjects)</li>
+<li>Specify the research or alternative hypothesis, <span class="math inline">\(H_A\)</span>, sometimes called <span class="math inline">\(H_1\)</span> (which usually indicates that there is some difference or some association between the results in those same groups of subjects).</li>
+<li>Specify the test procedure or test statistic to be used to make inferences to the population based on sample data. Here is where we usually specify <span class="math inline">\(\alpha\)</span>, the probability of incorrectly rejecting <span class="math inline">\(H_0\)</span> that we are willing to accept. In the absence of other information, we often use <span class="math inline">\(\alpha = 0.05\)</span>
+</li>
+<li>Obtain the data, and summarize it to obtain the relevant test statistic, which gets summarized as a <span class="math inline">\(p\)</span> value.</li>
+<li>Use the <span class="math inline">\(p\)</span> value to either
+<ul>
+<li>
+<strong>reject</strong> <span class="math inline">\(H_0\)</span> in favor of the alternative <span class="math inline">\(H_A\)</span> (concluding that there is a statistically significant difference/association at the <span class="math inline">\(\alpha\)</span> significance level) or</li>
+<li>
+<strong>retain</strong> <span class="math inline">\(H_0\)</span> (and conclude that there is no statistically significant difference/association at the <span class="math inline">\(\alpha\)</span> significance level)</li>
+</ul>
+</li>
+</ol>
+</div>
+<div id="type-i-and-type-ii-error" class="section level2" number="19.2">
+<h2>
+<span class="header-section-number">19.2</span> Type I and Type II Error<a class="anchor" aria-label="anchor" href="#type-i-and-type-ii-error"><i class="fas fa-link"></i></a>
+</h2>
+<p>Once we know how unlikely the results would have been if the null hypothesis were true, we must make one of two choices:</p>
+<ol style="list-style-type: decimal">
+<li>The <em>p</em> value is not small enough to convincingly rule out chance. Therefore, we cannot reject the null hypothesis as an explanation for the results.</li>
+<li>The <em>p</em> value was small enough to convincingly rule out chance. We reject the null hypothesis and accept the alternative hypothesis.</li>
+</ol>
+<p>How small must the <em>p</em> value be in order to rule out the null hypothesis? The standard choice is 5%. This standardization has some substantial disadvantages. It is simply a convention that has become accepted over the years, and there are many situations for which a 5% cutoff is unwise. While it does give a specific level to keep in mind, it suggests a rather mindless cutpoint having nothing to do with the importance of the decision nor the costs or losses associated with outcomes.</p>
+</div>
+<div id="the-courtroom-analogy" class="section level2" number="19.3">
+<h2>
+<span class="header-section-number">19.3</span> The Courtroom Analogy<a class="anchor" aria-label="anchor" href="#the-courtroom-analogy"><i class="fas fa-link"></i></a>
+</h2>
+<p>Consider the analogy of the jury in a courtroom.</p>
+<ol style="list-style-type: decimal">
+<li>The evidence is not strong enough to convincingly rule out that the defendant is innocent. Therefore, we cannot reject the null hypothesis, or innocence of the defendant.</li>
+<li>The evidence was strong enough that we are willing to rule out the possibility that an innocent person (as stated in the null hypothesis) produced the observed data. We reject the null hypothesis, that the defendant is innocent, and assert the alternative hypothesis.</li>
+</ol>
+<p>Consistent with our thinking in hypothesis testing, in many cases we would not accept the hypothesis that the defendant is innocent. We would simply conclude that the evidence was not strong enough to rule out the possibility of innocence.</p>
+<p>The <em>p</em> value is the probability of getting a result as extreme or more extreme than the one observed if the proposed null hypothesis is true. Notice that it is not valid to actually accept that the null hypothesis is true. To do so would be to say that we are essentially convinced that chance alone produced the observed results – a common mistake.</p>
+</div>
+<div id="significance-vs.-importance" class="section level2" number="19.4">
+<h2>
+<span class="header-section-number">19.4</span> Significance vs. Importance<a class="anchor" aria-label="anchor" href="#significance-vs.-importance"><i class="fas fa-link"></i></a>
+</h2>
+<p>Remember that a statistically significant relationship or difference does not necessarily mean an important one. A result that is significant in the statistical meaning of the word may not be significant clinically. Statistical significance is a technical term. Findings can be both statistically significant and practically significant or either or neither.</p>
+<p>When we have large samples, we will regularly find small differences that have a small <em>p</em> value even though they have no practical importance. At the other extreme, with small samples, even large differences will often not be large enough to create a small <em>p</em> value. The notion of statistical significance has not helped science, and we won’t perpetuate it any further.</p>
+</div>
+<div id="what-does-dr.-love-dislike-about-p-values-and-statistical-significance" class="section level2" number="19.5">
+<h2>
+<span class="header-section-number">19.5</span> What does Dr. Love dislike about <em>p</em> values and “statistical significance?”<a class="anchor" aria-label="anchor" href="#what-does-dr.-love-dislike-about-p-values-and-statistical-significance"><i class="fas fa-link"></i></a>
+</h2>
+<p>A lot of things. A major issue is that I believe that <em>p</em> values are impossible to explain in a way that is both [a] technically correct and [b] straightforward at the same time. As evidence of this, you might want to look at <a href="http://fivethirtyeight.com/features/statisticians-found-one-thing-they-can-agree-on-its-time-to-stop-misusing-p-values/">this article and associated video by Christie Aschwanden at 538.com</a></p>
+<p>The notion of a <em>p</em> value was an incredibly impressive achievement back when Wald and others were doing the work they were doing in the 1940s, and might still have been useful as recently as 10 years ago. But the notion of a <em>p</em> value relies on a lot of flawed assumptions, and null hypothesis significance testing is fraught with difficulties. Nonetheless, researchers use <em>p</em> values every day.</p>
+</div>
+<div id="the-asa-articles-in-2016-and-2019-on-statistical-significance-and-p-values" class="section level2" number="19.6">
+<h2>
+<span class="header-section-number">19.6</span> The ASA Articles in 2016 and 2019 on Statistical Significance and P-Values<a class="anchor" aria-label="anchor" href="#the-asa-articles-in-2016-and-2019-on-statistical-significance-and-p-values"><i class="fas fa-link"></i></a>
+</h2>
+<p>However, my primary motivation for taking the approach I’m taking comes from the pieces in two key reference collections we’ll read and discuss more thoroughly in 431 and 432.</p>
+<ol style="list-style-type: decimal">
+<li>The American Statistical Association’s 2016 <a href="http://amstat.tandfonline.com/doi/full/10.1080/00031305.2016.1154108">Statement on p-Values</a>: Context, Process and Purpose.</li>
+</ol>
+<blockquote>
+<p>The ASA Statement on p-Values and Statistical Significance (Wasserstein and Lazar 2016) was developed primarily because after decades, warnings about the don’ts had gone mostly unheeded. The statement was about what not to do, because there is widespread agreement about the don’ts.</p>
+</blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>
+<a href="https://amstat.tandfonline.com/toc/utas20/73/sup1">Statistical Inference in the 21st Century: A World Beyond <em>p</em> &lt; 0.05</a> from 2019 in <em>The American Statistician</em>
+</li>
+</ol>
+<blockquote>
+<p>This is a world where researchers are free to treat “p = 0.051” and “p = 0.049” as not being categorically different, where authors no longer find themselves constrained to selectively publish their results based on a single magic number. In this world, where studies with “p &lt; 0.05” and studies with “p &gt; 0.05” are not automatically in conflict, researchers will see their results more easily replicated-and, even when not, they will better understand why. As we venture down this path, we will begin to see fewer false alarms, fewer overlooked discoveries, and the development of more customized statistical strategies. Researchers will be free to communicate all their findings in all their glorious uncertainty, knowing their work is to be judged by the quality and effective communication of their science, and not by their p-values. As “statistical significance” is used less, statistical thinking will be used more. The ASA Statement on P-Values and Statistical Significance started moving us toward this world…. Now we must go further.</p>
+</blockquote>
+<blockquote>
+<p>The ASA Statement on P-Values and Statistical Significance stopped just short of recommending that declarations of “statistical significance” be abandoned. We take that step here. We conclude, based on our review of the articles in this special issue and the broader literature, that it is time to stop using the term “statistically significant” entirely. Nor should variants such as “significantly different,” “p &lt; 0.05,” and “nonsignificant” survive, whether expressed in words, by asterisks in a table, or in some other way…. Regardless of whether it was ever useful, a declaration of “statistical significance” has today become meaningless.</p>
+</blockquote>
+<p>For the moment, I will say this. I emphasize confidence intervals over <em>p</em> values, which is at best a partial solution. But …</p>
+<ol style="list-style-type: decimal">
+<li>Very rarely does a situation emerge in which a <em>p</em> value can be available in which looking at the associated confidence interval isn’t far more helpful for making a comparison of interest.</li>
+<li>The use of a <em>p</em> value requires making at least as many assumptions about the population, sample, individuals and data as does a confidence interval.</li>
+<li>Most null hypotheses are clearly not exactly true prior to data collection, and so the test summarized by a <em>p</em> value is of questionable value most of the time.</li>
+<li>No one has a truly adequate definition of a <em>p</em> value, in terms of both precision and parsimony. Brief, understandable definitions always fail to be technically accurate.</li>
+<li>Bayesian approaches avoid some of these pitfalls, but come with their own issues.</li>
+<li>Many smart people agree with me, and have sworn off of <em>p</em> values whenever they can.</li>
+</ol>
+<p>Again, we’ll look at these issues in greater depth later in the course.</p>
+</div>
+<div id="errors-in-hypothesis-testing" class="section level2" number="19.7">
+<h2>
+<span class="header-section-number">19.7</span> Errors in Hypothesis Testing<a class="anchor" aria-label="anchor" href="#errors-in-hypothesis-testing"><i class="fas fa-link"></i></a>
+</h2>
+<p>In testing hypotheses, there are two potential decisions and each one brings with it the possibility that a mistake has been made.</p>
+<p>Let’s use the courtroom analogy. Here are the potential choices and associated potential errors. Although the seriousness of errors depends on the seriousness of the crime and punishment, the potential error for choice 2 is usually more serious.</p>
+<ol style="list-style-type: decimal">
+<li>We cannot rule out that the defendant is innocent, so (s)he is set free without penalty.
+<ul>
+<li>Potential Error: A criminal has been erroneously freed.</li>
+</ul>
+</li>
+<li>We believe that there is enough evidence to conclude that the defendant is guilty.
+<ul>
+<li>Potential Error: An innocent person is convicted / penalized and a guilty person remains free.</li>
+</ul>
+</li>
+</ol>
+<p>As another example, consider being tested for disease. Most tests for diseases are not 100% accurate. The lab technician or physician must make a choice:</p>
+<ol style="list-style-type: decimal">
+<li>In the opinion of the medical practitioner, you are healthy. The test result was weak enough to be called “negative” for the disease.
+<ul>
+<li>Potential Error: You actually have the disease but have been told that you do not. This is called a <strong>false negative</strong>.</li>
+</ul>
+</li>
+<li>In the opinion of the medical practitioner, you have the disease. The test results were strong enough to be called “positive” for the disease.
+<ul>
+<li>Potential Error: You are actually healthy but have been told you have the disease. This is called a <strong>false positive</strong>.</li>
+</ul>
+</li>
+</ol>
+</div>
+<div id="the-two-types-of-hypothesis-testing-errors" class="section level2" number="19.8">
+<h2>
+<span class="header-section-number">19.8</span> The Two Types of Hypothesis Testing Errors<a class="anchor" aria-label="anchor" href="#the-two-types-of-hypothesis-testing-errors"><i class="fas fa-link"></i></a>
+</h2>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">–</th>
+<th align="center">
+<span class="math inline">\(H_A\)</span> is true</th>
+<th align="center">
+<span class="math inline">\(H_0\)</span> is true</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">Test Rejects <span class="math inline">\(H_0\)</span>
+</td>
+<td align="center">Correct Decision</td>
+<td align="center">Type I Error (False Positive)</td>
+</tr>
+<tr class="even">
+<td align="right">Test Retains <span class="math inline">\(H_0\)</span>
+</td>
+<td align="center">Type II Error (False Negative)</td>
+<td align="center">Correct Decision</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>A Type I error can only be made if the null hypothesis is actually true.</li>
+<li>A Type II error can only be made if the alternative hypothesis is actually true.</li>
+</ul>
+</div>
+<div id="the-significance-level-is-the-probability-of-a-type-i-error" class="section level2" number="19.9">
+<h2>
+<span class="header-section-number">19.9</span> The Significance Level is the Probability of a Type I Error<a class="anchor" aria-label="anchor" href="#the-significance-level-is-the-probability-of-a-type-i-error"><i class="fas fa-link"></i></a>
+</h2>
+<p>If the null hypothesis is true, the <em>p</em> value is the probability of making an error by choosing the alternative hypothesis instead. Alpha (<span class="math inline">\(\alpha\)</span>) is defined as the probability of rejecting the null hypothesis when the null hypothesis is actually true, creating a Type I error. This is also called the significance level, so that 100(1-<span class="math inline">\(\alpha\)</span>) is the confidence level – the probability of correctly concluding that there is no difference (retaining <span class="math inline">\(H_0\)</span>) when the null hypothesis is true.</p>
+</div>
+<div id="the-probability-of-avoiding-a-type-ii-error-is-called-power" class="section level2" number="19.10">
+<h2>
+<span class="header-section-number">19.10</span> The Probability of avoiding a Type II Error is called Power<a class="anchor" aria-label="anchor" href="#the-probability-of-avoiding-a-type-ii-error-is-called-power"><i class="fas fa-link"></i></a>
+</h2>
+<p>A Type II error is made if the alternative hypothesis is true, but you fail to choose it. The probability depends on exactly which part of the alternative hypothesis is true, so that computing the probability of making a Type II error is not feasible. The power of a test is the probability of making the correct decision when the alternative hypothesis is true. Beta (<span class="math inline">\(\beta\)</span>) is defined as the probability of concluding that there was no difference, when in fact there was one (a Type II error). Power is then just 1 - <span class="math inline">\(\beta\)</span>, the probability of concluding that there was a difference, when, in fact, there was one.</p>
+<p>Traditionally, people like the power of a test to be at least 80%, meaning that <span class="math inline">\(\beta\)</span> is at most 0.20. Often, I’ll be arguing for 90% as a minimum power requirement, or we’ll be presenting a range of power calculations for a variety of sample size choices.</p>
+</div>
+<div id="incorporating-the-costs-of-various-types-of-errors" class="section level2" number="19.11">
+<h2>
+<span class="header-section-number">19.11</span> Incorporating the Costs of Various Types of Errors<a class="anchor" aria-label="anchor" href="#incorporating-the-costs-of-various-types-of-errors"><i class="fas fa-link"></i></a>
+</h2>
+<p>Which error is more serious in medical testing, where we think of our <span class="math inline">\(H_0\)</span>: patient is healthy vs. <span class="math inline">\(H_A\)</span>: disease is present?</p>
+<p>It depends on the disease and on the consequences of a negative or positive test result. A false negative in a screening test for cancer could lead to a fatal delay in treatment, whereas a false positive would probably lead to a retest. A more troublesome example occurs in testing for an infectious disease. Inevitably, there is a trade-off between the two types of errors. It all depends on the consequences.</p>
+<p>It would be nice if we could specify the probability that we were making an error with each potential decision. We could then weigh the consequence of the error against its probability. Unfortunately, in most cases, we can only specify the conditional probability of making a Type I error, given that the null hypothesis is true.</p>
+<p>In deciding whether to reject a null hypothesis, we will need to consider the consequences of the two potential types of errors. If a Type I error is very serious, then you should reject the null hypothesis only if the <em>p</em> value is very small. Conversely, if a Type II error is more serious, you should be willing to reject the null hypothesis with a larger <em>p</em> value, perhaps 0.10 or 0.20, instead of 0.05.</p>
+<ul>
+<li>
+<span class="math inline">\(\alpha\)</span> is the probability of rejecting <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_0\)</span> is true.
+<ul>
+<li>So 1 - <span class="math inline">\(\alpha\)</span>, the confidence level, is the probability of retaining <span class="math inline">\(H_0\)</span> when that’s the right thing to do.</li>
+</ul>
+</li>
+<li>
+<span class="math inline">\(\beta\)</span> is the probability of retaining <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_A\)</span> is true.
+<ul>
+<li>So 1 - <span class="math inline">\(\beta\)</span>, the power, is the probability of rejecting <span class="math inline">\(H_0\)</span> when that’s the right thing to do.</li>
+</ul>
+</li>
+</ul>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">–</th>
+<th align="center">
+<span class="math inline">\(H_A\)</span> is True</th>
+<th align="center">
+<span class="math inline">\(H_0\)</span> is True</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">Test Rejects <span class="math inline">\(H_0\)</span>
+</td>
+<td align="center">Correct Decision (1 - <span class="math inline">\(\beta\)</span>)</td>
+<td align="center">Type I Error (<span class="math inline">\(\alpha\)</span>)</td>
+</tr>
+<tr class="even">
+<td align="right">Test Retains <span class="math inline">\(H_0\)</span>
+</td>
+<td align="center">Type II Error (<span class="math inline">\(\beta\)</span>)</td>
+<td align="center">Correct Decision (1 - <span class="math inline">\(\alpha\)</span>)</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="power-and-sample-size-considerations" class="section level2" number="19.12">
+<h2>
+<span class="header-section-number">19.12</span> Power and Sample Size Considerations<a class="anchor" aria-label="anchor" href="#power-and-sample-size-considerations"><i class="fas fa-link"></i></a>
+</h2>
+<p>For most statistical tests, it is theoretically possible to estimate the power of the test in the design stage, (before any data are collected) for various sample sizes, so we can hone in on a sample size choice which will enable us to collect data only on as many subjects as are truly necessary.</p>
+<p>A power calculation is likely the most common element of an scientific grant proposal on which a statistician is consulted. This is a fine idea in theory, but in practice…</p>
+<ul>
+<li>The tests that have power calculations worked out in intensive detail using R are mostly those with more substantial assumptions. Examples include t tests that assume population normality, common population variance and balanced designs in the independent samples setting, or paired t tests that assume population normality in the paired samples setting.</li>
+<li>These power calculations are also usually based on tests rather than confidence intervals, which would be much more useful in most settings. Simulation is your friend here.</li>
+<li>Even more unfortunately, this process of doing power and related calculations is <strong>far more of an art than a science</strong>.</li>
+<li>As a result, the value of many power calculations is negligible, since the assumptions being made are so arbitrary and poorly connected to real data.</li>
+<li>On several occasions, I have stood in front of a large audience of medical statisticians actively engaged in clinical trials and other studies that require power calculations for funding. When I ask for a show of hands of people who have had power calculations prior to such a study whose assumptions matched the eventual data perfectly, I get lots of laughs. It doesn’t happen.</li>
+<li>Even the underlying framework that assumes a power of 80% with a significance level of 5% is sufficient for most studies is pretty silly.</li>
+</ul>
+<p>All that said, I feel obliged to show you some examples of power calculations done using R, and provide some insight on how to make some of the key assumptions in a way that won’t alert reviewers too much to the silliness of the enterprise. All of the situations described in this Chapter are toy problems, but they may be instructive about some fundamental ideas.</p>
+</div>
+<div id="sample-size-in-a-one-sample-t-test" class="section level2" number="19.13">
+<h2>
+<span class="header-section-number">19.13</span> Sample Size in a One-Sample t test<a class="anchor" aria-label="anchor" href="#sample-size-in-a-one-sample-t-test"><i class="fas fa-link"></i></a>
+</h2>
+<p>For a t test, R can estimate any one of the following elements, given the other four, using the <code>power.t.test</code> command, for either a one-tailed or two-tailed single-sample t test…</p>
+<ul>
+<li>n = the sample size</li>
+<li>
+<span class="math inline">\(\delta\)</span> = delta = the true difference in population means between the null hypothesis value and a particular alternative</li>
+<li>s = sd = the true standard deviation of the population</li>
+<li>
+<span class="math inline">\(\alpha\)</span> = sig.level = the significance level for the test (maximum acceptable risk of Type I error)</li>
+<li>1 - <span class="math inline">\(\beta\)</span> = power = the power of the t test to detect the effect of size <span class="math inline">\(\delta\)</span>
+</li>
+</ul>
+<div id="a-toy-example" class="section level3" number="19.13.1">
+<h3>
+<span class="header-section-number">19.13.1</span> A Toy Example<a class="anchor" aria-label="anchor" href="#a-toy-example"><i class="fas fa-link"></i></a>
+</h3>
+<p>Suppose that in a recent health survey, the average beef consumption in the U.S. per person was 90 pounds per year. Suppose you are planning a new study to see if beef consumption levels have changed. You plan to take a random sample of 25 people to build your new estimate, and test whether the current pounds of beef consumed per year is 90. Suppose you want to do a two-sided (two-tailed) test at 95% confidence (so <span class="math inline">\(\alpha\)</span> = 0.05), and that you expect that the true difference will need to be at least <span class="math inline">\(\delta\)</span> = 5 pounds (i.e. 85 or less or 95 or more) in order for the result to be of any real, practical interest. Suppose also that you are willing to assume that the true standard deviation of the measurements in the population is 10 pounds.</p>
+<p>That is, of course, a lot to suppose.</p>
+<p>Now, we want to know what power the proposed experiment will have to detect a change of 5 pounds (or more) away from the original 90 pounds, with these specifications, and how tweaking these specifications will affect the power of the study.</p>
+<p>So, we have
+- n = 25 data points to be collected
+- <span class="math inline">\(\delta\)</span> = 5 pounds is the minimum clinically meaningful effect size
+- s = 10 is the assumed population standard deviation, in pounds per year
+- <span class="math inline">\(\alpha\)</span> is 0.05, and we’ll do a two-sided test</p>
+</div>
+<div id="using-the-power.t.test-function" class="section level3" number="19.13.2">
+<h3>
+<span class="header-section-number">19.13.2</span> Using the <code>power.t.test</code> function<a class="anchor" aria-label="anchor" href="#using-the-power.t.test-function"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb732"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">25</span>, delta <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="fl">10</span>, sig.level <span class="op">=</span> <span class="fl">0.05</span>, 
+             type<span class="op">=</span><span class="st">"one.sample"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     One-sample t test power calculation 
+
+              n = 25
+          delta = 5
+             sd = 10
+      sig.level = 0.05
+          power = 0.6697014
+    alternative = two.sided</code></pre>
+<p>So, under this study design, we would expect to detect an effect of size <span class="math inline">\(\delta\)</span> = 5 pounds with just under 67% power, i.e. with a probability of incorrect retention of <span class="math inline">\(H_0\)</span> of just about 1/3. Most of the time, we’d like to improve this power, and to do so, we’d need to adjust our assumptions.</p>
+</div>
+</div>
+<div id="changing-assumptions" class="section level2" number="19.14">
+<h2>
+<span class="header-section-number">19.14</span> Changing Assumptions<a class="anchor" aria-label="anchor" href="#changing-assumptions"><i class="fas fa-link"></i></a>
+</h2>
+<p>We made assumptions about the sample size n, the minimum clinically meaningful effect size (change in the population mean) <span class="math inline">\(\delta\)</span>, the population standard deviation s, and the significance level <span class="math inline">\(\alpha\)</span>, not to mention decisions about the test, like that we’d do a one-sample t test, rather than another sort of test for a single sample, and that we’d do a two-tailed, or two-sided test. Often, these assumptions are tweaked a bit to make the power look more like what a reviewer/funder is hoping to see.</p>
+<div id="increasing-sample-size-increases-power" class="section level3" number="19.14.1">
+<h3>
+<span class="header-section-number">19.14.1</span> Increasing Sample Size Increases Power<a class="anchor" aria-label="anchor" href="#increasing-sample-size-increases-power"><i class="fas fa-link"></i></a>
+</h3>
+<p>Suppose, we committed to using more resources and gathering data from 40 subjects instead of the 25 we assumed initially – what effect would this have on our power?</p>
+<div class="sourceCode" id="cb734"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">40</span>, delta <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="fl">10</span>, sig.level <span class="op">=</span> <span class="fl">0.05</span>, 
+             type<span class="op">=</span><span class="st">"one.sample"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     One-sample t test power calculation 
+
+              n = 40
+          delta = 5
+             sd = 10
+      sig.level = 0.05
+          power = 0.8693979
+    alternative = two.sided</code></pre>
+<p>With more samples, we should have a more powerful test, able to detect the difference with greater probability. In fact, a sample of 40 paired differences yields 87% power. As it turns out, we would need at least 44 observations with this scenario to get to 90% power, as shown in the calculation below, which puts the power in, but leaves out the sample size.</p>
+<div class="sourceCode" id="cb736"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>power<span class="op">=</span><span class="fl">0.9</span>, delta <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="fl">10</span>, sig.level <span class="op">=</span> <span class="fl">0.05</span>, 
+             type<span class="op">=</span><span class="st">"one.sample"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     One-sample t test power calculation 
+
+              n = 43.99552
+          delta = 5
+             sd = 10
+      sig.level = 0.05
+          power = 0.9
+    alternative = two.sided</code></pre>
+<p>We see that we would need at least 44 observations to achieve 90% power. Note: we always round the sample size up in doing a power calculation – if this calculation had actually suggested n = 43.1 paired differences were needed, we would still have rounded up to 44.</p>
+</div>
+<div id="increasing-effect-size-will-increase-power" class="section level3" number="19.14.2">
+<h3>
+<span class="header-section-number">19.14.2</span> Increasing Effect Size will increase Power<a class="anchor" aria-label="anchor" href="#increasing-effect-size-will-increase-power"><i class="fas fa-link"></i></a>
+</h3>
+<p>A larger effect should be easier to detect. If we go back to our original calculation, which had 67% power to detect an effect of size <span class="math inline">\(\delta\)</span> = 5, and now change the desired effect size to <span class="math inline">\(\delta\)</span> = 6 pounds (i.e. a value of 84 or less or 96 or more), we should obtain a more powerful design.</p>
+<div class="sourceCode" id="cb738"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">25</span>, delta <span class="op">=</span> <span class="fl">6</span>, sd <span class="op">=</span> <span class="fl">10</span>, sig.level <span class="op">=</span> <span class="fl">0.05</span>, 
+             type<span class="op">=</span><span class="st">"one.sample"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     One-sample t test power calculation 
+
+              n = 25
+          delta = 6
+             sd = 10
+      sig.level = 0.05
+          power = 0.8207213
+    alternative = two.sided</code></pre>
+<p>We see that this change in effect size from 5 to 6, leaving everything else the same, increases our power from 67% to 82%. To reach 90% power, we’d need to increase the effect size we were trying to detect to at least 6.76 pounds.</p>
+<div class="sourceCode" id="cb740"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">25</span>, power <span class="op">=</span> <span class="fl">0.9</span>, sd <span class="op">=</span> <span class="fl">10</span>, sig.level <span class="op">=</span> <span class="fl">0.05</span>, 
+             type<span class="op">=</span><span class="st">"one.sample"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     One-sample t test power calculation 
+
+              n = 25
+          delta = 6.759051
+             sd = 10
+      sig.level = 0.05
+          power = 0.9
+    alternative = two.sided</code></pre>
+<ul>
+<li>Again, note that I am rounding up here.</li>
+<li>Using <span class="math inline">\(\delta\)</span> = 6.75 would not quite make it to 90.00% power.</li>
+<li>Using <span class="math inline">\(\delta\)</span> = 6.76 guarantees that the power will be 90% or more, and not just round up to 90%.</li>
+</ul>
+</div>
+<div id="decreasing-the-standard-deviation-will-increase-power" class="section level3" number="19.14.3">
+<h3>
+<span class="header-section-number">19.14.3</span> Decreasing the Standard Deviation will increase Power<a class="anchor" aria-label="anchor" href="#decreasing-the-standard-deviation-will-increase-power"><i class="fas fa-link"></i></a>
+</h3>
+<p>The choice of standard deviation is usually motivated by a pilot study, or else pulled out of thin air - it’s relatively easy to convince yourself that the true standard deviation might be a little smaller than you’d guessed initially. Let’s see what happens to the power if we reduce the sample standard deviation from 10 pounds to 9. This should make the effect of 5 pounds easier to detect, because it will have smaller variation associated with it.</p>
+<div class="sourceCode" id="cb742"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">25</span>, delta <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="fl">9</span>, sig.level <span class="op">=</span> <span class="fl">0.05</span>, 
+             type<span class="op">=</span><span class="st">"one.sample"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     One-sample t test power calculation 
+
+              n = 25
+          delta = 5
+             sd = 9
+      sig.level = 0.05
+          power = 0.759672
+    alternative = two.sided</code></pre>
+<p>This change in standard deviation from 10 to 9, leaving everything else the same, increases our power from 67% to nearly 76%. To reach 90% power, we’d need to decrease the standard deviation of the population paired differences to no more than 7.39 pounds.</p>
+<div class="sourceCode" id="cb744"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">25</span>, delta <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="cn">NULL</span>, power <span class="op">=</span> <span class="fl">0.9</span>, sig.level <span class="op">=</span> <span class="fl">0.05</span>, 
+             type<span class="op">=</span><span class="st">"one.sample"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     One-sample t test power calculation 
+
+              n = 25
+          delta = 5
+             sd = 7.397486
+      sig.level = 0.05
+          power = 0.9
+    alternative = two.sided</code></pre>
+<p>Note I am rounding down here.</p>
+<ul>
+<li>Using s = 7.4 pounds would not quite make it to 90.00% power.</li>
+</ul>
+<p>Note also that in order to get R to treat the standard debviation as unknown, I must specify it as NULL in the formula.</p>
+</div>
+<div id="larger-significance-level-increases-power" class="section level3" number="19.14.4">
+<h3>
+<span class="header-section-number">19.14.4</span> Larger Significance Level increases Power<a class="anchor" aria-label="anchor" href="#larger-significance-level-increases-power"><i class="fas fa-link"></i></a>
+</h3>
+<p>We can trade off some of our Type II error (lack of power) for Type I error. If we are willing to trade off some Type I error (as described by the <span class="math inline">\(\alpha\)</span>), we can improve the power. For instance, suppose we decided to run the original test with 90% confidence.</p>
+<div class="sourceCode" id="cb746"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">25</span>, delta <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="fl">10</span>, sig.level <span class="op">=</span> <span class="fl">0.1</span>, 
+             type<span class="op">=</span><span class="st">"one.sample"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     One-sample t test power calculation 
+
+              n = 25
+          delta = 5
+             sd = 10
+      sig.level = 0.1
+          power = 0.7833861
+    alternative = two.sided</code></pre>
+<p>The calculation suggests that our power would thus increase from 67% to just over 78%.</p>
+</div>
+</div>
+<div id="paired-sample-t-tests-and-powersample-size" class="section level2" number="19.15">
+<h2>
+<span class="header-section-number">19.15</span> Paired Sample t Tests and Power/Sample Size<a class="anchor" aria-label="anchor" href="#paired-sample-t-tests-and-powersample-size"><i class="fas fa-link"></i></a>
+</h2>
+<p>For a paired-samples t test, R can estimate any one of the following elements, given the other four, using the <code>power.t.test</code> command, for either a one-tailed or two-tailed paired t test…</p>
+<ul>
+<li>n = the sample size (# of pairs) being compared</li>
+<li>
+<span class="math inline">\(\delta\)</span> = delta = the true difference in means between the two groups</li>
+<li>s = sd = the true standard deviation of the paired differences</li>
+<li>
+<span class="math inline">\(\alpha\)</span> = sig.level = the significance level for the comparison (maximum acceptable risk of Type I error)</li>
+<li>1 - <span class="math inline">\(\beta\)</span> = power = the power of the paired t test to detect the effect of size <span class="math inline">\(\delta\)</span>
+</li>
+</ul>
+<div id="a-toy-example-1" class="section level3" number="19.15.1">
+<h3>
+<span class="header-section-number">19.15.1</span> A Toy Example<a class="anchor" aria-label="anchor" href="#a-toy-example-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>As a toy example, suppose you are planning a paired samples experiment involving n = 30 subjects who will each provide a “Before” and an “After” result, which is measured in days.</p>
+<p>Suppose you want to do a two-sided (two-tailed) test at 95% confidence (so <span class="math inline">\(\alpha\)</span> = 0.05), and that you expect that the true difference between the “Before” and “After” groups will have to be at least <span class="math inline">\(\delta\)</span> = 5 days to be of any real interest. Suppose also that you are willing to assume that the true standard deviation of those paired differences will be 10 days.</p>
+<p>That is, of course, a lot to suppose.</p>
+<p>Now, we want to know what power the proposed experiment will have to detect this difference with these specifications, and how tweaking these specifications will affect the power of the study.</p>
+<p>So, we have
+- n = 30 paired differences will be collected
+- <span class="math inline">\(\delta\)</span> = 5 days is the minimum clinically meaningful difference
+- s = 10 days is the assumed population standard deviation of the paired differences
+- <span class="math inline">\(\alpha\)</span> is 0.05, and we’ll do a two-sided test</p>
+</div>
+<div id="using-the-power.t.test-function-1" class="section level3" number="19.15.2">
+<h3>
+<span class="header-section-number">19.15.2</span> Using the <code>power.t.test</code> function<a class="anchor" aria-label="anchor" href="#using-the-power.t.test-function-1"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb748"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span>, delta <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="fl">10</span>, sig.level <span class="op">=</span> <span class="fl">0.05</span>, 
+             type<span class="op">=</span><span class="st">"paired"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     Paired t test power calculation 
+
+              n = 30
+          delta = 5
+             sd = 10
+      sig.level = 0.05
+          power = 0.7539627
+    alternative = two.sided
+
+NOTE: n is number of *pairs*, sd is std.dev. of *differences* within pairs</code></pre>
+<p>So, under this study design, we would expect to detect an effect of size <span class="math inline">\(\delta\)</span> = 5 days with 75% power, i.e. with a probability of incorrect retention of <span class="math inline">\(H_0\)</span> of 0.25. Most of the time, we’d like to improve this power, and to do so, we’d need to adjust our assumptions.</p>
+</div>
+<div id="changing-assumptions-in-a-power-calculation" class="section level3" number="19.15.3">
+<h3>
+<span class="header-section-number">19.15.3</span> Changing Assumptions in a Power Calculation<a class="anchor" aria-label="anchor" href="#changing-assumptions-in-a-power-calculation"><i class="fas fa-link"></i></a>
+</h3>
+<p>We made assumptions about the sample size n, the minimum clinically meaningful difference in means <span class="math inline">\(\delta\)</span>, the population standard deviation s, and the significance level <span class="math inline">\(\alpha\)</span>, not to mention decisions about the test, like that we’d do a paired t test, rather than another sort of test for paired samples, or use an independent samples approach, and that we’d do a two-tailed, or two-sided test. Often, these assumptions are tweaked a bit to make the power look more like what a reviewer/funder is hoping to see.</p>
+</div>
+<div id="changing-the-sample-size" class="section level3" number="19.15.4">
+<h3>
+<span class="header-section-number">19.15.4</span> Changing the Sample Size<a class="anchor" aria-label="anchor" href="#changing-the-sample-size"><i class="fas fa-link"></i></a>
+</h3>
+<p>Suppose, we committed to using more resources and gathering “Before” and “After” data from 40 subjects instead of the 30 we assumed initially – what effect would this have on our power?</p>
+<div class="sourceCode" id="cb750"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">40</span>, delta <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="fl">10</span>, sig.level <span class="op">=</span> <span class="fl">0.05</span>, 
+             type<span class="op">=</span><span class="st">"paired"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     Paired t test power calculation 
+
+              n = 40
+          delta = 5
+             sd = 10
+      sig.level = 0.05
+          power = 0.8693979
+    alternative = two.sided
+
+NOTE: n is number of *pairs*, sd is std.dev. of *differences* within pairs</code></pre>
+<p>With more samples, we should have a more powerful test, able to detect the difference with greater probability. In fact, a sample of 40 paired differences yields 87% power. As it turns out, we would need at least 44 paired differences with this scenario to get to 90% power, as shown in the calculation below, which puts the power in, but leaves out the sample size.</p>
+<div class="sourceCode" id="cb752"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>power<span class="op">=</span><span class="fl">0.9</span>, delta <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="fl">10</span>, sig.level <span class="op">=</span> <span class="fl">0.05</span>, 
+             type<span class="op">=</span><span class="st">"paired"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     Paired t test power calculation 
+
+              n = 43.99552
+          delta = 5
+             sd = 10
+      sig.level = 0.05
+          power = 0.9
+    alternative = two.sided
+
+NOTE: n is number of *pairs*, sd is std.dev. of *differences* within pairs</code></pre>
+<p>We see that we would need at least 44 paired differences to achieve 90% power. Note: we always round the sample size up in doing a power calculation – if this calculation had actually suggested n = 43.1 paired differences were needed, we would still have rounded up to 44.</p>
+</div>
+<div id="changing-the-effect-size" class="section level3" number="19.15.5">
+<h3>
+<span class="header-section-number">19.15.5</span> Changing the Effect Size<a class="anchor" aria-label="anchor" href="#changing-the-effect-size"><i class="fas fa-link"></i></a>
+</h3>
+<p>A larger effect should be easier to detect. If we go back to our original calculation, which had 75% power to detect an effect (i.e. a true population mean difference) of size <span class="math inline">\(\delta\)</span> = 5, and now change the desired effect size to <span class="math inline">\(\delta\)</span> = 6, we should obtain a more powerful design.</p>
+<div class="sourceCode" id="cb754"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span>, delta <span class="op">=</span> <span class="fl">6</span>, sd <span class="op">=</span> <span class="fl">10</span>, sig.level <span class="op">=</span> <span class="fl">0.05</span>, 
+             type<span class="op">=</span><span class="st">"paired"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     Paired t test power calculation 
+
+              n = 30
+          delta = 6
+             sd = 10
+      sig.level = 0.05
+          power = 0.887962
+    alternative = two.sided
+
+NOTE: n is number of *pairs*, sd is std.dev. of *differences* within pairs</code></pre>
+<p>We see that this change in effect size from 5 to 6, leaving everything else the same, increases our power from 75% to nearly 89%. To reach 90% power, we’d need to increase the effect size we were trying to detect to at least 6.13 days.</p>
+<ul>
+<li>Again, note that I am rounding up here.</li>
+<li>Using <span class="math inline">\(\delta\)</span> = 6.12 would not quite make it to 90.00% power.</li>
+<li>Using <span class="math inline">\(\delta\)</span> = 6.13 guarantees that the power will be 90% or more, and not just round up to 90%..</li>
+</ul>
+</div>
+<div id="changing-the-standard-deviation" class="section level3" number="19.15.6">
+<h3>
+<span class="header-section-number">19.15.6</span> Changing the Standard Deviation<a class="anchor" aria-label="anchor" href="#changing-the-standard-deviation"><i class="fas fa-link"></i></a>
+</h3>
+<p>The choice of standard deviation is usually motivated by a pilot study, or else pulled out of thin air. It’s relatively easy to convince yourself that the true standard deviation might be a little smaller than you’d guessed initially. Let’s see what happens to the power if we reduce the sample standard deviation from 10 days to 9 days. This should make the effect of 5 days easier to detect as being different from the null hypothesized value of 0, because it will have smaller variation associated with it.</p>
+<div class="sourceCode" id="cb756"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span>, delta <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="fl">9</span>, sig.level <span class="op">=</span> <span class="fl">0.05</span>, 
+             type<span class="op">=</span><span class="st">"paired"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     Paired t test power calculation 
+
+              n = 30
+          delta = 5
+             sd = 9
+      sig.level = 0.05
+          power = 0.8366514
+    alternative = two.sided
+
+NOTE: n is number of *pairs*, sd is std.dev. of *differences* within pairs</code></pre>
+<p>This change in standard deviation from 10 to 9, leaving everything else the same, increases our power from 75% to nearly 84%. To reach 90% power, we’d need to decrease the standard deviation of the population paired differences to no more than 8.16 days.</p>
+<p>Note I am rounding down here, because using <span class="math inline">\(s\)</span> = 8.17 days would not quite make it to 90.00% power. Note also that in order to get R to treat the sd as unknown, I must specify it as NULL in the formula…</p>
+<div class="sourceCode" id="cb758"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span>, delta <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="cn">NULL</span>, power <span class="op">=</span> <span class="fl">0.9</span>, 
+             sig.level <span class="op">=</span> <span class="fl">0.05</span>, type<span class="op">=</span><span class="st">"paired"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     Paired t test power calculation 
+
+              n = 30
+          delta = 5
+             sd = 8.163989
+      sig.level = 0.05
+          power = 0.9
+    alternative = two.sided
+
+NOTE: n is number of *pairs*, sd is std.dev. of *differences* within pairs</code></pre>
+</div>
+<div id="changing-the-significance-level" class="section level3" number="19.15.7">
+<h3>
+<span class="header-section-number">19.15.7</span> Changing the Significance Level<a class="anchor" aria-label="anchor" href="#changing-the-significance-level"><i class="fas fa-link"></i></a>
+</h3>
+<p>We can trade off some of our Type II error (lack of power) for Type I error. If we are willing to trade off some Type I error (as described by the <span class="math inline">\(\alpha\)</span>), we can improve the power. For instance, suppose we decided to run the original test with 90% confidence.</p>
+<div class="sourceCode" id="cb760"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span>, delta <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="fl">10</span>, sig.level <span class="op">=</span> <span class="fl">0.1</span>, 
+             type<span class="op">=</span><span class="st">"paired"</span>, alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     Paired t test power calculation 
+
+              n = 30
+          delta = 5
+             sd = 10
+      sig.level = 0.1
+          power = 0.8482542
+    alternative = two.sided
+
+NOTE: n is number of *pairs*, sd is std.dev. of *differences* within pairs</code></pre>
+<p>The calculation suggests that our power would thus increase from 75% to nearly 85%.</p>
+</div>
+</div>
+<div id="two-independent-samples-power-for-t-tests" class="section level2" number="19.16">
+<h2>
+<span class="header-section-number">19.16</span> Two Independent Samples: Power for t Tests<a class="anchor" aria-label="anchor" href="#two-independent-samples-power-for-t-tests"><i class="fas fa-link"></i></a>
+</h2>
+<p>For an independent-samples t test, with a balanced design (so that <span class="math inline">\(n_1\)</span> = <span class="math inline">\(n_2\)</span>), R can estimate any one of the following elements, given the other four, using the <code>power.t.test</code> command, for either a one-tailed or two-tailed t test…</p>
+<ul>
+<li>n = the sample size in each of the two groups being compared</li>
+<li>
+<span class="math inline">\(\delta\)</span> = delta = the true difference in means between the two groups</li>
+<li>s = sd = the true standard deviation of the individual values in each group (assumed to be constant – since we assume equal population variances)</li>
+<li>
+<span class="math inline">\(\alpha\)</span> = sig.level = the significance level for the comparison (maximum acceptable risk of Type I error)</li>
+<li>1 - <span class="math inline">\(\beta\)</span> = power = the power of the t test to detect the effect of size <span class="math inline">\(\delta\)</span>
+</li>
+</ul>
+<p>This method only produces power calculations for balanced designs – where the sample size is equal in the two groups. If you want a two-sample power calculation for an unbalanced design, you will need to use a different library and function in R, as we’ll see.</p>
+</div>
+<div id="a-new-example" class="section level2" number="19.17">
+<h2>
+<span class="header-section-number">19.17</span> A New Example<a class="anchor" aria-label="anchor" href="#a-new-example"><i class="fas fa-link"></i></a>
+</h2>
+<p>Suppose we plan a study of the time to relapse for patients in a drug trial, where subjects will be assigned randomly to a (new) treatment or to a placebo. Suppose we anticipate that the placebo group will have a mean of about 9 months, and want to detect an improvement (increase) in time to relapse of 50%, so that the treatment group would have a mean of at least 13.5 months. We’ll use <span class="math inline">\(\alpha\)</span> = .10 and <span class="math inline">\(\beta\)</span> = .10, as well. Assume we’d do a two-sided test, with an equal number of observations in each group, and we’ll assume the observed standard deviation of 9 months in a pilot study will hold here, as well.</p>
+<p>We want the sample size required by the test under a two sample setting where:</p>
+<ul>
+<li>
+<span class="math inline">\(\alpha\)</span> = .10,</li>
+<li>with 90% power (so that <span class="math inline">\(\beta\)</span> = .10),</li>
+<li>and where we will have equal numbers of samples in the placebo group (group 1) and the treatment group (group 2).<br>
+</li>
+<li>We’ll plug in the observed standard deviation of 9 months.</li>
+<li>We’ll look at detecting a change from 9 [the average in the placebo group] to 13.5 (a difference of 50%, giving delta = 4.5)</li>
+<li>using a two-sided pooled t-test.</li>
+</ul>
+<p>The appropriate R command is:</p>
+<div class="sourceCode" id="cb762"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">4.5</span>, sd <span class="op">=</span> <span class="fl">9</span>, 
+             sig.level <span class="op">=</span> <span class="fl">0.10</span>, power <span class="op">=</span> <span class="fl">0.9</span>, 
+             type<span class="op">=</span><span class="st">"two.sample"</span>, 
+             alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     Two-sample t test power calculation 
+
+              n = 69.19782
+          delta = 4.5
+             sd = 9
+      sig.level = 0.1
+          power = 0.9
+    alternative = two.sided
+
+NOTE: n is number in *each* group</code></pre>
+<p>This suggests that we will need a sample of at least 70 subjects in the treated group and an additional 70 subjects in the placebo group, for a total of 140 subjects.</p>
+<div id="another-scenario" class="section level3" number="19.17.1">
+<h3>
+<span class="header-section-number">19.17.1</span> Another Scenario<a class="anchor" aria-label="anchor" href="#another-scenario"><i class="fas fa-link"></i></a>
+</h3>
+<p>What if resources are sparse, and we’ll be forced to do the study with no more than 120 subjects, overall? If we require 90% confidence in a two-sided test, what power will we have?</p>
+<div class="sourceCode" id="cb764"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">60</span>, delta <span class="op">=</span> <span class="fl">4.5</span>, sd <span class="op">=</span> <span class="fl">9</span>, 
+             sig.level <span class="op">=</span> <span class="fl">0.10</span>,
+             type<span class="op">=</span><span class="st">"two.sample"</span>, 
+             alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     Two-sample t test power calculation 
+
+              n = 60
+          delta = 4.5
+             sd = 9
+      sig.level = 0.1
+          power = 0.859484
+    alternative = two.sided
+
+NOTE: n is number in *each* group</code></pre>
+<p>It looks like the power under those circumstances would be just under 86%. Note that the n = 60 refers to half of the total sample size, since we’ll need 60 drug and 60 placebo subjects in this balanced design.</p>
+</div>
+</div>
+<div id="power-for-independent-sample-t-tests-with-unbalanced-designs" class="section level2" number="19.18">
+<h2>
+<span class="header-section-number">19.18</span> Power for Independent Sample T tests with Unbalanced Designs<a class="anchor" aria-label="anchor" href="#power-for-independent-sample-t-tests-with-unbalanced-designs"><i class="fas fa-link"></i></a>
+</h2>
+<p>Using the <code>pwr</code> package, R can do sample size calculations that describe the power of a two-sample t test that does not require a balanced design using the <code>pwr.t2n.test</code> command.</p>
+<p>Suppose we wanted to do the same study as we described above, using 100 “treated” patients but as few “placebo” patients as possible. What sample size would be required to maintain 90% power? There is one change here – the effect size d in the <code>pwr.t2n.test</code> command is specified using the difference in means <span class="math inline">\(\delta\)</span> that we used previously, divided by the standard deviation s that we used previously. So, in our old setup, we assumed delta = 4.5, sd = 9, so now we’ll assume d = 4.5/9 instead.</p>
+<div class="sourceCode" id="cb766"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pwr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pwr/man/pwr.t2n.test.html">pwr.t2n.test</a></span><span class="op">(</span>n1 <span class="op">=</span> <span class="fl">100</span>, d <span class="op">=</span> <span class="fl">4.5</span><span class="op">/</span><span class="fl">9</span>, 
+             sig.level <span class="op">=</span> <span class="fl">0.1</span>, power <span class="op">=</span> <span class="fl">0.9</span>,
+             alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     t test power calculation 
+
+             n1 = 100
+             n2 = 52.82433
+              d = 0.5
+      sig.level = 0.1
+          power = 0.9
+    alternative = two.sided</code></pre>
+<p>We would need at least 53 subjects in the “placebo” group.</p>
+<div id="the-most-efficient-design-for-an-independent-samples-comparison-will-be-balanced." class="section level3" number="19.18.1">
+<h3>
+<span class="header-section-number">19.18.1</span> The most efficient design for an independent samples comparison will be balanced.<a class="anchor" aria-label="anchor" href="#the-most-efficient-design-for-an-independent-samples-comparison-will-be-balanced."><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>Note that if we use <span class="math inline">\(n_1\)</span> = 100 subjects in the treated group, we need at least <span class="math inline">\(n_2\)</span> = 53 in the placebo group to achieve 90% power, and a total of 153 subjects.</li>
+<li>Compare this to the balanced design, where we needed 70 subjects in each group to achieve the same power, thus, a total of 140 subjects.</li>
+</ul>
+<p>We saw earlier that a test with 60 subjects in each group would yield just under 86% power. Suppose we instead built a test with 80 subjects in the treated group, and 40 in the placebo group, then what would our power be?</p>
+<div class="sourceCode" id="cb768"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pwr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pwr/man/pwr.t2n.test.html">pwr.t2n.test</a></span><span class="op">(</span>n1 <span class="op">=</span> <span class="fl">80</span>, n2 <span class="op">=</span> <span class="fl">40</span>, d <span class="op">=</span> <span class="fl">4.5</span><span class="op">/</span><span class="fl">9</span>, 
+             sig.level <span class="op">=</span> <span class="fl">0.10</span>,
+             alternative<span class="op">=</span><span class="st">"two.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     t test power calculation 
+
+             n1 = 80
+             n2 = 40
+              d = 0.5
+      sig.level = 0.1
+          power = 0.821823
+    alternative = two.sided</code></pre>
+<p>As we’d expect, the power is stronger for a balanced design than for an unbalanced design with the same overall sample size.</p>
+<p>Note that I used a two-sided test to establish my power calculation – in general, this is the most conservative and defensible approach for any such calculation, <strong>unless there is a strong and specific reason to use a one-sided approach in building a power calculation, don’t</strong>.</p>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="comparing-means-with-paired-samples.html"><span class="header-section-number">18</span> Comparing Means with Paired Samples</a></div>
+<div class="next"><a href="two-examples-comparing-means.html"><span class="header-section-number">20</span> Two Examples Comparing Means</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#hypothesis-testing-what-is-it-good-for"><span class="header-section-number">19</span> Hypothesis Testing: What is it good for?</a></li>
+<li><a class="nav-link" href="#five-steps-in-any-hypothesis-test"><span class="header-section-number">19.1</span> Five Steps in any Hypothesis Test</a></li>
+<li><a class="nav-link" href="#type-i-and-type-ii-error"><span class="header-section-number">19.2</span> Type I and Type II Error</a></li>
+<li><a class="nav-link" href="#the-courtroom-analogy"><span class="header-section-number">19.3</span> The Courtroom Analogy</a></li>
+<li><a class="nav-link" href="#significance-vs.-importance"><span class="header-section-number">19.4</span> Significance vs. Importance</a></li>
+<li><a class="nav-link" href="#what-does-dr.-love-dislike-about-p-values-and-statistical-significance"><span class="header-section-number">19.5</span> What does Dr. Love dislike about p values and “statistical significance?”</a></li>
+<li><a class="nav-link" href="#the-asa-articles-in-2016-and-2019-on-statistical-significance-and-p-values"><span class="header-section-number">19.6</span> The ASA Articles in 2016 and 2019 on Statistical Significance and P-Values</a></li>
+<li><a class="nav-link" href="#errors-in-hypothesis-testing"><span class="header-section-number">19.7</span> Errors in Hypothesis Testing</a></li>
+<li><a class="nav-link" href="#the-two-types-of-hypothesis-testing-errors"><span class="header-section-number">19.8</span> The Two Types of Hypothesis Testing Errors</a></li>
+<li><a class="nav-link" href="#the-significance-level-is-the-probability-of-a-type-i-error"><span class="header-section-number">19.9</span> The Significance Level is the Probability of a Type I Error</a></li>
+<li><a class="nav-link" href="#the-probability-of-avoiding-a-type-ii-error-is-called-power"><span class="header-section-number">19.10</span> The Probability of avoiding a Type II Error is called Power</a></li>
+<li><a class="nav-link" href="#incorporating-the-costs-of-various-types-of-errors"><span class="header-section-number">19.11</span> Incorporating the Costs of Various Types of Errors</a></li>
+<li><a class="nav-link" href="#power-and-sample-size-considerations"><span class="header-section-number">19.12</span> Power and Sample Size Considerations</a></li>
+<li>
+<a class="nav-link" href="#sample-size-in-a-one-sample-t-test"><span class="header-section-number">19.13</span> Sample Size in a One-Sample t test</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#a-toy-example"><span class="header-section-number">19.13.1</span> A Toy Example</a></li>
+<li><a class="nav-link" href="#using-the-power.t.test-function"><span class="header-section-number">19.13.2</span> Using the power.t.test function</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#changing-assumptions"><span class="header-section-number">19.14</span> Changing Assumptions</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#increasing-sample-size-increases-power"><span class="header-section-number">19.14.1</span> Increasing Sample Size Increases Power</a></li>
+<li><a class="nav-link" href="#increasing-effect-size-will-increase-power"><span class="header-section-number">19.14.2</span> Increasing Effect Size will increase Power</a></li>
+<li><a class="nav-link" href="#decreasing-the-standard-deviation-will-increase-power"><span class="header-section-number">19.14.3</span> Decreasing the Standard Deviation will increase Power</a></li>
+<li><a class="nav-link" href="#larger-significance-level-increases-power"><span class="header-section-number">19.14.4</span> Larger Significance Level increases Power</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#paired-sample-t-tests-and-powersample-size"><span class="header-section-number">19.15</span> Paired Sample t Tests and Power/Sample Size</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#a-toy-example-1"><span class="header-section-number">19.15.1</span> A Toy Example</a></li>
+<li><a class="nav-link" href="#using-the-power.t.test-function-1"><span class="header-section-number">19.15.2</span> Using the power.t.test function</a></li>
+<li><a class="nav-link" href="#changing-assumptions-in-a-power-calculation"><span class="header-section-number">19.15.3</span> Changing Assumptions in a Power Calculation</a></li>
+<li><a class="nav-link" href="#changing-the-sample-size"><span class="header-section-number">19.15.4</span> Changing the Sample Size</a></li>
+<li><a class="nav-link" href="#changing-the-effect-size"><span class="header-section-number">19.15.5</span> Changing the Effect Size</a></li>
+<li><a class="nav-link" href="#changing-the-standard-deviation"><span class="header-section-number">19.15.6</span> Changing the Standard Deviation</a></li>
+<li><a class="nav-link" href="#changing-the-significance-level"><span class="header-section-number">19.15.7</span> Changing the Significance Level</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#two-independent-samples-power-for-t-tests"><span class="header-section-number">19.16</span> Two Independent Samples: Power for t Tests</a></li>
+<li>
+<a class="nav-link" href="#a-new-example"><span class="header-section-number">19.17</span> A New Example</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#another-scenario"><span class="header-section-number">19.17.1</span> Another Scenario</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#power-for-independent-sample-t-tests-with-unbalanced-designs"><span class="header-section-number">19.18</span> Power for Independent Sample T tests with Unbalanced Designs</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#the-most-efficient-design-for-an-independent-samples-comparison-will-be-balanced."><span class="header-section-number">19.18.1</span> The most efficient design for an independent samples comparison will be balanced.</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/THOMASELOVE/431-notes/blob/master/19_PowerandSampleSize.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/THOMASELOVE/431-notes/edit/master/19_PowerandSampleSize.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</strong>" was written by Thomas E. Love. It was last built on 2021-10-11.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

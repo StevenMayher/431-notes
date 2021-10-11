@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 23 Power and Proportions | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</title>
+<meta name="author" content="Thomas E. Love">
+<meta name="description" content='23.1 Loading the Source Code for Love-boost.R source("data/Love-boost.R") Again, we’ll use this for the twobytwo function I’ll demonstrate shortly.  23.2 Tuberculosis Prevalence Among IV Drug...'>
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 23 Power and Proportions | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://thomaselove.github.io/431-notes/power-and-proportions.html">
+<meta property="og:description" content='23.1 Loading the Source Code for Love-boost.R source("data/Love-boost.R") Again, we’ll use this for the twobytwo function I’ll demonstrate shortly.  23.2 Tuberculosis Prevalence Among IV Drug...'>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 23 Power and Proportions | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431">
+<meta name="twitter:description" content='23.1 Loading the Source Code for Love-boost.R source("data/Love-boost.R") Again, we’ll use this for the twobytwo function I’ll demonstrate shortly.  23.2 Tuberculosis Prevalence Among IV Drug...'>
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Working with These Notes</a></li>
+<li><a class="" href="data-science.html"><span class="header-section-number">1</span> Data Science</a></li>
+<li class="book-part">Part A. Exploring Data</li>
+<li><a class="" href="the-palmer-penguins.html"><span class="header-section-number">2</span> The Palmer Penguins</a></li>
+<li><a class="" href="nhanes1.html"><span class="header-section-number">3</span> NHANES: A First Look</a></li>
+<li><a class="" href="data-structures-variable-types-sampling-nhanes.html"><span class="header-section-number">4</span> Data Structures, Variable Types &amp; Sampling NHANES</a></li>
+<li><a class="" href="visualizing-nhanes-data.html"><span class="header-section-number">5</span> Visualizing NHANES Data</a></li>
+<li><a class="" href="summarizing_quantities.html"><span class="header-section-number">6</span> Summarizing Quantities</a></li>
+<li><a class="" href="summarizing-categories.html"><span class="header-section-number">7</span> Summarizing Categories</a></li>
+<li><a class="" href="miss.html"><span class="header-section-number">8</span> Missing Data and Single Imputation</a></li>
+<li><a class="" href="NYFS-Study.html"><span class="header-section-number">9</span> National Youth Fitness Survey</a></li>
+<li><a class="" href="assessing-normality.html"><span class="header-section-number">10</span> Assessing Normality</a></li>
+<li><a class="" href="straight-line-models.html"><span class="header-section-number">11</span> Straight Line Models</a></li>
+<li><a class="" href="linearizing-transformations.html"><span class="header-section-number">12</span> Linearizing Transformations</a></li>
+<li><a class="" href="studying-crab-claws-crabs.html"><span class="header-section-number">13</span> Studying Crab Claws (crabs)</a></li>
+<li><a class="" href="Hydrate-Study.html"><span class="header-section-number">14</span> Dehydration Recovery</a></li>
+<li><a class="" href="WCGS-Study.html"><span class="header-section-number">15</span> The WCGS</a></li>
+<li class="book-part">Part B. Comparing Summaries</li>
+<li><a class="" href="confidence-intervals-for-a-mean.html"><span class="header-section-number">16</span> Confidence Intervals for a Mean</a></li>
+<li><a class="" href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html"><span class="header-section-number">17</span> The Ibuprofen in Sepsis Randomized Clinical Trial</a></li>
+<li><a class="" href="comparing-means-with-paired-samples.html"><span class="header-section-number">18</span> Comparing Means with Paired Samples</a></li>
+<li><a class="" href="hypothesis-testing-what-is-it-good-for.html"><span class="header-section-number">19</span> Hypothesis Testing: What is it good for?</a></li>
+<li><a class="" href="two-examples-comparing-means.html"><span class="header-section-number">20</span> Two Examples Comparing Means</a></li>
+<li><a class="" href="estimating-a-population-proportion.html"><span class="header-section-number">21</span> Estimating a Population Proportion</a></li>
+<li><a class="" href="comparing-proportions-with-two-independent-samples.html"><span class="header-section-number">22</span> Comparing Proportions with Two Independent Samples</a></li>
+<li><a class="active" href="power-and-proportions.html"><span class="header-section-number">23</span> Power and Proportions</a></li>
+<li><a class="" href="larger-contingency-tables.html"><span class="header-section-number">24</span> Larger Contingency Tables</a></li>
+<li><a class="" href="analysis-of-variance.html"><span class="header-section-number">25</span> Analysis of Variance</a></li>
+<li class="book-part">Appendix</li>
+<li><a class="" href="some-r-tips.html">Some R Tips</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/THOMASELOVE/431-notes">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="power-and-proportions" class="section level1" number="23">
+<h1>
+<span class="header-section-number">23</span> Power and Proportions<a class="anchor" aria-label="anchor" href="#power-and-proportions"><i class="fas fa-link"></i></a>
+</h1>
+<div id="loading-the-source-code-for-love-boost.r-2" class="section level2" number="23.1">
+<h2>
+<span class="header-section-number">23.1</span> Loading the Source Code for Love-boost.R<a class="anchor" aria-label="anchor" href="#loading-the-source-code-for-love-boost.r-2"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb846"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="st">"data/Love-boost.R"</span><span class="op">)</span></code></pre></div>
+<p>Again, we’ll use this for the <code>twobytwo</code> function I’ll demonstrate shortly.</p>
+</div>
+<div id="tuberculosis-prevalence-among-iv-drug-users" class="section level2" number="23.2">
+<h2>
+<span class="header-section-number">23.2</span> Tuberculosis Prevalence Among IV Drug Users<a class="anchor" aria-label="anchor" href="#tuberculosis-prevalence-among-iv-drug-users"><i class="fas fa-link"></i></a>
+</h2>
+<p>Consider a study to investigate factors affecting tuberculosis prevalence among intravenous drug users. The original data source is Graham NMH et al. (1992) Prevalence of Tuberculin Positivity and Skin Test Anergy in HIV-1-Seropositive and Seronegative Intravenous Drug Users. <em>JAMA</em>, 267, 369-373. Among 97 individuals who admit to sharing needles, 24 (24.7%) had a positive tuberculin skin test result; among 161 drug users who deny sharing needles, 28 (17.4%) had a positive test result. To start, we’ll test the null hypothesis that the proportions of intravenous drug users who have a positive tuberculin skin test result are identical for those who share needles and those who do not.</p>
+<div class="sourceCode" id="cb847"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">twobytwo</span><span class="op">(</span><span class="fl">24</span>, <span class="fl">73</span>, <span class="fl">28</span>, <span class="fl">133</span>, 
+         <span class="st">"Sharing Needles"</span>, <span class="st">"Not Sharing"</span>, 
+         <span class="st">"TB test+"</span>, <span class="st">"TB test-"</span><span class="op">)</span></code></pre></div>
+<pre><code>2 by 2 table analysis: 
+------------------------------------------------------ 
+Outcome   : TB test+ 
+Comparing : Sharing Needles vs. Not Sharing 
+
+                TB test+ TB test-    P(TB test+) 95% conf.
+Sharing Needles       24       73         0.2474    0.1717
+Not Sharing           28      133         0.1739    0.1229
+                interval
+Sharing Needles   0.3427
+Not Sharing       0.2404
+
+                                   95% conf. interval
+             Relative Risk: 1.4227    0.8772   2.3073
+         Sample Odds Ratio: 1.5616    0.8439   2.8898
+Conditional MLE Odds Ratio: 1.5588    0.8014   3.0191
+    Probability difference: 0.0735   -0.0265   0.1807
+
+             Exact P-value: 0.1996 
+        Asymptotic P-value: 0.1557 
+------------------------------------------------------</code></pre>
+<p>What conclusions should we draw?</p>
+</div>
+<div id="designing-a-new-tb-study" class="section level2" number="23.3">
+<h2>
+<span class="header-section-number">23.3</span> Designing a New TB Study<a class="anchor" aria-label="anchor" href="#designing-a-new-tb-study"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now, suppose we wanted to design a new study with as many non-sharers as needle-sharers participating, and suppose that we wanted to detect any difference in the proportion of positive skin test results between the two groups that was identical to the data presented above or larger with at least 90% power, using a two-sided test and <span class="math inline">\(\alpha\)</span> = .05. What sample size would be required to accomplish these aims?</p>
+</div>
+<div id="using-power.prop.test-for-balanced-designs" class="section level2" number="23.4">
+<h2>
+<span class="header-section-number">23.4</span> Using <code>power.prop.test</code> for Balanced Designs<a class="anchor" aria-label="anchor" href="#using-power.prop.test-for-balanced-designs"><i class="fas fa-link"></i></a>
+</h2>
+<p>Our constraints are that we want to find the sample size for a two-sample comparison of proportions using a balanced design, we will use <span class="math inline">\(\alpha\)</span> = .05, and power = .90, and that we estimate that the non-sharers will have a .174 proportion of positive tests, and we will try to detect a difference between this group and the needle sharers, who we estimate will have a proportion of .247, using a two-sided hypothesis test.</p>
+<div class="sourceCode" id="cb849"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.prop.test.html">power.prop.test</a></span><span class="op">(</span>p1 <span class="op">=</span> <span class="fl">.174</span>, p2  <span class="op">=</span> <span class="fl">.247</span>, sig.level <span class="op">=</span> <span class="fl">0.05</span>, power <span class="op">=</span> <span class="fl">0.90</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     Two-sample comparison of proportions power calculation 
+
+              n = 653.2876
+             p1 = 0.174
+             p2 = 0.247
+      sig.level = 0.05
+          power = 0.9
+    alternative = two.sided
+
+NOTE: n is number in *each* group</code></pre>
+<p>So, we’d need at least 654 non-sharing subjects, and 654 more who share needles to accomplish the aims of the study.</p>
+</div>
+<div id="how-power.prop.test-works" class="section level2" number="23.5">
+<h2>
+<span class="header-section-number">23.5</span> How <code>power.prop.test</code> works<a class="anchor" aria-label="anchor" href="#how-power.prop.test-works"><i class="fas fa-link"></i></a>
+</h2>
+<p><code>power.prop.test</code> works much like the <code>power.t.test</code> we saw for means.</p>
+<p>Again, we specify 4 of the following 5 elements of the comparison, and R calculates the fifth.</p>
+<ul>
+<li>The sample size (interpreted as the # in each group, so half the total sample size)</li>
+<li>The true probability in group 1</li>
+<li>The true probability in group 2</li>
+<li>The significance level (<span class="math inline">\(\alpha\)</span>)</li>
+<li>The power (1 - <span class="math inline">\(\beta\)</span>)</li>
+</ul>
+<p>The big weakness with the <code>power.prop.test</code> tool is that it doesn’t allow you to work with unbalanced designs.</p>
+</div>
+<div id="a-revised-scenario" class="section level2" number="23.6">
+<h2>
+<span class="header-section-number">23.6</span> A Revised Scenario<a class="anchor" aria-label="anchor" href="#a-revised-scenario"><i class="fas fa-link"></i></a>
+</h2>
+<p>Suppose we can get exactly 800 subjects in total (400 sharing and 400 non-sharing). How much power would we have to detect a difference in the proportion of positive skin test results between the two groups that was identical to the data presented above or larger, using a one-sided test, with <span class="math inline">\(\alpha\)</span> = .10?</p>
+<div class="sourceCode" id="cb851"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.prop.test.html">power.prop.test</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">400</span>, p1<span class="op">=</span><span class="fl">.174</span>, p2<span class="op">=</span><span class="fl">.247</span>, sig.level <span class="op">=</span> <span class="fl">0.10</span>,
+                alternative<span class="op">=</span><span class="st">"one.sided"</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     Two-sample comparison of proportions power calculation 
+
+              n = 400
+             p1 = 0.174
+             p2 = 0.247
+      sig.level = 0.1
+          power = 0.8954262
+    alternative = one.sided
+
+NOTE: n is number in *each* group</code></pre>
+<p>We would have just under 90% power to detect such an effect.</p>
+</div>
+<div id="using-the-pwr-library-for-unbalanced-designs" class="section level2" number="23.7">
+<h2>
+<span class="header-section-number">23.7</span> Using the <code>pwr</code> library for Unbalanced Designs<a class="anchor" aria-label="anchor" href="#using-the-pwr-library-for-unbalanced-designs"><i class="fas fa-link"></i></a>
+</h2>
+<p>The <code>pwr.2p2n.test</code> function in the <code>pwr</code> library can help assess the power of a test to determine a particular effect size using an unbalanced design, where <span class="math inline">\(n_1\)</span> is not equal to <span class="math inline">\(n_2\)</span>.</p>
+<p>As before, we specify four of the following five elements of the comparison, and R calculates the fifth.</p>
+<ul>
+<li>
+<code>n1</code> = The sample size in group 1</li>
+<li>
+<code>n2</code> = The sample size in group 2</li>
+<li>
+<code>sig.level</code> = The significance level (<span class="math inline">\(\alpha\)</span>)</li>
+<li>
+<code>power</code> = The power (1 - <span class="math inline">\(\beta\)</span>)</li>
+<li>
+<code>h</code> = the effect size h, which can be calculated separately in R based on the two proportions being compared: <code>p1</code> and <code>p2</code>.</li>
+</ul>
+<div id="calculating-the-effect-size-h" class="section level3" number="23.7.1">
+<h3>
+<span class="header-section-number">23.7.1</span> Calculating the Effect Size <code>h</code><a class="anchor" aria-label="anchor" href="#calculating-the-effect-size-h"><i class="fas fa-link"></i></a>
+</h3>
+<p>To calculate the effect size for a given set of proportions, just use <code>ES.h(p1, p2)</code> which is available in the <code>pwr</code> library.</p>
+<p>For instance, in our comparison, we have the following effect size.</p>
+<div class="sourceCode" id="cb853"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pwr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pwr/man/ES.h.html">ES.h</a></span><span class="op">(</span>p1 <span class="op">=</span> <span class="fl">.174</span>, p2 <span class="op">=</span> <span class="fl">.247</span><span class="op">)</span></code></pre></div>
+<pre><code>[1] -0.1796783</code></pre>
+</div>
+</div>
+<div id="using-pwr.2p2n.test-in-r" class="section level2" number="23.8">
+<h2>
+<span class="header-section-number">23.8</span> Using <code>pwr.2p2n.test</code> in R<a class="anchor" aria-label="anchor" href="#using-pwr.2p2n.test-in-r"><i class="fas fa-link"></i></a>
+</h2>
+<p>Suppose we can have 700 samples in group 1 (the not sharing group) but only half that many in group 2 (the group of users who share needles). How much power would we have to detect this same difference (<span class="math inline">\(p_1\)</span> = .174, <span class="math inline">\(p_2\)</span> = .247) with a 5% significance level in a two-sided test?</p>
+<div class="sourceCode" id="cb855"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pwr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pwr/man/pwr.2p2n.test.html">pwr.2p2n.test</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fu">pwr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pwr/man/ES.h.html">ES.h</a></span><span class="op">(</span>p1 <span class="op">=</span> <span class="fl">.174</span>, p2 <span class="op">=</span> <span class="fl">.247</span><span class="op">)</span>, 
+              n1 <span class="op">=</span> <span class="fl">700</span>, n2 <span class="op">=</span> <span class="fl">350</span>,
+              sig.level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     difference of proportion power calculation for binomial distribution (arcsine transformation) 
+
+              h = 0.1796783
+             n1 = 700
+             n2 = 350
+      sig.level = 0.05
+          power = 0.7836768
+    alternative = two.sided
+
+NOTE: different sample sizes</code></pre>
+<p>Note that the headline for this output actually reads:</p>
+<pre><code>difference of proportion power calculation for binomial distribution 
+(arcsine transformation) </code></pre>
+<p>It appears we will have about 78% power under these circumstances.</p>
+<div id="comparison-to-balanced-design" class="section level3" number="23.8.1">
+<h3>
+<span class="header-section-number">23.8.1</span> Comparison to Balanced Design<a class="anchor" aria-label="anchor" href="#comparison-to-balanced-design"><i class="fas fa-link"></i></a>
+</h3>
+<p>How does this compare to the results with a balanced design using only 1000 drug users in total, so that we have 500 patients in each group?</p>
+<div class="sourceCode" id="cb858"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pwr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pwr/man/pwr.2p2n.test.html">pwr.2p2n.test</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fu">pwr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pwr/man/ES.h.html">ES.h</a></span><span class="op">(</span>p1 <span class="op">=</span> <span class="fl">.174</span>, p2 <span class="op">=</span> <span class="fl">.247</span><span class="op">)</span>, 
+                   n1 <span class="op">=</span> <span class="fl">500</span>, n2 <span class="op">=</span> <span class="fl">500</span>, sig.level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     difference of proportion power calculation for binomial distribution (arcsine transformation) 
+
+              h = 0.1796783
+             n1 = 500
+             n2 = 500
+      sig.level = 0.05
+          power = 0.8108416
+    alternative = two.sided
+
+NOTE: different sample sizes</code></pre>
+<p>or we could instead have used…</p>
+<div class="sourceCode" id="cb860"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/power.prop.test.html">power.prop.test</a></span><span class="op">(</span>p1 <span class="op">=</span> <span class="fl">.174</span>, p2 <span class="op">=</span> <span class="fl">.247</span>, 
+                sig.level <span class="op">=</span> <span class="fl">0.05</span>, n <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></code></pre></div>
+<pre><code>
+     Two-sample comparison of proportions power calculation 
+
+              n = 500
+             p1 = 0.174
+             p2 = 0.247
+      sig.level = 0.05
+          power = 0.8091808
+    alternative = two.sided
+
+NOTE: n is number in *each* group</code></pre>
+<p>Note that these two sample size estimation approaches are approximations, and use slightly different approaches, so it’s not surprising that the answers are similar, but not completely identical.</p>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="comparing-proportions-with-two-independent-samples.html"><span class="header-section-number">22</span> Comparing Proportions with Two Independent Samples</a></div>
+<div class="next"><a href="larger-contingency-tables.html"><span class="header-section-number">24</span> Larger Contingency Tables</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#power-and-proportions"><span class="header-section-number">23</span> Power and Proportions</a></li>
+<li><a class="nav-link" href="#loading-the-source-code-for-love-boost.r-2"><span class="header-section-number">23.1</span> Loading the Source Code for Love-boost.R</a></li>
+<li><a class="nav-link" href="#tuberculosis-prevalence-among-iv-drug-users"><span class="header-section-number">23.2</span> Tuberculosis Prevalence Among IV Drug Users</a></li>
+<li><a class="nav-link" href="#designing-a-new-tb-study"><span class="header-section-number">23.3</span> Designing a New TB Study</a></li>
+<li><a class="nav-link" href="#using-power.prop.test-for-balanced-designs"><span class="header-section-number">23.4</span> Using power.prop.test for Balanced Designs</a></li>
+<li><a class="nav-link" href="#how-power.prop.test-works"><span class="header-section-number">23.5</span> How power.prop.test works</a></li>
+<li><a class="nav-link" href="#a-revised-scenario"><span class="header-section-number">23.6</span> A Revised Scenario</a></li>
+<li>
+<a class="nav-link" href="#using-the-pwr-library-for-unbalanced-designs"><span class="header-section-number">23.7</span> Using the pwr library for Unbalanced Designs</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#calculating-the-effect-size-h"><span class="header-section-number">23.7.1</span> Calculating the Effect Size h</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#using-pwr.2p2n.test-in-r"><span class="header-section-number">23.8</span> Using pwr.2p2n.test in R</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#comparison-to-balanced-design"><span class="header-section-number">23.8.1</span> Comparison to Balanced Design</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/THOMASELOVE/431-notes/blob/master/23_PowerforProportions.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/THOMASELOVE/431-notes/edit/master/23_PowerforProportions.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</strong>" was written by Thomas E. Love. It was last built on 2021-10-11.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
